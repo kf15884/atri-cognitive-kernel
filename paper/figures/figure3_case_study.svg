@@ -1,0 +1,123 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="560" viewBox="0 0 1200 560" font-family="DejaVu Sans, Arial, Helvetica, sans-serif">
+<defs>
+<marker id="f3-arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" fill="#475569"/></marker>
+</defs>
+<rect x="0" y="0" width="1200" height="560" fill="#ffffff"/>
+<text x="24" y="30" font-size="17" font-weight="700" fill="#0f172a">Figure 3 · End-to-End Qualitative Trace: Ecological Flood Survival, Sleep Genesis &amp; Counterfactual Inquiry</text>
+<text x="24" y="49" font-size="11.5" fill="#475569">Deterministic zero-LLM execution trace showing live hypergraph counts, MDL concept minting, REM 2-hop analogies, Pearl Rung-3 do(·), and Law-2 conservation</text>
+<rect x="24" y="68" width="178" height="140" rx="8" fill="#f0f9ff" stroke="#0284c7" stroke-width="1.4"/>
+<rect x="24" y="68" width="178" height="26" rx="8" fill="#0284c7"/>
+<text x="34" y="85" font-size="11" font-weight="700" fill="#ffffff">T1 · Reading Flood</text>
+<text x="34" y="116" font-size="10.2" fill="#1e293b">Active Nodes: 1558</text>
+<text x="34" y="137" font-size="10.2" fill="#1e293b">Active Edges: 1515</text>
+<text x="34" y="158" font-size="10.2" fill="#1e293b">Raw Mass: 265.8</text>
+<text x="34" y="179" font-size="10.2" fill="#1e293b">Passive form:* spike</text>
+<line x1="202" y1="138" x2="216" y2="138" stroke="#475569" stroke-width="1.6" marker-end="url(#f3-arr)"/>
+<rect x="218" y="68" width="178" height="140" rx="8" fill="#f5f3ff" stroke="#7c3aed" stroke-width="1.4"/>
+<rect x="218" y="68" width="178" height="26" rx="8" fill="#7c3aed"/>
+<text x="228" y="85" font-size="11" font-weight="700" fill="#ffffff">T2 · NREM Genesis</text>
+<text x="228" y="116" font-size="10.2" fill="#1e293b">Concepts: +1</text>
+<text x="228" y="137" font-size="10.2" fill="#1e293b">Chunks: +4</text>
+<text x="228" y="158" font-size="10.2" fill="#1e293b">Two-Part MDL Gate</text>
+<text x="228" y="179" font-size="10.2" fill="#1e293b">72h Catalytic Loan</text>
+<line x1="396" y1="138" x2="410" y2="138" stroke="#475569" stroke-width="1.6" marker-end="url(#f3-arr)"/>
+<rect x="412" y="68" width="178" height="140" rx="8" fill="#faf5ff" stroke="#9333ea" stroke-width="1.4"/>
+<rect x="412" y="68" width="178" height="26" rx="8" fill="#9333ea"/>
+<text x="422" y="85" font-size="11" font-weight="700" fill="#ffffff">T3 · REM Analogy</text>
+<text x="422" y="116" font-size="10.2" fill="#1e293b">Analogies: 4 pairs</text>
+<text x="422" y="137" font-size="10.2" fill="#1e293b">2-Hop PPR Alignment</text>
+<text x="422" y="158" font-size="10.2" fill="#1e293b">c &lt;= 0.25 · η_rem = 0</text>
+<text x="422" y="179" font-size="10.2" fill="#1e293b">Cross-Domain Seeds</text>
+<line x1="590" y1="138" x2="604" y2="138" stroke="#475569" stroke-width="1.6" marker-end="url(#f3-arr)"/>
+<rect x="606" y="68" width="178" height="140" rx="8" fill="#fffbeb" stroke="#d97706" stroke-width="1.4"/>
+<rect x="606" y="68" width="178" height="26" rx="8" fill="#d97706"/>
+<text x="616" y="85" font-size="11" font-weight="700" fill="#ffffff">T4 · Pearl Rung-3</text>
+<text x="616" y="116" font-size="10.2" fill="#1e293b">PN(flare→out): 0.945</text>
+<text x="616" y="137" font-size="10.2" fill="#1e293b">do(sh=0): 0.278</text>
+<text x="616" y="158" font-size="10.2" fill="#1e293b">do(sh=1): 0.056</text>
+<text x="616" y="179" font-size="10.2" fill="#1e293b">Mixed Gen/Preventive</text>
+<line x1="784" y1="138" x2="798" y2="138" stroke="#475569" stroke-width="1.6" marker-end="url(#f3-arr)"/>
+<rect x="800" y="68" width="178" height="140" rx="8" fill="#ecfdf5" stroke="#059669" stroke-width="1.4"/>
+<rect x="800" y="68" width="178" height="26" rx="8" fill="#059669"/>
+<text x="810" y="85" font-size="11" font-weight="700" fill="#ffffff">T5 · Law-2 Shedding</text>
+<text x="810" y="116" font-size="10.2" fill="#1e293b">Mass: 99.9955 / 100</text>
+<text x="810" y="137" font-size="10.2" fill="#1e293b">Roots: 40/40 (100%)</text>
+<text x="810" y="158" font-size="10.2" fill="#1e293b">Concepts: 1 alive</text>
+<text x="810" y="179" font-size="10.2" fill="#1e293b">Entities: 17 alive</text>
+<line x1="978" y1="138" x2="992" y2="138" stroke="#475569" stroke-width="1.6" marker-end="url(#f3-arr)"/>
+<rect x="994" y="68" width="178" height="140" rx="8" fill="#f0fdfa" stroke="#0f766e" stroke-width="1.4"/>
+<rect x="994" y="68" width="178" height="26" rx="8" fill="#0f766e"/>
+<text x="1004" y="85" font-size="11" font-weight="700" fill="#ffffff">T6 · QUD &amp; Privacy</text>
+<text x="1004" y="116" font-size="10.2" fill="#1e293b">Action: local_check</text>
+<text x="1004" y="137" font-size="10.2" fill="#1e293b">QUD ID: 90 chars</text>
+<text x="1004" y="158" font-size="10.2" fill="#1e293b">Private Egress: BLOCKED</text>
+<text x="1004" y="179" font-size="10.2" fill="#1e293b">0.0% Secret Exposure</text>
+<g transform="translate(24,232)">
+<rect x="0" y="0" width="380" height="304" rx="8" fill="#f8fafc" stroke="#cbd5e1"/>
+<text x="14" y="24" font-size="12.5" font-weight="700" fill="#0f172a">a  NREM Rissanen MDL Abstraction &amp; Chunking</text>
+<text x="14" y="48" font-size="10.5" font-weight="600" fill="#6d28d9">Minted Open-Ended Concept Signature:</text>
+<rect x="14" y="58" width="352" height="36" rx="5" fill="#ede9fe" stroke="#c4b5fd"/>
+<text x="22" y="80" font-size="10" font-family="DejaVu Sans Mono, monospace" fill="#4c1d95">?x-causes-&gt;?y ; ?y-enables-&gt;entity:energy_cycle</text>
+<text x="14" y="118" font-size="10.5" font-weight="600" fill="#334155">Live Cross-Domain Instances Unified (4):</text>
+<text x="18" y="138" font-size="9.5" fill="#475569">1. coral_symbiosis -&gt; algal_photosynth -&gt; energy_cy…</text>
+<text x="18" y="157" font-size="9.5" fill="#475569">2. hydrothermal_vent -&gt; chemosynthesis -&gt; energy_cy…</text>
+<text x="18" y="176" font-size="9.5" fill="#475569">3. marsh_microbes -&gt; nutrient_flux -&gt; energy_cycle</text>
+<text x="18" y="195" font-size="9.5" fill="#475569">4. mycorrhizal_net -&gt; root_exchange -&gt; energy_cycle</text>
+<text x="14" y="228" font-size="10.5" font-weight="600" fill="#334155">Active Minted IDs (1 concept, 4 chunks):</text>
+<text x="18" y="248" font-size="9.2" font-family="DejaVu Sans Mono, monospace" fill="#0f172a">concept:0fc72562448a, chunk:8937b903e5</text>
+<text x="18" y="264" font-size="9.2" font-family="DejaVu Sans Mono, monospace" fill="#0f172a">chunk:5ab207167c, (+2 more)</text>
+<text x="14" y="290" font-size="9.8" fill="#059669">✓ Disjoint rootSeqs/leafEdgeIds verified (zero self-reference)</text>
+</g>
+<g transform="translate(420,232)">
+<rect x="0" y="0" width="380" height="304" rx="8" fill="#f8fafc" stroke="#cbd5e1"/>
+<text x="14" y="24" font-size="12.5" font-weight="700" fill="#0f172a">b  REM 2-Hop Analogies &amp; Pearl Rung-3 do(·)</text>
+<text x="14" y="48" font-size="10.5" font-weight="600" fill="#7e22ce">Top Emitted REM Cross-Domain Analogies:</text>
+<text x="18" y="68" font-size="9.8" fill="#1e293b">coral_symbiosis ↔ hydrothermal_vent</text>
+<text x="364" y="68" text-anchor="end" font-size="9.5" font-weight="600" fill="#7e22ce">c=0.213</text>
+<text x="18" y="88" font-size="9.8" fill="#1e293b">coral_symbiosis ↔ marsh_microbes</text>
+<text x="364" y="88" text-anchor="end" font-size="9.5" font-weight="600" fill="#7e22ce">c=0.213</text>
+<text x="18" y="108" font-size="9.8" fill="#1e293b">coral_symbiosis ↔ mycorrhizal_net</text>
+<text x="364" y="108" text-anchor="end" font-size="9.5" font-weight="600" fill="#7e22ce">c=0.213</text>
+<text x="18" y="128" font-size="9.8" fill="#1e293b">hydrothermal_vent ↔ marsh_microbes</text>
+<text x="364" y="128" text-anchor="end" font-size="9.5" font-weight="600" fill="#7e22ce">c=0.213</text>
+<line x1="14" y1="156" x2="366" y2="156" stroke="#cbd5e1" stroke-dasharray="3,3"/>
+<text x="14" y="176" font-size="10.5" font-weight="600" fill="#b45309">QMC Counterfactual &amp; Preventive Intervention:</text>
+<text x="14" y="205" font-size="9.8" fill="#334155">PN(flare → outage)</text>
+<rect x="150" y="192" width="165" height="16" rx="3" fill="#e2e8f0"/>
+<rect x="150" y="192" width="156.0" height="16" rx="3" fill="#f59e0b"/>
+<text x="322" y="204" font-size="10" font-weight="600" fill="#0f172a">0.945</text>
+<text x="14" y="237" font-size="9.8" fill="#334155">P(out | do(shield=0))</text>
+<rect x="150" y="224" width="165" height="16" rx="3" fill="#e2e8f0"/>
+<rect x="150" y="224" width="45.8" height="16" rx="3" fill="#ef4444"/>
+<text x="322" y="236" font-size="10" font-weight="600" fill="#0f172a">0.278</text>
+<text x="14" y="269" font-size="9.8" fill="#334155">P(out | do(shield=1))</text>
+<rect x="150" y="256" width="165" height="16" rx="3" fill="#e2e8f0"/>
+<rect x="150" y="256" width="9.2" height="16" rx="3" fill="#10b981"/>
+<text x="322" y="268" font-size="10" font-weight="600" fill="#0f172a">0.056</text>
+<text x="14" y="294" font-size="9.8" fill="#047857">✓ Preventive shield reduces outage risk by 80.0% under do(·)</text>
+</g>
+<g transform="translate(816,232)">
+<rect x="0" y="0" width="360" height="304" rx="8" fill="#f8fafc" stroke="#cbd5e1"/>
+<text x="14" y="24" font-size="12.5" font-weight="700" fill="#0f172a">c  Priority-Stratified Law-2 Conservation</text>
+<text x="14" y="54" font-size="10.2" font-weight="600" fill="#334155">Active Mass Before vs After Metabolism Tick:</text>
+<text x="98" y="84" text-anchor="end" font-size="10" fill="#334155">Pre-Tick Flood</text>
+<rect x="104" y="70" width="200.0" height="18" rx="3" fill="#94a3b8"/>
+<text x="308.0" y="83" font-size="9.8" font-weight="600" fill="#334155">265.8</text>
+<text x="98" y="118" text-anchor="end" font-size="10" fill="#065f46">Post-Tick Live</text>
+<rect x="104" y="104" width="75.2" height="18" rx="3" fill="#10b981"/>
+<text x="173.2" y="117" text-anchor="end" font-size="9.5" font-weight="700" fill="#ffffff">99.9955</text>
+<line x1="179.2" y1="62" x2="179.2" y2="132" stroke="#dc2626" stroke-width="1.6" stroke-dasharray="4,3"/>
+<text x="179.2" y="145" text-anchor="middle" font-size="9.5" font-weight="700" fill="#dc2626">M_cap = 100</text>
+<line x1="14" y1="160" x2="346" y2="160" stroke="#cbd5e1"/>
+<text x="14" y="180" font-size="10.5" font-weight="600" fill="#0f172a">Post-Shedding Structural Survival (Zero Cliff):</text>
+<text x="18" y="202" font-size="9.8" fill="#334155">Tier 4 · Innate Roots (root:*)</text>
+<text x="344" y="202" text-anchor="end" font-size="9.8" font-weight="600" fill="#047857">40 / 40</text>
+<text x="18" y="224" font-size="9.8" fill="#334155">Tier 3 · Concepts &amp; Chunks</text>
+<text x="344" y="224" text-anchor="end" font-size="9.8" font-weight="600" fill="#047857">1 / 1 concepts</text>
+<text x="18" y="246" font-size="9.8" fill="#334155">Tier 2 · Grounded Entities</text>
+<text x="344" y="246" text-anchor="end" font-size="9.8" font-weight="600" fill="#047857">17 / 17 entities</text>
+<text x="18" y="268" font-size="9.8" fill="#334155">Tier 0 · Passive form:* Flood</text>
+<text x="344" y="268" text-anchor="end" font-size="9.8" font-weight="600" fill="#047857">1024 / 1501 alive</text>
+<text x="14" y="294" font-size="9.8" fill="#047857">✓ Private token egress blocked · QUD ID 90 ch intact</text>
+</g>
+</svg>

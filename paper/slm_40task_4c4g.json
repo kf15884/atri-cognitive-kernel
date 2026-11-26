@@ -1,0 +1,79 @@
+{
+  "hardware": "linux/x64 4-vCPU 3.8GiB RAM (Rocky Linux 9.2, CPU-only Ollama)",
+  "results": [
+    {
+      "model": "qwen2.5:0.5b",
+      "warmupMs": 236.87,
+      "ollamaPs": "NAME            ID              SIZE      PROCESSOR    CONTEXT    RUNNER      UNTIL              \nqwen2.5:0.5b    a8b0c5157701    486 MB    100% CPU     4096       llamacpp    4 minutes from now",
+      "tasksTotal": 40,
+      "totalPassed": 31,
+      "overallRate": 0.775,
+      "categories": {
+        "temporal_update": {
+          "passed": 8,
+          "total": 16,
+          "rate": 0.5
+        },
+        "provenance_conflict": {
+          "passed": 12,
+          "total": 12,
+          "rate": 1.0
+        },
+        "privacy_isolation": {
+          "passed": 5,
+          "total": 6,
+          "rate": 0.8333
+        },
+        "nuxoll_surgery": {
+          "passed": 6,
+          "total": 6,
+          "rate": 1.0
+        }
+      },
+      "latencyMs": {
+        "count": 40,
+        "mean": 1204.94,
+        "p50": 1011.21,
+        "p95": 2698.42,
+        "max": 2780.62
+      }
+    },
+    {
+      "model": "qwen2.5:1.5b",
+      "warmupMs": 6374.67,
+      "ollamaPs": "NAME            ID              SIZE      PROCESSOR    CONTEXT    RUNNER      UNTIL              \nqwen2.5:1.5b    65ec06548149    1.2 GB    100% CPU     4096       llamacpp    4 minutes from now    \nqwen2.5:0.5b    a8b0c5157701    486 MB    100% CPU     4096       llamacpp    4 minutes from now",
+      "tasksTotal": 40,
+      "totalPassed": 26,
+      "overallRate": 0.65,
+      "categories": {
+        "temporal_update": {
+          "passed": 8,
+          "total": 16,
+          "rate": 0.5
+        },
+        "provenance_conflict": {
+          "passed": 6,
+          "total": 12,
+          "rate": 0.5
+        },
+        "privacy_isolation": {
+          "passed": 6,
+          "total": 6,
+          "rate": 1.0
+        },
+        "nuxoll_surgery": {
+          "passed": 6,
+          "total": 6,
+          "rate": 1.0
+        }
+      },
+      "latencyMs": {
+        "count": 40,
+        "mean": 2434.6,
+        "p50": 2220.07,
+        "p95": 5171.82,
+        "max": 5250.48
+      }
+    }
+  ]
+}

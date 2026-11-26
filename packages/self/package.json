@@ -1,0 +1,9 @@
+{
+  "name": "@atri/self",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Atri endogenous zero-LLM cognitive kernel and append-only event store",
+  "dependencies": {
+    "@atri/protocol": "1.0.0"
+  }
+}

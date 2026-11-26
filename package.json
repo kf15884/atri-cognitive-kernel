@@ -1,0 +1,18 @@
+{
+  "name": "atri-cognitive-kernel",
+  "version": "1.0.0",
+  "description": "Atri: A Conserved Metabolic Hypergraph and Zero-LLM Cognitive Kernel for Post-Severing Autonomy (JAIR Reproduction Package)",
+  "license": "MIT",
+  "author": "Yixun Zhang <easonzhang15884@foxmail.com>",
+  "type": "module",
+  "engines": {
+    "node": ">=22.18"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "test": "node --disable-warning=ExperimentalWarning --test packages/self/test/q307-stageD.test.ts",
+    "eval:paper": "node --disable-warning=ExperimentalWarning scripts/eval/q307-paper-suite.ts --seeds=20 --out=scripts/eval/.out/n20-run1"
+  }
+}

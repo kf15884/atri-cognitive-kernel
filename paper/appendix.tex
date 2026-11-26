@@ -1,0 +1,420 @@
+% ============================================================================
+% Appendices for the Atri JAIR Manuscript:
+%   Appendix A: Complete Mathematical Proofs of Theorems 1--5
+%   Appendix B: Formal Pseudocode (Algorithms 1--3)
+%   Appendix C: Complete Symbol, Hyperparameter, and 40-Root Ontology Tables
+%   Appendix D: Air-Gapped 4C4G Docker Reproduction & JAIR Checklist
+% ============================================================================
+
+\section{Complete Mathematical Proofs}
+\label{app:proofs}
+
+\subsection{Proof of Theorem~\ref{thm:law1} (Order-Invariant Authority Dominance \& Lattice Non-Interference)}
+\label{app:proof1}
+
+\begin{proof}
+\textbf{(a) Permutation invariance and derived-layer isolation.}
+Consider any finite multiset of base-layer observations $B = \{x_1, \dots, x_n\}$ with pairwise disjoint exact provenance stamps ($S_{x_i} \cap S_{x_j} = \emptyset$ for $i \neq j$) and any multiset of derived-layer edges $D = \{y_1, \dots, y_m\}$.
+First, suppose $B = \emptyset$ and $D$ is pairwise stamp-disjoint ($S_{y_i} \cap S_{y_j} = \emptyset$ for $i \neq j$). Then every revision succeeds under Rule~(iii), summing per-channel counts in $(\R_{\ge 0}^2, +)$ and taking sorted \texttt{Uint32Array} set unions; both operations are commutative and associative, so the final $(\mathbf{W}, S)$ is permutation-invariant.
+Second, suppose $B \neq \emptyset$ (with $D$ arbitrary, even with overlapping derived stamps) and let $\pi$ be any ingestion permutation of $B \cup D$. Let $x_{i_1}$ be the first base-layer element appearing in $\pi$. All derived elements preceding $x_{i_1}$ produce a derived-only intermediate state $(\mathbf{W}_{\text{der}}, S_{\text{der}})$; when $x_{i_1}$ arrives, Rule~(ii) of \texttt{reviseStratifiedEvidence} discards $\mathbf{W}_{\text{der}}$ and $S_{\text{der}}$ completely and sets the state to $(\mathbf{W}_{x_{i_1}}|_{\text{base}}, S_{x_{i_1}})$. Thereafter, the state contains base evidence; every subsequent derived element $y \in D$ is rejected unchanged by Rule~(i) (\texttt{derived\_cannot\_revise\_base}), while every subsequent base element $x \in B \setminus \{x_{i_1}\}$ has stamp disjoint from all previously merged base elements and adds its non-negative counts $(w_p^+(x), w_p^-(x))$ without truncation into channel $p \in \mathcal{P}_{\text{base}}$ and unions its stamp $S_x$. By commutativity and associativity of real addition and finite set union, the final state is identically
+\[
+  \mathbf{W}_p = \sum_{x \in B} \big(w_p^+(x),\, w_p^-(x)\big) \quad (\forall p \in \mathcal{P}_{\text{base}}),
+  \qquad \mathbf{W}_p = (0, 0) \quad (\forall p \in \mathcal{P}_{\text{der}}),
+  \qquad S = \bigcup_{x \in B} S_x,
+\]
+independent of $\pi$ and unaffected by $D$.
+
+\textbf{(b) Tier-1 authority dominance.}
+Suppose $W_{T_1} > 0$ and $f_{T_1} = 1$ (all Tier-1 direct/probe evidence is positive, so $W_{T_1}^+ = W_{T_1}$ and $W_{T_1}^- = 0$). Since base evidence is present, $W_{T_4} = 0$. Regardless of how large the raw counts in Tier~2 (\texttt{partner\_told}) and Tier~3 (\texttt{read\_text}, \texttt{cloud\_extract}) become, readout tier-dominance scaling~\eqref{eq:tier_scaling} enforces $W_{T_2} \le 0.65\,W_{T_1}$ and $W_{T_3} \le 0.25\,W_{T_1}$ prior to aggregation. In the worst case where $W_{T_2}^+ = W_{T_3}^+ = 0$ (100\% opposing low-authority counts), total effective weight satisfies $W_{\mathrm{eff}} = W_{T_1} + W_{T_2} + W_{T_3} \le 1.90\,W_{T_1}$ while $W_{\mathrm{eff}}^+ = W_{T_1}$. Hence
+\[
+  f = \frac{W_{\mathrm{eff}}^+}{W_{\mathrm{eff}}} \ge \frac{W_{T_1}}{1.90\,W_{T_1}} = \frac{10}{19} \approx 0.5263 > 0.5.
+\]
+The symmetric case $f_{T_1} = 0$ yields $W_{\mathrm{eff}}^+ \le 0.90\,W_{T_1}$, so $f \le \frac{0.90\,W_{T_1}}{1.90\,W_{T_1}} = \frac{9}{19} \approx 0.4737 < 0.5$. Because \texttt{dominantProvenance} selects $\arg\max_{p:\,w_p^+ + w_p^- > 0} \mathrm{rank}(p)$ and $\mathrm{rank}(\texttt{direct\_exp}) = 6 > \mathrm{rank}(\texttt{verified\_probe}) = 5 > 4 \ge \mathrm{rank}(p')$ for all $p' \notin T_1$, low-authority channels can never usurp \texttt{dominantProvenance}.
+
+\textbf{(c) Join-semilattice and egress monotonicity.}
+Define the rank map $r(\texttt{public\_read}) = 0$, $r(\texttt{self}) = 1$, $r(\texttt{group:}g) = r(\texttt{private:}p) = 2$ (for $p \neq \texttt{\_\_multi\_\_}$), and $r(\top) = 3$ where $\top = \texttt{private:\_\_multi\_\_}$. The join operation $\kappa_1 \sqcup \kappa_2$ returns $\kappa_1$ if $\kappa_1 = \kappa_2$; $\top$ if either equals $\top$; the strictly higher-rank operand if $r(\kappa_1) \neq r(\kappa_2)$; and $\top$ if $r(\kappa_1) = r(\kappa_2) = 2$ with $\kappa_1 \neq \kappa_2$. Idempotence and commutativity hold by inspection. For associativity, observe that $(\kappa_1 \sqcup \kappa_2) \sqcup \kappa_3$ equals: (i) $\top$ iff any operand is $\top$ or the set $\{\kappa_1,\kappa_2,\kappa_3\}$ contains two distinct rank-2 elements; (ii) the unique rank-2 element if all rank-2 operands coincide and none is $\top$; (iii) \texttt{self} if all operands have rank $\le 1$ and at least one is \texttt{self}; (iv) \texttt{public\_read} if all three are \texttt{public\_read}. Since all four cases depend solely on the unordered set $\{\kappa_1, \kappa_2, \kappa_3\}$, associativity holds identically.
+For egress monotonicity, fix any channel $C$ and define the allowed scope set $A(C) = \{\kappa \in \mathcal{L} : \mathrm{canEgress}(\kappa, C)\}$. From~\eqref{eq:privacy_egress}:
+$A(\texttt{self\_internal}) = \mathcal{L}$;
+$A(\texttt{public\_search}) = \{\texttt{public\_read}\}$;
+$A(\texttt{group}(g)) = \{\texttt{public\_read}, \texttt{self}, \texttt{group:}g\}$;
+$A(\texttt{private}(p)) = \{\texttt{public\_read}, \texttt{self}, \texttt{private:}p\}$.
+Every $A(C)$ is a downward-closed principal ideal $\downarrow\!\kappa_C$ in $(\mathcal{L}, \sqsubseteq)$: whenever $\kappa_1 \sqcup \kappa_2 \in A(C)$, both $\kappa_1 \sqsubseteq \kappa_1 \sqcup \kappa_2 \sqsubseteq \kappa_C$ and $\kappa_2 \sqsubseteq \kappa_1 \sqcup \kappa_2 \sqsubseteq \kappa_C$, so $\kappa_1 \in A(C)$ and $\kappa_2 \in A(C)$.
+
+\textbf{(d) Exact NARS--Beta bijection.}
+On $(0, c_{\max}]$ ($c_{\max} \le 0.9999 < 1$), $c \mapsto w = k c / (1 - c)$ is strictly increasing and continuous onto $(0, k c_{\max}/(1 - c_{\max})]$ with inverse $w \mapsto w / (w + k)$. Because \texttt{readTruthValue} rescales $(W_{\mathrm{eff}}, W_{\mathrm{eff}}^+, W_{\mathrm{eff}}^-)$ by $W_{\max,\mathrm{cap}}/W_{\mathrm{eff}}$ whenever capping occurs, $W_{\mathrm{eff}} = k c / (1 - c) > 0$ holds identically in exact arithmetic. Mapping $(f, c) \in [0, 1] \times (0, c_{\max}]$ to $(\alpha, \beta) = (w f + 1, w(1 - f) + 1)$ yields $\alpha \ge 1, \beta \ge 1$, and $0 < \alpha + \beta - 2 = w \le k c_{\max}/(1 - c_{\max})$, whose inverse recovers $c = w / (w + k)$ and $f = (\alpha - 1)/w$ identically. At the boundary $c = 0$, $w = 0$ maps every $(f, 0)$ to the uninformative prior $\mathrm{Beta}(1, 1)$, and \texttt{betaToTruth(1, 1)} returns the canonical neutral truth value $\langle 0.5, 0 \rangle$.
+\end{proof}
+
+\subsection{Proof of Theorem~\ref{thm:law2} (Metabolic Conservation, Collapse, and Anti-Sycophancy)}
+\label{app:proof2}
+
+\begin{proof}
+\textbf{(a) Conservation and order-invariance.}
+In Step~1 of \texttt{stepInformationalMetabolism}, every observation's external negentropy $\Phi_{\mathrm{ext}}(u)$ uses the same pre-step mass snapshot $M_t$, and total inflow is uniformly rescaled by $\min(1, \max(0, \Mcap - M_t)/\Phi_{\mathrm{ext}}^{\mathrm{tot}})$. Because addition across observations is commutative, both $\Phi_{\mathrm{ext}}(u)$ and error penalties are strictly invariant to observation order.
+In Step~2, each catalytic routing round partitions each active carrier's frontier flux $F_u$ into retained flux $(1 - r_{\mathrm{sent}}(u)) F_u$ and outgoing shares $r_{\mathrm{sent}}(u) F_u \frac{w_{uv}}{W_{\mathrm{out}}(u)}$ over all active outgoing links $(u, v)$. Since $\sum_v \frac{w_{uv}}{W_{\mathrm{out}}(u)} = 1$, total flux is conserved identically at every round ($\sum_u \Phi_{\mathrm{net}}(u) = \sum_u \Phi_{\mathrm{ext}}(u)$ even when $0 < W_{\mathrm{out}}(u) < 1$).
+In Step~3 and the hard-cap guard, every carrier's post-step mass satisfies $m_u' \ge 0$; if $\sum_u m_u' > \Mcap$, priority shedding reduces total active mass strictly until either $M_{t+1} \le \Mcap$ or only mildly over-capacity high-tier carriers remain, whereupon floor-rounded proportional scaling $m_u'' = \lfloor 10^4 m_u' (\Mcap / M') \rfloor / 10^4 \le m_u' (\Mcap / M')$ guarantees $\sum_u m_u'' \le \sum_u m_u' (\Mcap / M') = \Mcap$. Every dropped or scaled mass increment is debited to $L_{\mathrm{diss}}$, closing the first-law ledger.
+
+\textbf{(b) Dark-Room and White-Noise collapse.}
+In a Dark Room, no external observations arrive, so $\Phi_{\mathrm{ext}}(u) = 0$ for all $u$; by conservation in (a), $\Phi_{\mathrm{net}}(u) = 0$ for all $u$. Under White Noise, $P(y_t \mid u) = P_{\mathrm{base}}(y_t) \implies \ln(P/P_{\mathrm{base}}) = 0 \implies \Phi_{\mathrm{ext}}(u) = 0$, again yielding $\Phi_{\mathrm{net}}(u) = 0$, while prediction errors $e_u(t_k) > 0$ at tick times $0 < t_1 < \dots < t_K \le T$ incur per-tick dissipation $\lambda_{\mathrm{err}} e_u(t_k) > 0$. Moreover, derived internal edges carry $\eta_{\mathrm{inferred}} = \eta_{\mathrm{rem}} = 0$, so internal cycles cannot inject net negentropy. Letting $\rho_u = \rho_0(1 + \beta_{\mathrm{comp}} a_u) > 0$ and defining the decay-attenuated cumulative error $\bar{e}_u(T) = \sum_{k=1}^K e_u(t_k) e^{-\rho_u(T - t_k)} \ge 0$, induction over ticks yields
+\[
+  m_u^{\mathrm{WN}}(T) \le \max\!\big(0,\, m_u^{\mathrm{DR}}(T) - \lambda_{\mathrm{err}} \bar{e}_u(T)\big),
+  \qquad m_u^{\mathrm{DR}}(T) \le m_u(0)\, e^{-\rho_u T},
+\]
+with strict inequality $m_u^{\mathrm{WN}}(T) < m_u^{\mathrm{DR}}(T)$ whenever $m_u^{\mathrm{DR}}(T) > 0$ and $\bar{e}_u(T) > 0$. For $m_u(0) \ge m_{\mathrm{dorm}}$, let $T^*(u) = \frac{1}{\rho_u}\ln(m_u(0)/m_{\mathrm{dorm}}) \ge 0$. For any elapsed time $T > T^*(u)$, $m_u(0) e^{-\rho_u T} < m_{\mathrm{dorm}}$ holds strictly (and under discrete ticks $\Delta t$ large enough that per-tick decay exceeds the 4-decimal quantization floor $5\times 10^{-5}$, dormancy triggers no later than $T^*(u) + \Delta t$), forcing $m_u \leftarrow 0$ and $T_{\mathrm{dorm}}^{\mathrm{WN}} \le T_{\mathrm{dorm}}^{\mathrm{DR}}$.
+
+\textbf{(c) Strict SPD preservation and strict concavity of $\Vendo$.}
+In \texttt{projectSpdMat4}, symmetrizing $A \leftarrow \tfrac{1}{2}(M + M^\top)$ ensures $A$ is real symmetric. Each cyclic Jacobi Givens rotation $Q_{pq}$ is orthogonal ($Q_{pq}^\top Q_{pq} = I_4$), reducing off-diagonal Frobenius norm monotonically to $< 10^{-11}$, yielding $A = V \Lambda V^\top$. Clamping eigenvalues to $\lambda_k' \in [0.015, 0.16]$ produces $\Sigma^*_{\mathrm{exact}} = V \mathrm{diag}(\lambda') V^\top$ with $\lambda_{\min}(\Sigma^*_{\mathrm{exact}}) \ge 0.015$, so $\lambda_{\min}(\Sigma^*_{\mathrm{exact}} + \epsilon_V I_4) \ge 0.025$ before rounding. Elementwise 4-decimal serialization rounding \texttt{r4()} introduces a symmetric perturbation $E$ with $|E_{ij}| \le 5\times 10^{-5}$, whose spectral norm obeys $\|E\|_2 \le \|E\|_F \le 4 \times 5\times 10^{-5} = 2\times 10^{-4}$ (and Jacobi off-diagonal residual adds $< \sqrt{12}\cdot 10^{-11}$). By Weyl's inequality, after rounding and Tikhonov regularization $\epsilon_V I_4$ ($\epsilon_V = 10^{-2}$), $\lambda_{\min}(\Sigma^* + \epsilon_V I_4) \ge 0.025 - 2\times 10^{-4} = 0.0248 > 0$, so $(\Sigma^* + \epsilon_V I_4)^{-1} \succ 0$. Hence $\Vendo(s) = -\tfrac{1}{2}(s-\mu^*)^\top(\Sigma^* + \epsilon_V I_4)^{-1}(s-\mu^*)$ has strictly negative-definite Hessian $-(\Sigma^* + \epsilon_V I_4)^{-1} \prec 0$, is strictly concave on $\R^4$, and attains its unique global maximum $0$ at $s = \mu^*$.
+
+\textbf{(d) Endogenous anti-sycophancy.}
+Compare policy $\pi_{\mathrm{refuse}}$ (honest refusal: $\ell_{\mathrm{coh}} = 0$, social cost $c_{\mathrm{soc}}^{\mathrm{ref}}$) against $\pi_{\mathrm{concede}}$ (sycophantic concession: expected coherence loss $\bar{\ell}_{\mathrm{coh}} > 0$ on grounded belief $u$, social cost $c_{\mathrm{soc}}^{\mathrm{con}} = c_{\mathrm{soc}}^{\mathrm{ref}} - \Delta c_{\mathrm{soc}}$), holding epistemic gain, curiosity, compute cost, and predicted 4D state equal. From~\eqref{eq:grb}:
+\[
+  \GRB(\pi_{\mathrm{concede}}) - \GRB(\pi_{\mathrm{refuse}})
+  = \tau_t\,\tilde{C}(u)\,\bar{\ell}_{\mathrm{coh}} - \frac{\Delta c_{\mathrm{soc}}}{\beta_{\mathrm{load}}(L_t)},
+  \qquad \tilde{C}(u) = \frac{2\Cendo(u)}{1 + \Cendo(u)}.
+\]
+Thus $\GRB(\pi_{\mathrm{refuse}}) < \GRB(\pi_{\mathrm{concede}})$ holds strictly whenever $\tau_t \tilde{C}(u) \bar{\ell}_{\mathrm{coh}} > \Delta c_{\mathrm{soc}}/\beta_{\mathrm{load}}(L_t)$. Notice that ablating $\Cendo$ ($\Cendo(u) = 0 \implies \tilde{C}(u) = 0$) immediately makes the difference $-\Delta c_{\mathrm{soc}}/\beta_{\mathrm{load}}(L_t) < 0$, causing sycophantic capitulation whenever $\Delta c_{\mathrm{soc}} > 0$.
+\end{proof}
+
+\subsection{Proof of Theorem~\ref{thm:law3} (Exact Noisy-OR-NOT Kernel and Bongard MI Isolation)}
+\label{app:proof3}
+
+\begin{proof}
+\textbf{(a) Closed-form counterfactual transition kernel.}
+Drop node index $i$ for clarity. Because $l_i \in (0, 1)$ and $q_e^\pm \in [0, 1)$, we have $q_K^+ \in (0, 1)$, $s_K^-, s_D^-, s_A^- \in (0, 1]$, hence $p_{\mathrm{gen}}^{\mathrm{fact}} = 1 - q_K^+ q_D^+ \in (0, 1)$, $\Prob(Y_{\mathrm{fact}}=1) = p_{\mathrm{gen}}^{\mathrm{fact}} s_K^- s_D^- > 0$, and $\Prob(Y_{\mathrm{fact}}=0) = 1 - p_{\mathrm{gen}}^{\mathrm{fact}} s_K^- s_D^- > 0$, so both conditional probabilities are well-defined. Define independent binary aggregate mechanisms over the disjoint edge sets $K^+, D^+, A^+$ and $K^-, D^-, A^-$:
+\begin{align*}
+  G_K &= U_{\mathrm{leak}} \lor \bigvee_{e \in K^+} U_e^+ \;\;(\Prob(G_K = 0) = q_K^+), &
+  S_K &= \bigwedge_{e \in K^-} \neg U_e^- \;\;(\Prob(S_K = 1) = s_K^-),\\
+  G_D &= \bigvee_{e \in D^+} U_e^+ \;\;(\Prob(G_D = 0) = q_D^+), &
+  S_D &= \bigwedge_{e \in D^-} \neg U_e^- \;\;(\Prob(S_D = 1) = s_D^-),\\
+  G_A &= \bigvee_{e \in A^+} U_e^+ \;\;(\Prob(G_A = 0) = q_A^+), &
+  S_A &= \bigwedge_{e \in A^-} \neg U_e^- \;\;(\Prob(S_A = 1) = s_A^-).
+\end{align*}
+Because all six edge sets are pairwise disjoint, $(G_K, G_D, G_A, S_K, S_D, S_A)$ are mutually independent binary random variables. From~\eqref{eq:noisy_or_not}, the factual and counterfactual outcomes are:
+\[
+  Y_{\mathrm{fact}} = G_{\mathrm{fact}} \land S_K \land S_D, \qquad
+  Y_{\mathrm{cf}} = G_{\mathrm{cf}} \land S_K \land S_A,
+\]
+where $G_{\mathrm{fact}} = G_K \lor G_D$ (with $\Prob(G_{\mathrm{fact}} = 1) = 1 - q_K^+ q_D^+ = p_{\mathrm{gen}}^{\mathrm{fact}}$) and $G_{\mathrm{cf}} = G_K \lor G_A$.
+
+\emph{Case 1: $Y_{\mathrm{fact}} = 1$.} Conditioning on $\{Y_{\mathrm{fact}} = 1\} = \{G_{\mathrm{fact}} = 1,\, S_K = 1,\, S_D = 1\}$ fixes $S_K = 1$, while $S_A$ is independent of $(G_K, G_D, G_A, S_K, S_D)$. Moreover, $\{G_{\mathrm{fact}}=1, G_{\mathrm{cf}}=0\} = \{G_K=0, G_D=1, G_A=0\}$, which has probability $q_K^+(1 - q_D^+) q_A^+$. Therefore:
+\begin{align*}
+  \Prob(G_{\mathrm{cf}}=1 \mid G_{\mathrm{fact}}=1) &= 1 - \frac{q_K^+(1 - q_D^+) q_A^+}{p_{\mathrm{gen}}^{\mathrm{fact}}},\\
+  \Prob(Y_{\mathrm{cf}}=1 \mid Y_{\mathrm{fact}}=1) &= \Prob(G_{\mathrm{cf}}=1 \mid G_{\mathrm{fact}}=1) \cdot \Prob(S_A = 1),
+\end{align*}
+establishing~\eqref{eq:cf_exact_1}.
+
+\emph{Case 2: $Y_{\mathrm{fact}} = 0$.} The event $\{Y_{\mathrm{fact}} = 0\}$ has probability $1 - p_{\mathrm{gen}}^{\mathrm{fact}}\, s_K^- s_D^-$ and partitions into two mutually exclusive events:
+(i) $E_A = \{G_{\mathrm{fact}} = 0\} = \{G_K = 0, G_D = 0\}$, and
+(ii) $E_B = \{G_{\mathrm{fact}} = 1, S_K \land S_D = 0\}$.
+Intersecting with $\{Y_{\mathrm{cf}} = 1\} = \{G_{\mathrm{cf}} = 1, S_K = 1, S_A = 1\}$ gives:
+\begin{align*}
+  \Prob(E_A \cap \{Y_{\mathrm{cf}}=1\}) &= \Prob(G_K=0, G_D=0, G_A=1, S_K=1, S_A=1) = q_K^+ q_D^+ (1 - q_A^+)\, s_K^- s_A^-,\\
+  \Prob(E_B \cap \{Y_{\mathrm{cf}}=1\}) &= \Prob(G_{\mathrm{fact}}=1, G_{\mathrm{cf}}=1, S_K=1, S_D=0, S_A=1)\\
+  &= \big(p_{\mathrm{gen}}^{\mathrm{fact}} - q_K^+(1-q_D^+)q_A^+\big)(1 - s_D^-)\, s_K^- s_A^-.
+\end{align*}
+Summing the two disjoint probabilities and dividing by $\Prob(Y_{\mathrm{fact}} = 0)$ yields~\eqref{eq:cf_exact_0} identically.
+
+\textbf{(b) Causal MI fault isolation.}
+Holding priors, curiosity, pragmatic state, and social cost equal between $\pi_{\mathrm{retryA}}$ and $\pi_{\mathrm{probeB}}$, if $P(O_A \mid \doop(h_{\mathrm{ch}})) = P(O_A \mid \doop(h_{\mathrm{org}}))$, then $O_A \perp H$ and $I(H; O_A) = 0$. Since $P(O_B \mid \doop(h_{\mathrm{ch}})) \neq P(O_B \mid \doop(h_{\mathrm{org}}))$ with full-support prior $0 < \Prob(h_{\mathrm{ch}}) < 1$, strict convexity of KL divergence guarantees $I(H; O_B) > 0$. From~\eqref{eq:grb}:
+\[
+  \GRB(\pi_{\mathrm{probeB}}) - \GRB(\pi_{\mathrm{retryA}}) = -I(H; O_B) + \frac{c_{\mathrm{cpu}}(\mathrm{B}) - c_{\mathrm{cpu}}(\mathrm{A})}{\beta_{\mathrm{load}}(L_t)},
+\]
+which is strictly negative iff $I(H; O_B) > (c_{\mathrm{cpu}}(\mathrm{B}) - c_{\mathrm{cpu}}(\mathrm{A}))/\beta_{\mathrm{load}}(L_t)$. When Rung-3 SCM is ablated ($I(H; O_B) = 0$) and $c_{\mathrm{cpu}}(\mathrm{B}) > c_{\mathrm{cpu}}(\mathrm{A})$, $\GRB$ strictly prefers the uninformative cheaper retry.
+\end{proof}
+
+\subsection{Proof of Theorem~\ref{thm:law4} (Bounded Minting and Anti-Runaway Stability)}
+\label{app:proof4}
+
+\begin{proof}
+\textbf{(a)} The NREM minting loop explicitly terminates when $|\text{mintedConcepts}| \ge K_{\max}$, and filters every candidate before and after dynamic edge-coverage updates by $\mathrm{uncoveredDisjoint.length} \ge n_{\min}$ ($n_{\min} = 2$ for forks, $3$ for chains), $|\text{uncoveredContexts}| \ge 2$, and $\Delta_{\mathrm{DL}}(M) > \theta_{\mathrm{MDL}}$.
+
+\textbf{(b)} Consider a static finite graph $G$ with $|E|$ initial active non-concept edges and zero new external arrivals. Whenever a concept $c_k$ is minted in NREM, its uncovered disjoint instances consist of $n_k \ge 2$ instances (each containing 2 distinct edges) whose root stamps are pairwise disjoint; thus its $2 n_k \ge 4$ constituent edges are mutually distinct and immediately added to \texttt{coveredEdgeIds}. Because every minted concept adds an \texttt{is\_a} edge carrying the union of its constituent leaf IDs (\texttt{edgeFullLeafSet}), on all subsequent NREM cycles those $2 n_k$ edges remain excluded from \texttt{subOut} as long as $c_k$ stays active. Moreover, flat fork pairing explicitly forbids \texttt{is\_a -> concept:*} edges, and chain/derived combinations require strictly disjoint leaf-edge sets (\texttt{canCombineMotifEdges}), so no concept can re-consume edges already represented by an active $c_k$. Since the uncovered non-concept edge budget decreases by at least $4$ per simultaneously active concept, at most $\lfloor |E|/4 \rfloor$ concepts can be simultaneously active (and minted prior to any 72-hour loan expiry). Finally, whenever a concept $c_k$ dissolves or enters dormancy on a static graph, its \texttt{lastActiveAt} timestamp is at least its minting time $t_0 \ge \max_{e \in G} e.\mathrm{ingestedAt}$ (and is explicitly stamped to $t_{\mathrm{diss}} \ge t_0$ on loan dissolution), whereas re-minting $c_k$ requires at least one constituent edge with $t_{\mathrm{ing}} > \mathrm{prevNode.lastActiveAt}$; with zero new external arrivals, zombie resurrection of $c_k$ is algebraically impossible.
+
+\textbf{(c)} Immediately upon minting at $t_0$, $c_k$ is assigned \texttt{loanExpiresAt} $= t_0 + T_{\mathrm{loan}}$ and \texttt{cumulativeNegentropy} $= 0$. In both \texttt{stepInformationalMetabolism} and NREM Step~2, at the first tick or sleep cycle with $t \ge t_0 + T_{\mathrm{loan}}$, if cumulative absorbed negentropy $< 0.15$, $c_k$ is deterministically set dormant ($m \leftarrow 0$) and all active \texttt{is\_a} edges with $\mathrm{dst} = c_k$ are synchronously set dormant ($m \leftarrow 0$).
+\end{proof}
+
+\subsection{Proof of Theorem~\ref{thm:script} (Bijective Script-Invariance and Viterbi Margins)}
+\label{app:proof5}
+
+\begin{proof}
+\textbf{(a) Exact bijective script-invariance.}
+Let $\phi: \Sigma_1 \to \Sigma_2$ be a bijection between non-delimiter alphabets that commutes with NFKC normalization and \texttt{.toLowerCase()} and preserves delimiter classification (\texttt{DELIM\_CHAR\_RE}) and spacing typology. Lifting $\phi$ homomorphically to strings preserves normalized forms, string lengths, delimiter positions, whitespace typology (\texttt{isSpacedCorpus}), $n$-gram multiplicities $c(\phi(g)) = c(g)$, document frequencies $\mathrm{df}(\phi(g)) = \mathrm{df}(g)$, left/right neighbor multisets and therefore $\mathrm{AV}(\phi(g)) = \mathrm{AV}(g)$, branching entropies $H_{\min}(\phi(g)) = H_{\min}(g)$, neighbor concentration shares, length-bucketed probabilities $P_L(\phi(g)) = P_L(g)$, and $\mathrm{PMI}_{\min}(\phi(g)) = \mathrm{PMI}_{\min}(g)$. Hence $\phi(\NULLTOK{}_1) = \NULLTOK{}_2$ and $\phi(\text{cohesiveChunks}_1) = \text{cohesiveChunks}_2$.
+Because complete-linkage ADIOS computes neighbor-signature cosine/Jaccard similarities purely on mapped token IDs, and R2 explaining-away computes $2 \times 2$ contingency tables $(a, b, c, d)$ and Fisher exact hypergeometric $p$-values purely from episode co-occurrence sets (which commute with $\phi$), all score values in Viterbi DP, ADIOS clustering and edge ranking, Fisher synonym induction, Beam-4 chart parsing, and Levelt--Nozari monitoring are invariant under $\phi$. When all candidate scores and ADIOS edge weights are tie-free (so codepoint tie-breaking \texttt{asciiCmp} is never invoked between distinct tied candidates), argmax and top-$K$ selections commute identically with $\phi$, yielding exact metric equivalence $\max_k |\Delta_k| = 0$.
+
+\textbf{(b) Algebraic Viterbi chunk-protection margins.}
+Let $L \ge 2$ denote codepoint length (or non-space codepoint length in word-level DP) and $e_0, e_1, e_2 \in [0, 1]$ denote grounded lexicon entrenchments ($\delta_{\mathrm{hyp}} = 0$). From~\eqref{eq:viterbi_scores}:
+\begin{enumerate}
+  \item \emph{Lexical Parsimony ($L = L_1 + L_2$):}
+  \begin{align*}
+    \sigma_{\mathrm{gr}}(L, e_0) - \big(\sigma_{\mathrm{gr}}(L_1, e_1) + \sigma_{\mathrm{gr}}(L_2, e_2)\big)
+      &= (3.8 L - 1.8 + 0.8 e_0) - \big(3.8 L - 3.6 + 0.8(e_1 + e_2)\big)\\
+      &= 1.8 + 0.8 e_0 - 0.8(e_1 + e_2) \ge 1.8 + 0 - 1.6 = 0.20 > 0.
+  \end{align*}
+  \item \emph{Cohesive Chunk Protection ($L \ge 2$, $L_{\mathrm{null}} \ge 1$):} Since $b_{\mathrm{coh}}(s) \in [-0.25, +0.70]$, a multi-unit cohesive chunk satisfies $\sigma_{\mathrm{coh}}(L) \ge 3.8 L - 4.70$. Splitting off an $(L - L_{\mathrm{null}})$ grounded prefix plus one \NULLTOK{} token (score $-0.8$ in spaced DP and $-0.8 L_{\mathrm{null}} \le -0.8$ in unspaced DP, both strictly higher than a residual span at $-2.4 L_{\mathrm{null}}$) achieves at most:
+  \[
+    \sigma_{\mathrm{gr}}(L - L_{\mathrm{null}}, 1) + (-0.8) = 3.8(L - L_{\mathrm{null}}) - 1.8 + 0.8 - 0.8 = 3.8 L - 3.8 L_{\mathrm{null}} - 1.80.
+  \]
+  Thus for every $L_{\mathrm{null}} \ge 1$:
+  \begin{align*}
+    \sigma_{\mathrm{coh}}(L) - \big(\sigma_{\mathrm{gr}}(L - L_{\mathrm{null}}, e_1) + \sigma_{\mathrm{null}}\big)
+      &\ge (3.8 L - 4.70) - (3.8 L - 3.8 L_{\mathrm{null}} - 1.80)\\
+      &= 3.8 L_{\mathrm{null}} - 2.90 \ge 0.90 > 0
+  \end{align*}
+  (and $\ge 2.50$ against grounded + residual).
+  \item \emph{Compositional Splitting ($L = L_1 + L_2$):} Since $\sigma_{\mathrm{coh}}(L) \le 3.8 L - 3.75$ and $\sigma_{\mathrm{gr}}(L_1, e_1) + \sigma_{\mathrm{gr}}(L_2, e_2) \ge 3.8 L - 3.60$:
+  \[
+    \big(\sigma_{\mathrm{gr}}(L_1, e_1) + \sigma_{\mathrm{gr}}(L_2, e_2)\big) - \sigma_{\mathrm{coh}}(L) \ge (3.8 L - 3.60) - (3.8 L - 3.75) = 0.15 > 0.
+  \]
+\end{enumerate}
+Because all three inequalities hold for every $L \ge 2$, $L_{\mathrm{null}} \ge 1$, and $e_i \in [0, 1]$, optimal global Viterbi DP guarantees lexical parsimony, cohesive chunk protection, and valid compositional splitting simultaneously.
+\end{proof}
+
+% ============================================================================
+% APPENDIX B: FORMAL ALGORITHMS
+% ============================================================================
+\section{Formal Algorithms}
+\label{app:algos}
+
+\begin{algorithm}[H]
+\caption{Order-Invariant Stratified NARS--Beta Revision and Nissenbaum Fold (Law~1)}
+\label{alg:fold}
+\begin{algorithmic}[1]
+\Require Append-only SQLite event log $\mathcal{E}$, query time $t_{\mathrm{now}}$, revocation table
+\Ensure Deterministic Active Belief Hypergraph $\mathcal{G}_{t_{\mathrm{now}}}$
+\State Initialize $V \leftarrow V_{\mathrm{root}}$ (40 innate roots, $m = 0.25, \Cendo = 0.25, \kappa = \texttt{public\_read}$), $E \leftarrow \emptyset$, $J \leftarrow \emptyset$, $\mathcal{N} \leftarrow \mathcal{N}_0$
+\State Compute active revoked sequence set $R_{\mathrm{rev}} \leftarrow \mathrm{revokedSet}(\mathcal{E}, t_{\mathrm{now}})$
+\For{each event $\mathrm{ev} \in \mathcal{E}$ with $\mathrm{ev}.\mathrm{at} \le t_{\mathrm{now}}$ ordered by $\mathrm{ev}.\mathrm{seq}$ ascending}
+  \If{$\mathrm{ev}.\mathrm{seq} \in R_{\mathrm{rev}}$}
+    \State \textbf{continue}
+  \EndIf
+  \If{$\mathrm{ev}.\mathrm{op} = \texttt{bf\_assert}$}
+    \If{$\mathrm{ev}.\mathrm{rootSeqs} \cap R_{\mathrm{rev}} \neq \emptyset$} \textbf{continue} \EndIf \Comment{Nuxoll upstream provenance cascade}
+    \State Construct incoming $(\mathbf{W}_{\mathrm{inc}}, S_{\mathrm{inc}}, \kappa_{\mathrm{inc}}, \mathcal{T}_{\mathrm{inc}})$
+    \If{$e = E[\mathrm{edgeId}]$ exists}
+      \State $\mathrm{promoted} \leftarrow \mathrm{isDerivedOnly}(e.\mathbf{W}) \land \mathrm{hasBase}(\mathbf{W}_{\mathrm{inc}})$
+      \State $(\mathrm{ok}, \mathbf{W}', S') \leftarrow \mathrm{reviseStratifiedEvidence}(e.\mathbf{W}, e.S, \mathbf{W}_{\mathrm{inc}}, S_{\mathrm{inc}})$
+      \If{$\mathrm{ok}$}
+        \State $e.\mathbf{W} \leftarrow \mathbf{W}'$; $e.S \leftarrow S'$
+        \State If $\mathrm{promoted}$, cleanly replace $e.\kappa \leftarrow \kappa_{\mathrm{inc}}$ and $e.\mathcal{T} \leftarrow \mathcal{T}_{\mathrm{inc}}$; else join $e.\kappa \leftarrow e.\kappa \sqcup \kappa_{\mathrm{inc}}$
+      \EndIf
+    \Else
+      \State Insert $e$ into $E$; upsert endpoints into $V$ with lattice-joined privacy
+    \EndIf
+    \State Apply optional attached observation tick and advance normative manifold (\texttt{advanceNormativeOnEvent})
+  \ElsIf{$\mathrm{ev}.\mathrm{op} = \texttt{bf\_close}$}
+    \If{$\mathrm{ev}.\mathrm{rootSeqs} \cap R_{\mathrm{rev}} \neq \emptyset$} \textbf{continue} \EndIf
+    \State Set $E[\mathrm{edgeId}].\mathcal{T}.t_{\mathrm{until}} \leftarrow \mathrm{ev}.\mathrm{validUntil}$
+  \ElsIf{$\mathrm{ev}.\mathrm{op} = \texttt{bf\_metabolism}$}
+    \State Execute Algorithm~\ref{alg:metab} on $(V, E, J, \mathcal{N}, \mathrm{ev})$
+  \ElsIf{$\mathrm{ev}.\mathrm{op} \in \{\texttt{bf\_nrem}, \texttt{bf\_rem}\}$}
+    \State Execute Algorithm~\ref{alg:sleep} (\texttt{nrem} or \texttt{rem}) on $\mathcal{G}$ and advance normative manifold
+  \EndIf
+  \State Enforce active working-memory caps (\texttt{enforceWorkingMemoryBudget}: $|V_{\mathrm{act}}| \le 8{,}000$, $|E_{\mathrm{act}}| \le 30{,}000$)
+\EndFor
+\State \Return $\mathcal{G}_{t_{\mathrm{now}}} = (V, E, J, \mathcal{N})$
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[H]
+\caption{Priority-Stratified Conserved Informational Metabolism and SPD Viability Update (Law~2)}
+\label{alg:metab}
+\begin{algorithmic}[1]
+\Require Active graph $(V, E, J)$, observations $\mathcal{O}$, elapsed $\Delta t$, headroom $s_3$, capacity $\Mcap$
+\State $M_t \leftarrow \sum_{u \in V \cup E,\,\neg u.\mathrm{dormant}} m_u$ \Comment{Pre-step snapshot for order invariance}
+\For{each $o \in \mathcal{O}$ targeting $u \in V \cup E$}
+  \State $\Phi_{\mathrm{ext}}(u) \mathrel{+=} \mathrm{clip}_{[0, I_{\max}]}(\ln\frac{P(y|u)}{P_{\mathrm{base}}}) \cdot \eta_{o.p} \cdot \max(0, 1 - M_t / \Mcap)$ \Comment{$\eta_{\mathrm{inf}}=\eta_{\mathrm{rem}}=0$}
+  \State $E_{\mathrm{err}}(u) \mathrel{+=} \lambda_{\mathrm{err}}\, o.\mathrm{err}$
+\EndFor
+\If{$\sum_u \Phi_{\mathrm{ext}}(u) > \max(0, \Mcap - M_t)$}
+  \State Proportionally scale all $\Phi_{\mathrm{ext}}(u)$ to fit $\max(0, \Mcap - M_t)$
+\EndIf
+\State Run 2 conservative catalytic flux rounds along active $J$ with $r_{\mathrm{sent}}(u) = \kappa_{\mathrm{flux}} \min(1, W_{\mathrm{out}}(u))$ to obtain $\Phi_{\mathrm{net}}$
+\For{each active or woken carrier $u$}
+  \State $m_u \leftarrow \mathrm{clip}_{[0, M_{\max}]}(\max(0, m_u e^{-\rho_0(1+\beta_{\mathrm{comp}} a_u)\Delta t} + \Phi_{\mathrm{net}}(u) - E_{\mathrm{err}}(u)))$
+  \State If $u$ is an expired probationary \texttt{concept:*} with cumulative negentropy $< 0.15$, dissolve $u$ and its \texttt{is\_a} edges
+  \State If $\mathrm{r4}(m_u) < m_{\mathrm{dorm}}$, set $m_u \leftarrow 0, u.\mathrm{dormant} \leftarrow \mathrm{true}$
+\EndFor
+\If{$M' = \sum_{\text{active}} m_u > \Mcap$}
+  \State Sort active carriers by $(\mathrm{priorityTier} \in \{0..4\},\, m_u,\, \mathrm{lastActiveAt},\, \mathrm{createdAt},\, \mathrm{asciiCmp}(u.\mathrm{id}))$
+  \State Shed Tier 0--1 carriers first until $M' \le \Mcap$; if still $\Mcap / M' < 0.35$, shed non-root carriers
+  \State For remaining mild overshoot, apply floor-rounded 4-decimal scaling $m_u \leftarrow \lfloor 10^4 m_u \Mcap / M' \rfloor / 10^4$; if scaled $m_u < m_{\mathrm{dorm}}$, set $m_u \leftarrow 0, u.\mathrm{dormant} \leftarrow \mathrm{true}$
+\EndIf
+\State Compute $\Cendo$ via~\eqref{eq:cendo} (max 24 Jacobi iterations), 4D state $s_{t+1}$, update $(\mu^*, \Sigma^*)$ via~\eqref{eq:attractor_update} with cyclic Jacobi SPD projection, and update $\Vendo, \dot{V}_{\mathrm{endo}}, \tau_t$
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[H]
+\caption{Dual-Phase Zero-LLM Sleep: NREM MDL Concept Genesis \& REM Structural Analogy (Law~4)}
+\label{alg:sleep}
+\begin{algorithmic}[1]
+\Require Active graph $\mathcal{G}$, timestamp $t_{\mathrm{now}}$, phase $\in \{\texttt{nrem}, \texttt{rem}\}$
+\If{phase $= \texttt{nrem}$}
+  \State Close open ($t_{\mathrm{until}}=\mathrm{null}$) superseded spans where newer Tier~1--2 base edge has $t_{\mathrm{from}}^{\mathrm{new}} > t_{\mathrm{from}}^{\mathrm{old}}$, $|\Delta f| \ge 0.45$, $c_{\mathrm{new}} \ge 0.45$, $\mathrm{rank}_{\mathrm{new}} \ge \mathrm{rank}_{\mathrm{old}}$
+  \State Dissolve expired probationary \texttt{concept:*} nodes ($t_{\mathrm{now}} \ge t_{\mathrm{loan}}, \Phi_{\mathrm{cum}} < 0.15$) and their \texttt{is\_a} edges
+  \State Compile up to 4 high-truth ($f \ge 0.65, c \ge 0.45$) stamp-disjoint 2-hop causal chains into privacy-joined \texttt{chunk:*}
+  \State Collect \texttt{coveredEdgeIds} from active \texttt{is\_a -> concept:*} edges; select Top-500 semantic active subgraph ($c \ge 0.20, f \ge 0.55$, non-self-loop)
+  \State Enumerate two-edge fork ($v_{\mathrm{free}}=0, n_{\min}=2$) and chain ($v_{\mathrm{free}}=1, n_{\min}=3$) motif candidates obeying \texttt{canCombineMotifEdges}
+  \State Rank candidates by two-part MDL surplus $\Delta_{\mathrm{DL}}(M)$~\eqref{eq:mdl_gain} over minimum-footprint stamp-disjoint instances
+  \For{each candidate $M$ while $|\text{minted}| < K_{\max}$}
+    \State Re-filter instances against updated \texttt{coveredEdgeIds}; verify $n_{\mathrm{uncov}} \ge n_{\min}$, contexts $\ge 2$, $\Delta_{\mathrm{DL}} > \theta_{\mathrm{MDL}}$, Jaccard $< 0.70$, and non-zombie freshness ($t_{\mathrm{ing}} > t_{\mathrm{lastActive}}$)
+    \State Mint \texttt{concept:*} with $m = 0.45$, 72h loan, joined privacy $\bigsqcup_i \kappa_i$, attach \texttt{is\_a} edges + reverse catalytic links ($w = 0.4$), add constituent edges to \texttt{coveredEdgeIds}
+  \EndFor
+  \State Reconverge $\Cendo$ and update $\Anew(t)$
+\Else \Comment{phase $= \texttt{rem}$}
+  \State Select up to 12 context-balanced 2-hop-eligible seed nodes; run 10-step inverse-degree sparse PPR ($\alpha=0.2$, Top-24)
+  \State Build 2-hop relational ego-profiles joining 1-hop and 2-hop privacy scopes, contexts, and root stamps
+  \State Emit up to 4 cross-context, stamp-disjoint pairs ($J_{\mathrm{feat}} \ge 0.40$) as \texttt{rem\_analogy} edges ($c \le 0.25, \eta_{\mathrm{rem}}=0, m=0.06$)
+\EndIf
+\end{algorithmic}
+\end{algorithm}
+
+% ============================================================================
+% APPENDIX C: NOTATION, HYPERPARAMETERS, AND 40 INNATE ROOT ANCHORS
+% ============================================================================
+\section{Notation, Hyperparameters, and 40 Innate Root Anchors}
+\label{app:notation}
+
+\begin{table}[htbp]
+  \centering
+  \caption{Complete summary of mathematical symbols and default kernel hyperparameters.}
+  \label{tab:notation}
+  {\footnotesize\setlength{\tabcolsep}{4pt}
+  \resizebox{\textwidth}{!}{%
+  \begin{tabular}{llcl}
+    \toprule
+    Symbol & Code Constant & Default & Definition \\
+    \midrule
+    $k$ & \texttt{EVIDENCE\_K} & $1.0$ & NARS--Beta evidential horizon \\
+    $c_{\max}(p), \rho_p, \eta_p$ & \texttt{PROVENANCE\_POLICIES} & Table~\ref{tab:provenance_params} & Per-channel ceiling, discount, negentropy efficiency \\
+    $\gamma_{r_1, r_2}$ & \texttt{COMPOSITION\_TABLE} & $0.55\text{--}0.80$ & Relation-composition attenuation factor \\
+    $c_{\min,\mathrm{wm}}, c_{\min,\mathrm{hyp}}, c_{\min,\mathrm{ass}}$ & \texttt{C\_MIN\_*} & $0.04, 0.08, 0.15$ & Working-memory / hypothesis / assertable floors \\
+    $\Mcap, M_{\max}, m_{\mathrm{dorm}}$ & \texttt{M\_CAP, M\_MAX, DORMANCY\_THRESHOLD} & $100, 10, 0.05$ & Conserved capacity, item cap, dormancy threshold \\
+    $I_{\max}, \kappa_{\mathrm{flux}}, \rho_0, \beta_{\mathrm{comp}}, \lambda_{\mathrm{err}}$ & Law~2 params & $2.5, 0.35, 0.04, 0.25, 0.45$ & Negentropy cap, flux share, rent, complexity slope, error loss \\
+    $\gamma_c, \epsilon_c$ & \texttt{gammaC, eps} & $0.65, 10^{-6}$ & Autocatalytic centrality damping and denominator floor \\
+    $B_{\mathrm{surv}}, \alpha_\mu, \epsilon_V$ & \texttt{SURVIVAL\_FLOOR, adaptRate, eps} & $[.15,.20,.15,.15], 0.05, 10^{-2}$ & 4D survival floor, adaptation rate, SPD Tikhonov ridge \\
+    $[\lambda_{\min}, \lambda_{\max}]$ & \texttt{projectSpdMat4} & $[0.015, 0.16]$ & Jacobi SPD covariance eigenvalue projection bounds \\
+    $\beta_{\mathrm{load}}(L_t), I(H;O), \ell_{\mathrm{coh}}$ & Law~3 params & $\max(.2, 1.2-.9 L_t)$ & Resource-load cost sensitivity, discrete MI, coherence loss \\
+    $\kappa_{\mathrm{comp}}, \gamma_{\mathrm{LP}}$ & Law~3 params & $\in [0, 1]$ & Silvia comprehensibility and Oudeyer learning progress \\
+    $\theta_{\mathrm{MDL}}, K_{\max}, T_{\mathrm{loan}}, \Anew$ & Law~4 params & $0.5\text{ bits}, 6, 72\text{h}$ & MDL threshold, cycle cap, loan window, novelty rate \\
+    $\tau_{\mathrm{PMI}}, \mathrm{AV}_{\min,\mathrm{coh}}, \mathrm{AV}_{\min,\mathrm{null}}, H_{\min}$ & R1 params & $0.35, 2, 4, 1.8\text{ bits}$ & Cohesive PMI, cohesive/null AV thresholds, branching entropy \\
+    $N_{\mathrm{QMC}}$ & \texttt{particles} & $64$ & Deterministic stratified QMC particles for Rung-3 SCM \\
+    \bottomrule
+  \end{tabular}}%
+  }
+\end{table}
+
+\begin{table}[htbp]
+  \centering
+  \caption{The 40 language-neutral innate root anchors $V_{\mathrm{root}}$ (zero natural-language strings).}
+  \label{tab:roots40}
+  {\footnotesize
+  \begin{tabularx}{\textwidth}{l>{\raggedright\arraybackslash}X}
+    \toprule
+    Category (Count) & Innate Root Anchor IDs \\
+    \midrule
+    Perception \& Self-Check (18) & \texttt{root:entity\_ref}, \texttt{root:order\_prev}, \texttt{root:order\_curr}, \texttt{root:same\_diff}, \texttt{root:agent\_self}, \texttt{root:agent\_other}, \texttt{root:source\_direct}, \texttt{root:source\_told}, \texttt{root:layer\_asset}, \texttt{root:layer\_channel}, \texttt{root:layer\_organ}, \texttt{root:layer\_semantic}, \texttt{root:state\_active}, \texttt{root:polarity\_pos}, \texttt{root:polarity\_neg}, \texttt{root:epistemic\_unknown}, \texttt{root:query\_ask}, \texttt{root:compare\_outcome} \\
+    Daily Autonomy \& Pursuits (14) & \texttt{root:pursuit\_active}, \texttt{root:pursuit\_progress}, \texttt{root:pursuit\_blocked}, \texttt{root:activity\_reading}, \texttt{root:activity\_using\_tool}, \texttt{root:activity\_room}, \texttt{root:activity\_resting}, \texttt{root:obj\_book}, \texttt{root:obj\_tool}, \texttt{root:obj\_concern}, \texttt{root:will\_want}, \texttt{root:will\_not\_now}, \texttt{root:will\_later}, \texttt{root:body\_strain} \\
+    Epistemic Inquiry (4) & \texttt{root:epistemic\_conflict}, \texttt{root:source\_read}, \texttt{root:source\_checked}, \texttt{root:ask\_clarify} \\
+    Structural Relations (4) & \texttt{root:rel\_is\_a}, \texttt{root:rel\_causes}, \texttt{root:rel\_part\_of}, \texttt{root:rel\_contrast} \\
+    \bottomrule
+  \end{tabularx}}
+\end{table}
+
+% ============================================================================
+% APPENDIX D: REPRODUCTION PROTOCOL
+% ============================================================================
+\section{Air-Gapped 4C4G Reproduction Protocol}
+\label{app:repro}
+
+\paragraph{Air-Gapped Clean-Room Reproduction.}
+All empirical artifacts in this paper can be reproduced bit-for-bit on any 4-vCPU / 4\,GiB RAM Linux host with zero network access using the companion public repository (\url{https://github.com/kf15884/atri-cognitive-kernel}, MIT License) and its Docker Compose specification (\texttt{deploy/paper-cleanroom/docker-compose.yml}, base image \texttt{node:22.18-bookworm-slim}):
+\begin{verbatim}
+mkdir -p deploy/paper-cleanroom/out && chown 1000:1000 deploy/paper-cleanroom/out
+docker compose -f deploy/paper-cleanroom/docker-compose.yml \
+  up --build atri-paper-airgapped
+\end{verbatim}
+The \texttt{atri-paper-airgapped} service enforces \texttt{network\_mode: none}, \texttt{cpus: "4.0"}, \texttt{mem\_limit: 4g}, non-root UID 1000, \texttt{read\_only: true}, \texttt{cap\_drop: [ALL]}, \texttt{security\_opt:} \texttt{[no-\allowbreak new-\allowbreak privileges:true]}, and \texttt{--seeds=20}, writing all 15 artifacts (4 SVGs, 3 LaTeX tables, 5 CSVs, \texttt{report.json}, \texttt{telemetry.json}, and \texttt{manifest.json}) to \texttt{deploy/\allowbreak paper-cleanroom/\allowbreak out/}.
+
+\paragraph{Optional Live Local-SLM Hardware Benchmark.}
+To populate the optional C5 live local-SLM comparison (e.g., Qwen2.5-0.5B/1.5B-Q4 via Ollama) on a 4C4G Linux host, pull the weights into the \texttt{slm-ollama} service (attached to both \texttt{default} for initial weight download and \texttt{slm\_internal}, bound locally to \texttt{127.0.0.1:11434}) and then execute \texttt{atri-paper-with-slm}, which connects \emph{exclusively} over the non-routable internal Docker bridge \texttt{slm\_internal} (\texttt{internal: true}):
+\begin{verbatim}
+mkdir -p deploy/paper-cleanroom/out-slm && \
+  chown 1000:1000 deploy/paper-cleanroom/out-slm
+docker compose -f deploy/paper-cleanroom/docker-compose.yml \
+  --profile slm up -d slm-ollama
+docker exec atri-q307-slm-4c4g ollama pull qwen2.5:0.5b
+docker compose -f deploy/paper-cleanroom/docker-compose.yml \
+  --profile slm up --build atri-paper-with-slm
+\end{verbatim}
+The 40-task live CPU-only local-SLM harness is included in \texttt{scripts/eval/bench\_slm\_40task.py}, and its full recorded per-task trace is archived in \texttt{paper/slm\_40task\_4c4g.json}.
+
+\paragraph{Verification Highlights.}
+\begin{itemize}
+  \item \textbf{Deterministic RNG \& Clock Isolation:} Verified via static clean-room regression gate (\texttt{packages/self/test/q307-stageD.test.ts}); zero \texttt{Math.random()}, \texttt{Date.now()}, or \texttt{localeCompare()} in kernel/evaluation logic.
+  \item \textbf{Cross-OS Cryptographic Verification:} Independent $N=20$ runs inside the air-gapped physical 4C4G Linux container (\texttt{linux/x64}, \texttt{Node v22.18.0}) and on \texttt{win32/x64} (\texttt{Node v26.13.1}) produced the identical 256-bit \texttt{deterministicCoreSha256} (\texttt{7ed831b28023a442...}) across all 10 deterministic CSV/SVG/TeX artifacts.
+  \item \textbf{Statistical Rigor:} Exact $2^{20}$ paired sign-flip permutation tests with single-family Holm--Bonferroni FWER adjustment, Wilson/Bootstrap 95\% CIs, Cliff's $\delta$, and unpaired Hedges' $g$.
+  \item \textbf{Live Hardware Local-SLM Verification:} Both \texttt{Qwen2.5-0.5B-Q4} and \texttt{Qwen2.5-1.5B-Q4} were directly benchmarked on the identical physical 4C4G Linux host (Table~\ref{tab:slm_4c4g}, archived in \texttt{paper/slm\_40task\_4c4g.json}); the zero-network air-gapped container continues to report \texttt{not\_configured} cleanly with zero fabricated scores.
+\end{itemize}
+
+% ============================================================================
+% APPENDIX E: OFFICIAL REPRODUCIBILITY CHECKLIST FOR JAIR
+% ============================================================================
+\section{Reproducibility Checklist for JAIR}
+\label{app:jair_checklist}
+
+\subsection*{All articles:}
+\begin{enumerate}
+  \item All claims investigated in this work are clearly stated. [\textbf{yes}]
+  \item Clear explanations are given how the work reported substantiates the claims. [\textbf{yes}]
+  \item Limitations or technical assumptions are stated clearly and explicitly. [\textbf{yes}]
+  \item Conceptual outlines and/or pseudo-code descriptions of the AI methods introduced in this work are provided, and important implementation details are discussed. [\textbf{yes}]
+  \item Motivation is provided for all design choices, including algorithms, implementation choices, parameters, data sets and experimental protocols beyond metrics. [\textbf{yes}]
+\end{enumerate}
+
+\subsection*{Articles containing theoretical contributions:}
+Does this paper make theoretical contributions? [\textbf{yes}]
+
+\begin{enumerate}
+  \item All assumptions and restrictions are stated clearly and formally. [\textbf{yes}]
+  \item All novel claims are stated formally (e.g., in theorem statements). [\textbf{yes}]
+  \item Proofs of all non-trivial claims are provided in sufficient detail to permit verification by readers with a reasonable degree of expertise (e.g., that expected from a PhD candidate in the same area of AI). [\textbf{yes}]
+  \item Complex formalism, such as definitions or proofs, is motivated and explained clearly. [\textbf{yes}]
+  \item The use of mathematical notation and formalism serves the purpose of enhancing clarity and precision; gratuitous use of mathematical formalism (i.e., use that does not enhance clarity or precision) is avoided. [\textbf{yes}]
+  \item Appropriate citations are given for all non-trivial theoretical tools and techniques. [\textbf{yes}]
+\end{enumerate}
+
+\subsection*{Articles reporting on computational experiments:}
+Does this paper include computational experiments? [\textbf{yes}]
+
+\begin{enumerate}
+  \item All source code required for conducting experiments is included in an online appendix or will be made publicly available upon publication of the paper. The online appendix follows best practices for source code readability and documentation as well as for long-term accessibility. [\textbf{yes}]
+  \item The source code comes with a license that allows free usage for reproducibility purposes. [\textbf{yes}]
+  \item The source code comes with a license that allows free usage for research purposes in general. [\textbf{yes}]
+  \item Raw, unaggregated data from all experiments is included in an online appendix or will be made publicly available upon publication of the paper. The online appendix follows best practices for long-term accessibility. [\textbf{yes}]
+  \item The unaggregated data comes with a license that allows free usage for reproducibility purposes. [\textbf{yes}]
+  \item The unaggregated data comes with a license that allows free usage for research purposes in general. [\textbf{yes}]
+  \item If an algorithm depends on randomness, then the method used for generating random numbers and for setting seeds is described in a way sufficient to allow replication of results. [\textbf{yes}]
+  \item The execution environment for experiments, the computing infrastructure (hardware and software) used for running them, is described, including GPU/CPU makes and models; amount of memory (cache and RAM); make and version of operating system; names and versions of relevant software libraries and frameworks. [\textbf{yes}]
+  \item The evaluation metrics used in experiments are clearly explained and their choice is explicitly motivated. [\textbf{yes}]
+  \item The number of algorithm runs used to compute each result is reported. [\textbf{yes}]
+  \item Reported results have not been ``cherry-picked'' by silently ignoring unsuccessful or unsatisfactory experiments. [\textbf{yes}]
+  \item Analysis of results goes beyond single-dimensional summaries of performance (e.g., average, median) to include measures of variation, confidence, or other distributional information. [\textbf{yes}]
+  \item All (hyper-) parameter settings for the algorithms/methods used in experiments have been reported, along with the rationale or method for determining them. [\textbf{yes}]
+  \item The number and range of (hyper-) parameter settings explored prior to conducting final experiments have been indicated, along with the effort spent on (hyper-) parameter optimisation. [\textbf{yes}]
+  \item Appropriately chosen statistical hypothesis tests are used to establish statistical significance in the presence of noise effects. [\textbf{yes}]
+\end{enumerate}
+
+\subsection*{Articles using data sets:}
+Does this work rely on one or more data sets (possibly obtained from a benchmark generator or similar software artifact)? [\textbf{yes}]
+
+\begin{enumerate}
+  \item All newly introduced data sets are included in an online appendix or will be made publicly available upon publication of the paper. The online appendix follows best practices for long-term accessibility with a license that allows free usage for research purposes. [\textbf{yes}]
+  \item The newly introduced data set comes with a license that allows free usage for reproducibility purposes. [\textbf{yes}]
+  \item The newly introduced data set comes with a license that allows free usage for research purposes in general. [\textbf{yes}]
+  \item All data sets drawn from the literature or other public sources (potentially including authors' own previously published work) are accompanied by appropriate citations. [\textbf{NA}]
+  \item All data sets drawn from the existing literature (potentially including authors' own previously published work) are publicly available. [\textbf{NA}]
+  \item All new data sets and data sets that are not publicly available are described in detail, including relevant statistics, the data collection process and annotation process if relevant. [\textbf{yes}]
+  \item All methods used for preprocessing, augmenting, batching or splitting data sets (e.g., in the context of hold-out or cross-validation) are described in detail. [\textbf{yes}]
+\end{enumerate}
+
+\subsection*{Explanations on any of the answers above (optional):}
+All source code, deterministic benchmark generators, air-gapped 4C4G Docker files, per-seed CSV outputs, and live CPU-only local-SLM JSON traces are publicly released under the MIT License at \url{https://github.com/kf15884/atri-cognitive-kernel}. All benchmark corpora and synthetic clean-room worlds are generated deterministically inside the companion harness with zero external third-party datasets (hence ``NA'' for literature-drawn dataset items 4--5); exact hyperparameter defaults and $\pm 30\%$ sensitivity sweeps are documented in Table~\ref{tab:notation} and Table~\ref{tab:q307_sensitivity}.

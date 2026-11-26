@@ -1,0 +1,11 @@
+.git
+node_modules
+scripts/eval/.out
+deploy/paper-cleanroom/out
+deploy/paper-cleanroom/out-slm
+paper
+*.db
+*.db-wal
+*.db-shm
+.env
+.env.*

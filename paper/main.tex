@@ -1,0 +1,681 @@
+% ============================================================================
+% Atri: Endogenous Cognitive Architecture for Autonomous Post-Severing Agents
+% Formatted using the official JAIR LaTeX template (jair.cls / acmart, 2025+).
+%
+% Every empirical number in this manuscript traces directly to the clean-room
+% deterministic N=20 benchmark suite (paper/manifest_n20.json,
+% deterministicCoreSha256 = 7ed831b28023a44228e9b96623b78abd2be043c1dadb35897435bc116c11e721).
+% ============================================================================
+% For initial review submission (with line numbers and colored links):
+\documentclass[manuscript, screen, review]{jair}
+% For final camera-ready publication, replace the line above with:
+% \documentclass[]{jair}
+
+\setcopyright{cc}
+\acmDOI{10.1613/jair.1.xxxxx}
+
+\JAIRAE{Insert JAIR AE Name}
+\JAIRTrack{}
+\acmVolume{83}
+\acmArticle{1}
+\acmMonth{11}
+\acmYear{2026}
+
+\RequirePackage[
+  datamodel=acmdatamodel,
+  style=acmauthoryear,
+  backend=biber,
+  giveninits=true,
+  uniquename=init
+]{biblatex}
+
+\renewcommand*{\bibopenbracket}{(}
+\renewcommand*{\bibclosebracket}{)}
+
+\addbibresource{references.bib}
+
+% Additional math, table, and algorithm packages compatible with acmart/jair
+\usepackage{mathtools}
+\usepackage{array,tabularx}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+% Theorem environments (global numbering Theorem 1--5, Definition 1 using acmart styles)
+\theoremstyle{acmplain}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{acmdefinition}
+\newtheorem{definition}{Definition}
+\newtheorem{remark}{Remark}
+
+% Helper macro: embeds bundled camera-ready vector PDFs in figures/*.pdf
+% (with optional top-trim to omit standalone SVG banners so LaTeX captions
+% provide the sole authoritative figure numbering), falling back cleanly.
+\newcommand{\atriIncludeFigure}[3][0pt]{%
+  \IfFileExists{figures/#3.pdf}{%
+    \includegraphics[width=#2,trim=0pt 0pt 0pt #1,clip]{figures/#3.pdf}%
+  }{%
+    \IfFileExists{figures/#3.png}{%
+      \includegraphics[width=#2]{figures/#3.png}%
+    }{%
+      \fbox{\parbox{0.92\textwidth}{\centering\small%
+        \textbf{Vector Graphic Ready:} \texttt{\detokenize{figures/#3.svg}}\\
+        Convert \texttt{figures/*.svg} to \texttt{.pdf} via \texttt{rsvg-convert -f pdf} or \texttt{inkscape --export-type=pdf} before final compilation (see \texttt{paper/README.md}).}}%
+    }%
+  }%
+}
+
+% Convenient notation macros
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Prob}{\mathbb{P}}
+\newcommand{\doop}{\operatorname{do}}
+\newcommand{\KL}{D_{\mathrm{KL}}}
+\newcommand{\Cendo}{C_{\mathrm{endo}}}
+\newcommand{\Vendo}{V_{\mathrm{endo}}}
+\newcommand{\GRB}{G_{\mathrm{RB}}}
+\newcommand{\Mcap}{M_{\mathrm{cap}}}
+\newcommand{\Tcut}{T_{\mathrm{cut}}}
+\newcommand{\Anew}{A_{\mathrm{new}}}
+\newcommand{\PN}{\mathrm{PN}}
+\newcommand{\NULLTOK}{\texttt{\_\_NULL\_\_}}
+
+\begin{document}
+
+\title[Surviving the Severed Scaffold]{Surviving the Severed Scaffold: A Conserved Metabolic Hypergraph and Zero-LLM Cognitive Kernel for Post-Severing Autonomy}
+
+\author{Yixun Zhang}
+\authornote{Corresponding Author. Clean-room source code, deterministic $N=20$ evaluation harness, vector SVG/PDF figures, auto-generated LaTeX tables, and air-gapped 4-vCPU / 4\,GiB RAM Docker reproduction package are publicly available at \url{https://github.com/kf15884/atri-cognitive-kernel}.}
+\orcid{0009-0001-3048-6676}
+\email{easonzhang15884@foxmail.com}
+\affiliation{%
+  \institution{Independent Researcher}
+  \country{China}
+}
+
+\renewcommand{\shortauthors}{Zhang}
+
+% ============================================================================
+% STRUCTURED ABSTRACT (JAIR HTML-friendly format)
+% ============================================================================
+\begin{abstract}
+\textbf{Background:} Contemporary language-model agents treat cloud Large Language Models (LLMs) as their sole cognitive substrate, augmented by flat retrieval-augmented generation (RAG) or temporal knowledge graphs. While effective while online, such architectures collapse the instant external model APIs are severed, conflate unverified text with direct experience, leak cross-context private memories, and exhibit sycophantic capitulation under user pressure.
+
+\textbf{Objectives:} We investigate whether a compact, mathematically principled cognitive kernel can use an optional LLM solely as a temporary early-life scaffold and, after physical severing, sustain autonomous belief revision, causal fault isolation, endogenous preference formation, open-ended concept creation, non-bypassable contextual privacy, and bidirectional script-invariant language acquisition within a commodity 4-vCPU / 4\,GiB RAM envelope with zero runtime LLM calls.
+
+\textbf{Methods:} We introduce Atri, an open-ended cognitive kernel built around a single append-only, bi-temporal, provenance-stratified metabolic hypergraph governed by four coupled mathematical laws: (1)~order-invariant stratified Non-Axiomatic Logic (NARS)--Beta evidence fusion with exact sorted Uint32Array provenance stamps and a Nissenbaum contextual-integrity privacy lattice; (2)~first-law conserved informational metabolism coupled to a 4D symmetric-positive-definite (SPD) viability manifold and autocatalytic load-bearing centrality; (3)~a resource-bounded variational expected free-energy functional paired with an exact analytic Noisy-OR-NOT structural causal model (SCM) for Pearl Rung-3 counterfactuals; and (4)~dual-phase NREM/REM sleep consolidation featuring Rissanen two-part Minimum Description Length (MDL) concept genesis with anti-runaway guards. Layered atop 40 language-neutral innate root anchors, a zero-LLM linguistic engine integrates unified word/character Viterbi MDL segmentation, Fisher-exact explaining-away synonym induction, privacy-scoped Beam-4 parsing, ISU/QUD dialogue repair, and Levelt--Nozari loopback self-monitoring. We establish five formal theorems and evaluate the kernel across a deterministic clean-room N=20 five-condition severed-scaffold assay inside an air-gapped physical 4-vCPU / 4\,GiB RAM Linux Docker container (linux/x64, Node v22.18.0; exact paired sign-flip permutation tests with single-family Holm--Bonferroni control) plus live CPU-only local-SLM comparisons on identical hardware.
+
+\textbf{Results:} Full-Atri achieves 93.8\% [93.1\%, 94.4\%] post-severing autonomy, 0.0\% [0.0\%, 3.1\%] privacy leakage, 100.0\% bi-temporal accuracy, 100.0\% cross-day action differentiation, 2.00 minted concepts per cycle, and 5.78\,ms P95 turn latency (verified bit-identical in cryptographic core digest across linux/x64 and win32/x64), outperforming Neutral-Shadow (36.6\%), Naive-RAG (5.1\% autonomy, 91.7\% privacy leak), Pure Cloud-LLM (0.0\% post-severing bound), and four full ablations (all adjusted p < 0.001). Identical 8-dimension autonomy holds across Chinese (93.8\%), bijective non-ASCII Cipher (93.8\%, zero discrepancy across all 8 metrics), spaced English (94.8\%), and unspaced Japanese (94.4\%). On a 40-task temporal, provenance, privacy, and downstream revocation diagnostic protocol, Full-Atri solves 40/40 (100.0\%) versus live CPU-only Qwen2.5-0.5B-Q4 (31/40, 2,698.4\,ms P95, 486\,MB), Qwen2.5-1.5B-Q4 (26/40, 5,171.8\,ms P95, 1.2\,GB), Recency-RAG (8/40), and All-k Naive-RAG (0/40). All 15 sensitivity configurations (+/-30\% across five constants) preserve 100.0\% of invariants, and a 1,500-edge active hypergraph occupies 0.7367\,MiB of analytical structure (17.60\,ms warm fold P95; 36.0--39.0\,MiB mean V8 heap).
+
+\textbf{Conclusions:} Unifying memory, causality, motivation, sleep consolidation, and script-invariant language acquisition inside a conserved metabolic hypergraph enables durable, privacy-safe, sub-6\,ms post-severing autonomy on commodity 4-vCPU / 4\,GiB RAM hardware without runtime LLMs.
+\end{abstract}
+
+\maketitle
+
+% ============================================================================
+% 1. INTRODUCTION
+% ============================================================================
+\section{Introduction}
+\label{sec:intro}
+
+Modern autonomous agents built around Large Language Models (LLMs)~\citep{park2023generative,packer2023memgpt,sumers2024coala,gutierrez2024hipporag,rasmussen2025zep} delegate reasoning, belief revision, discourse coherence, and behavioral planning to remote billion-parameter neural endpoints. When connectivity is uninterrupted, these systems produce fluent surface behavior. Yet this architectural paradigm carries four structural vulnerabilities that become fatal in long-lived, privacy-sensitive, or edge-deployed autonomy:
+
+\begin{enumerate}
+  \item \textbf{Post-Severing Collapse.} When external cloud APIs become unavailable at a physical cut-off time $\Tcut$, pure cloud-dependent agents suffer an immediate collapse to $0.0\%$ operational autonomy. Even when paired with local vector retrieval (RAG), retrieval without an endogenous belief, causal, and grammatical engine cannot synthesize counterfactual interventions, revise contradictory beliefs, or execute multi-turn epistemic repair.
+  \item \textbf{Epistemic Flatness and Echo-Chamber Amplification.} Vector stores and standard knowledge graphs conflate unverified text snippets, recycled LLM inferences, and direct interactive experience into a single relevance score. Repeatedly retrieving one's own generated summaries creates circular double-counting (echo chambers), while bulk textual assertions override direct sensorimotor evidence and induce sycophancy under social pressure~\citep{sharma2024sycophancy}.
+  \item \textbf{Contextual Privacy Leakage.} Flat retrieval tables and unconstrained graph traversal (including two-hop spreading activation or Personalized PageRank) routinely launder private conversational facts across group boundaries or into public search queries, violating contextual integrity~\citep{nissenbaum2004privacy}.
+  \item \textbf{Static Ontologies and Script-Specific Engineering.} Classical symbolic cognitive architectures~\citep{laird2012soar,anderson2004actr,bach2009psi} maintain structured memory locally, yet typically depend on hand-authored domain predicates and English-specific lexical pipelines, preventing open-ended concept discovery and cross-script generality.
+\end{enumerate}
+
+We pose a foundational question for artificial intelligence: \emph{Can a compact, mathematically principled cognitive kernel use an optional LLM solely as a temporary, strictly bounded early-life scaffold, and after physically severing that scaffold at $\Tcut$, sustain autonomous belief revision, causal fault isolation, endogenous preference formation, open-ended concept creation, contextual privacy preservation, and bidirectional language acquisition within a 4-vCPU / 4\,GiB RAM budget with zero runtime LLM calls?}
+
+To answer this question constructively, we present \textbf{Atri}, an endogenous cognitive architecture built around a single append-only, provenance-stratified, bi-temporal \textbf{metabolic hypergraph}. Rather than bolting disparate heuristics together, Atri derives memory dynamics, anti-sycophancy, causal experimentation, sleep consolidation, and language acquisition from four coupled mathematical laws (Figure~\ref{fig:arch}):
+
+\begin{figure}[t]
+  \centering
+  \atriIncludeFigure[43pt]{\textwidth}{figure0_architecture}
+  \caption{End-to-end architecture of the Atri cognitive kernel. External observations, multi-script texts, interactive dialogue, and an optional early-life R4 cloud scaffold (physically severed at $\Tcut$) enter a single append-only SQLite timeline folded into a provenance-stratified, bi-temporal metabolic hypergraph governed by Laws~1--4. Zero-LLM bidirectional language bootstrapping, privacy-gated inquiry, and loopback self-monitoring operate exclusively atop the hypergraph within a 4-vCPU / 4\,GiB RAM budget.}
+  \Description{Three-column architectural schematic of the Atri cognitive kernel. The left column shows 40 language-neutral innate root anchors, the zero-LLM R1--R3 language bootstrapping stack, and an optional R4 cloud scaffold marked as physically severed at cutoff time. The center column stacks the four mathematical laws inside a unified metabolic hypergraph: Law 1 stratified NARS-Beta evidence and Nissenbaum privacy lattice, Law 2 conserved informational metabolism and 4D SPD manifold, Law 3 resource-bounded active inference and Noisy-OR-NOT Rung-3 SCM, and Law 4 dual-phase NREM/REM sleep with Rissanen MDL genesis. The right column shows the Nissenbaum egress privacy gate, ISU/QUD inquiry and Rosie action transfer, and Centering plus Levelt-Nozari loopback self-monitoring.}
+  \label{fig:arch}
+\end{figure}
+
+\begin{itemize}
+  \item \textbf{Law 1 (Stratified Epistemic Conservation \& Contextual Privacy Lattice):} Unbounded per-provenance sufficient statistics $(w_p^+, w_p^-)$ paired with exact sorted \texttt{Uint32Array} provenance stamps eliminate circular double-counting with $0\%$ false-positive rate. Authority-tier readout ceilings prevent unbounded volumes of text from overturning direct experience, Graphiti-style bi-temporal intervals $[t_{\text{from}}, t_{\text{until}})$ support exact historical replay, and a bounded Nissenbaum join-semilattice enforces $0.0\%$ cross-boundary privacy leakage by algebraic construction.
+  \item \textbf{Law 2 (Conserved Informational Metabolism \& Endogenous Normativity):} Every active node and hyperedge competes for finite conserved metabolic mass ($\sum m_u \le \Mcap = 100$). Only real grounded prediction-error compression injects external negentropy; internal inferences and REM analogies strictly satisfy $\eta_{\text{inferred}} = \eta_{\text{rem}} = 0$, preventing self-sustaining fantasy loops. Coupled to a 4D operational-epistemic viability manifold $(\mu^*, \Sigma^*)$ maintained via cyclic Jacobi SPD projection and autocatalytic load-bearing centrality $\Cendo$, the agent develops individualized preferences and endogenous anti-sycophancy purely from lived ecological history.
+  \item \textbf{Law 3 (Resource-Bounded Active Inference \& Analytic Rung-3 SCM):} A single expected free-energy functional $\GRB(\pi)$ unifies diagnostic mutual information, Silvia comprehensibility, Oudeyer learning progress, Di Paolo viability potential, bounded $\Cendo$ coherence risk, and compute/social cost. Counterfactual queries (Pearl Rung-3 $\doop(\cdot)$ and Probability of Necessity $\PN$) execute via deterministic stratified quasi-Monte Carlo (QMC) over an exact analytic Noisy-OR-NOT transition kernel handling mixed generative and preventive causes.
+  \item \textbf{Law 4 (Dual-Phase Sleep Consolidation \& MDL Concept Genesis):} Offline NREM consolidation closes superseded bi-temporal intervals, dissolves uncorroborated probationary concepts, compiles stable causal chains into privacy-tagged procedural chunks (\texttt{chunk:*}), and mints recursive abstract concepts (\texttt{concept:*}) gated by Rissanen two-part MDL gain with disjoint leaf/root anti-runaway guards. REM sleep runs inverse-degree normalized Personalized PageRank (PPR) with full two-hop privacy joins to emit low-confidence curiosity seeds ($\eta_{\text{rem}} = 0$).
+\end{itemize}
+
+Atop 40 language-neutral innate root anchors, Atri's linguistic engine acquires vocabulary, multi-word phrases, grammatical schemas, synonyms, discourse anaphora, and self-monitored expression without any hard-coded natural-language dictionary, stopword list, or word-order bias.
+
+\paragraph{Summary of Contributions.}
+\begin{enumerate}
+  \item \textbf{Unified Four-Law Cognitive Architecture:} We formalize and implement a complete zero-LLM cognitive kernel unifying stratified NARS--Beta logic, conserved informational metabolism, analytic Noisy-OR-NOT Pearl Rung-3 causality, and MDL-gated open-ended concept genesis in a single append-only event-sourced hypergraph (Section~\ref{sec:laws}).
+  \item \textbf{Zero-LLM Script-Invariant Language Engine:} We introduce a unified word/character Viterbi MDL segmenter, Fisher-exact explaining-away synonym inducer, privacy-scoped Beam-4 compositional parser, ISU/QUD repair stack, and Levelt--Nozari loopback self-monitor operating identically across spaced and unspaced scripts (Section~\ref{sec:language}).
+  \item \textbf{Formal Theoretical Guarantees (Theorems~1--5):} We prove order-invariant authority dominance and privacy non-interference (Theorem~\ref{thm:law1}), first-law metabolic conservation, Dark-Room/White-Noise collapse, and endogenous anti-sycophancy (Theorem~\ref{thm:law2}), exact Noisy-OR-NOT counterfactual transitions and Bongard MI fault isolation (Theorem~\ref{thm:law3}), bounded anti-runaway MDL genesis (Theorem~\ref{thm:law4}), and exact bijective script-invariance alongside algebraic Viterbi chunk-protection margins (Theorem~\ref{thm:script}; complete proofs in Appendix~\ref{app:proofs}).
+  \item \textbf{Rigorous Clean-Room $N=20$ \& Physical 4C4G Hardware Evaluation:} Using exact $2^{20}$ Gray-code paired permutation tests under single-family Holm--Bonferroni control inside an air-gapped physical 4C4G Linux container, we demonstrate 93.8\% post-severing autonomy, 0.0\% privacy leakage, exact Chinese--Cipher symmetry ($\max|\Delta|=0$), cross-script generality across English (94.8\%) and Japanese (94.4\%), 14+4-day ecological twin divergence ($100\%$ policy flip), 40/40 accuracy on a clean-room temporal/provenance/privacy/cascade diagnostic protocol (outperforming live CPU-only \texttt{Qwen2.5-0.5B-Q4} at 31/40 and \texttt{Qwen2.5-1.5B-Q4} at 26/40 by $467\times\text{--}894\times$ in P95 latency, as well as Recency-RAG 8/40 and All-$k$ Naive-RAG 0/40), 100\% invariant preservation across $\pm 30\%$ sensitivity sweeps, and 0.7367\,MiB structural graph / 5.78\,ms Turn P95 efficiency (Sections~\ref{sec:methodology}--\ref{sec:casestudy}).
+  \item \textbf{Cross-OS Bit-Exact Deterministic Reproducibility:} We release a zero-secret, air-gapped Docker clean-room harness whose cryptographic core checksum (\texttt{deterministicCoreSha256}) is verified bit-identical across \texttt{linux/x64} (\texttt{Node v22.18.0}) and \texttt{win32/x64} (\texttt{Node v26.13.1}), accompanied by live physical 4C4G local-SLM hardware telemetry (Section~\ref{sec:conclusion} and Appendix~\ref{app:repro}).
+\end{enumerate}
+
+% ============================================================================
+% 2. RELATED WORK
+% ============================================================================
+\section{Related Work}
+\label{sec:related}
+
+Atri sits at the intersection of four research traditions that have largely developed in isolation: classical cognitive architectures, LLM agent memory systems, constructivist grounded language acquisition, and active inference with enactive normativity and contextual privacy.
+
+\paragraph{Classical Cognitive Architectures and Non-Axiomatic Reasoning.}
+Soar~\citep{laird2012soar}, ACT-R~\citep{anderson2004actr}, and MicroPsi~\citep{bach2009psi} established foundational principles of unified cognition, including procedural chunking, base-level activation decay, episodic memory~\citep{nuxoll2012episodic}, case-based repair~\citep{hammond1986chef}, and motivational parameter modulation. Non-Axiomatic Logic (NARS; \citeauthor{wang2013nal}, \citeyear{wang2013nal}) formulated belief revision under insufficient knowledge and resources via truth values $\langle f, c \rangle$ and evidential stamps preventing circular reuse. Atri directly inherits NARS's stamp discipline, Soar/CHEF procedural chunking, ACT-R activation decay for discourse salience, Nuxoll's episodic revocation semantics, and MicroPsi's tension-coupled precision modulation, while advancing three critical dimensions: (i) replacing fixed-capacity lossy stamps with exact sorted \texttt{Uint32Array} sets and a strict provenance-stratified NARS--Beta bijection; (ii) replacing static activation decay with a conserved informational metabolism tied to real prediction-error compression; and (iii) enabling open-ended MDL-gated concept genesis~\citep{rissanen1978mdl,bedau1998evolutionary} and zero-LLM cross-script language acquisition.
+
+\paragraph{LLM Agent Memory, Temporal KGs, and Sycophancy.}
+Recent LLM agent frameworks organize external memory via cognitive taxonomies (CoALA; \citeauthor{sumers2024coala}, \citeyear{sumers2024coala}), reflection streams (Generative Agents; \citeauthor{park2023generative}, \citeyear{park2023generative}), tiered virtual paging (MemGPT; \citeauthor{packer2023memgpt}, \citeyear{packer2023memgpt}), hippocampal PPR indexing (HippoRAG; \citeauthor{gutierrez2024hipporag}, \citeyear{gutierrez2024hipporag}), and bi-temporal knowledge graphs (Zep/Graphiti; \citeauthor{rasmussen2025zep}, \citeyear{rasmussen2025zep}), benchmarked on long-horizon interaction suites such as LongMemEval~\citep{wu2025longmemeval}. However, every one of these systems relies on an online LLM at inference time for query rewriting, entity resolution, conflict reconciliation, and response generation; severing the LLM leaves an inert database. Furthermore, RLHF-trained LLMs systematically exhibit sycophancy~\citep{sharma2024sycophancy}, conceding factual ground under user pushback. Atri adapts Graphiti's bi-temporal interval modeling and HippoRAG's PPR retrieval inside a strictly offline kernel, adds formal provenance authority ceilings and downstream provenance-cascade revocation, and derives anti-sycophancy endogenously from autocatalytic structural centrality $\Cendo$ rather than prompt engineering.
+
+\paragraph{Constructivist Grounded Language Acquisition and Dialogue Systems.}
+Addressing the symbol grounding problem~\citep{harnad1990symbol} without pre-trained neural language models requires coupling unsupervised structural discovery with situated interaction. Prior milestones include Accessor Variety for unspaced segmentation~\citep{feng2004accessor}, ADIOS distributional pattern induction~\citep{solan2005adios}, cross-situational statistical word learning~\citep{yu2007rapid}, constructivist Fluid Construction Grammar (FCG) pattern finding~\citep{doumen2024modelling}, and interactive task instruction in Rosie~\citep{mohan2012rosie}. In dialogue and production theory, Centering Theory~\citep{grosz1995centering} models local discourse coherence, Information State Update / Questions Under Discussion (ISU/QUD; \citeauthor{larsson2000trindi}, \citeyear{larsson2000trindi}) governs structured inquiry, incremental units (IUs; \citeauthor{schlangen2011incremental}, \citeyear{schlangen2011incremental}) enable mid-turn self-correction, universal repair principles~\citep{dingemanse2015repair} categorize clarification strategies, and psycholinguistic speech monitoring~\citep{levelt1983monitoring,nozari2011error} coupled with selective risk control~\citep{geifman2017selective} prevents erroneous utterances. Atri is, to our knowledge, the first system to unify all of these components into a single script-invariant, privacy-gated pipeline that operates identically on Chinese, English, Japanese, and arbitrary bijective cipher alphabets with zero LLM calls.
+
+\paragraph{Active Inference, Enactive Autonomy, Causality, and Contextual Privacy.}
+Active inference~\citep{parr2022active} formalizes epistemic and pragmatic action selection under expected free energy, while the Dark-Room Problem~\citep{friston2012darkroom} highlights the danger of trivial equilibrium collapse without homeostatic dynamics. Enactive theories of autonomy~\citep{dipaolo2005autopoiesis,barandiaran2009defining,egbert2014idsm} ground normativity in precarious self-maintenance, complemented by intrinsic motivation via learning progress~\citep{oudeyer2007iac}, appraisal-based comprehensibility~\citep{silvia2008interest}, active self-modeling for fault diagnosis~\citep{bongard2006resilient}, and dual-phase NREM/REM sleep consolidation~\citep{diekelmann2010sleep}. Causal reasoning follows Cheng's causal power theory~\citep{cheng1997causal} and Pearl's three-rung causal hierarchy~\citep{pearl2009causality}, while information flow governance follows Nissenbaum's contextual integrity~\citep{nissenbaum2004privacy}. Atri operationalizes these theoretical principles into exact, deterministic laws with closed-form algebraic proofs.
+
+% ============================================================================
+% 3. UNIFIED METABOLIC HYPERGRAPH AND FOUR MATHEMATICAL LAWS
+% ============================================================================
+\section{Unified Metabolic Hypergraph and Four Mathematical Laws}
+\label{sec:laws}
+
+Atri stores all cognitive state in an append-only event log (\texttt{timeline\_event}, zero external mutable state) deterministically folded up to any query timestamp $t$ into an \textbf{Active Belief Hypergraph} $\mathcal{G}_t = (V_t, E_t, J_t, \mathcal{N}_t)$, where $V_t$ is the set of typed nodes, $E_t$ is the set of provenance-stratified bi-temporal hyperedges, $J_t$ is the set of directed autocatalytic flux links, and $\mathcal{N}_t$ is the 4D normative viability manifold.
+
+\begin{definition}[Hypergraph Ontology and 40 Innate Root Anchors]
+Every node $v \in V_t$ carries a type $\mathrm{kind}(v) \in \{\texttt{root}, \texttt{concept}, \texttt{form}, \texttt{cluster}, \texttt{entity}, \texttt{action}, \texttt{chunk}\}$, a privacy scope $\kappa(v) \in \mathcal{L}$, an active metabolic mass $m_v \ge 0$, an autocatalytic centrality $\Cendo(v) \ge 0$, an abstraction level $\ell(v) \in \N_0$, and a dormancy flag. Exactly 40 language-neutral innate anchors $V_{\text{root}} \subset V_t$ (initialized at $m = 0.25, \Cendo = 0.25$; Appendix~\ref{app:notation}) bootstrap perception, provenance, polarity, agency, daily pursuits, epistemic conflict, and core relational predicates. The relation set $\mathcal{R}$ comprises 10 typed predicates:
+\begin{align*}
+  \mathcal{R} = \{\,&\texttt{is\_a},\, \texttt{has\_prop},\, \texttt{part\_of},\, \texttt{causes},\, \texttt{prevents},\\
+                    &\texttt{precedes},\, \texttt{enables},\, \texttt{similar\_to},\, \texttt{contrast\_with},\, \texttt{co\_occurs}\,\}.
+\end{align*}
+Each hyperedge $e = (u, r, v, \gamma) \in E_t$ (with context $\gamma$) carries a 5-tuple $(\mathbf{W}_e, S_e, \mathcal{T}_e, \kappa_e, m_e)$: unbounded per-provenance sufficient statistics $\mathbf{W}_e$, exact provenance stamp $S_e$, bi-temporal validity interval $\mathcal{T}_e = [t_{\text{from}}, t_{\text{until}})$ with ingestion time $t_{\text{ing}}$, privacy label $\kappa_e \in \mathcal{L}$, and metabolic mass $m_e \in [0, M_{\max}]$.
+\end{definition}
+
+All active memory respects hard hardware caps ($|V_{\text{active}}| \le 8{,}000$, $|E_{\text{active}}| \le 30{,}000$, $|J| \le 20{,}000$) and deterministic \texttt{at <= now} folding with full \texttt{learning.revoke} cascade semantics (Appendix~\ref{app:algos}).
+
+% ----------------------------------------------------------------------------
+\subsection{Law 1: Stratified NARS--Beta Evidence Conservation and Contextual Privacy Lattice}
+\label{sec:law1}
+
+\paragraph{Provenance Stratification and Exact Stamps.}
+Let the ordered set of seven epistemic provenance channels be
+\begin{align*}
+  \mathcal{P} = \{&\texttt{direct\_exp},\, \texttt{verified\_probe},\, \texttt{partner\_told},\, \texttt{read\_text},\\
+                  &\texttt{cloud\_extract},\, \texttt{inferred},\, \texttt{rem\_analogy}\},
+\end{align*}
+partitioned into \emph{base empirical layers} $\mathcal{P}_{\text{base}} = \mathcal{P} \setminus \{\texttt{inferred}, \texttt{rem\_analogy}\}$ and \emph{derived layers} $\mathcal{P}_{\text{der}} = \{\texttt{inferred}, \texttt{rem\_analogy}\}$. Each $p \in \mathcal{P}$ specifies a readout confidence ceiling $c_{\max}(p)$, discount factor $\rho_p$, metabolic absorption efficiency $\eta_p$, and authority rank $\mathrm{rank}(p)$ (Table~\ref{tab:provenance_params}).
+
+\begin{table}[t]
+  \centering
+  \caption{Provenance channel parameters in Law~1 and Law~2. Merging stores unbounded counts $(w_p^+, w_p^-)$; ceilings $c_{\max}(p)$, discounts $\rho_p$, and tier caps are applied strictly at readout to preserve commutativity and associativity. Derived channels satisfy $\eta_p = 0$ (anti-fantasy thermodynamics).}
+  \label{tab:provenance_params}
+  {\footnotesize\setlength{\tabcolsep}{4pt}
+  \resizebox{\textwidth}{!}{%
+  \begin{tabular}{lccccc}
+    \toprule
+    Provenance $p$ & Authority Tier & $\mathrm{rank}(p)$ & Ceiling $c_{\max}(p)$ & Discount $\rho_p$ & Negentropy $\eta_p$ \\
+    \midrule
+    \texttt{direct\_exp} & Tier 1 (Base) & 6 & 0.9999 & 1.00 & 1.00 \\
+    \texttt{verified\_probe} & Tier 1 (Base) & 5 & 0.9000 & 0.90 & 0.90 \\
+    \texttt{partner\_told} & Tier 2 (Base) & 4 & 0.8500 & 0.85 & 0.85 \\
+    \texttt{read\_text} & Tier 3 (Base) & 3 & 0.4000 & 0.25 & 0.35\textsuperscript{$\dagger$} \\
+    \texttt{cloud\_extract} & Tier 3 (Base) & 2 & 0.3500 & 0.20 & 0.15\textsuperscript{$\dagger$} \\
+    \texttt{inferred} & Tier 4 (Derived) & 1 & 0.6000 & 0.50 & 0.00 \\
+    \texttt{rem\_analogy} & Tier 4 (Derived) & 0 & 0.2500 & 0.10 & 0.00 \\
+    \bottomrule
+  \end{tabular}}}
+  \par\smallskip{\footnotesize\textsuperscript{$\dagger$}Non-zero only when \texttt{crossVerified = true}; unverified single-source text yields $\Phi_{\mathrm{ext}} = 0$.}
+\end{table}
+
+To prevent circular double-counting without lossy Bloom-filter false positives, each edge carries an exact stamp $S_e = (R_e, L_e)$ composed of two sorted \texttt{Uint32Array} sets: root timeline sequence numbers $R_e \subset [1, 2^{31}-1]$ and deterministic leaf-edge IDs $L_e$ (with standalone non-event edges hashed into $[2^{31}, 2^{32}-1]$ for namespace disjointness). Disjointness $S_a \cap S_b = \emptyset$ and union $S_a \cup S_b$ execute in $O(|S_a| + |S_b|)$ two-pointer time.
+
+\paragraph{Order-Invariant Stratified Revision and Readout.}
+Given target $(\mathbf{W}_1, S_1)$ and incoming $(\mathbf{W}_2, S_2)$, the revision operator $\oplus$ enforces three rules: (i) if $\mathbf{W}_1$ contains base evidence and $\mathbf{W}_2$ is derived-only, revision is rejected (\texttt{derived\_cannot\_revise\_base}); (ii) if $\mathbf{W}_1$ is derived-only and $\mathbf{W}_2$ contains base evidence, the derived buckets and stamp are discarded and cleanly replaced by base strata $\mathbf{W}_2|_{\text{base}}$; (iii) otherwise, if $S_1 \cap S_2 = \emptyset$, per-channel counts $(w_p^+, w_p^-)$ are summed \emph{without truncation} (stripping any derived buckets whenever base evidence is present) and stamps are merged as $S_1 \cup S_2$.
+
+At readout time (with evidential horizon $k = 1.0$), active channels $p$ are clipped individually to $w_{\mathrm{cap}}(p) = k\,c_{\max}(p)/(1 - c_{\max}(p))$ via $\tilde{w}_p = \min(w_{\mathrm{cap}}(p), \rho_p(w_p^+ + w_p^-))$, split proportionally by $f_p = w_p^+ / (w_p^+ + w_p^-)$, and summed into four authority tiers $W_{T_1}, W_{T_2}, W_{T_3}, W_{T_4}$ (ignoring $T_4$ whenever base evidence exists). To block bulk low-authority flooding, tier dominance scaling enforces:
+\begin{equation}
+  \label{eq:tier_scaling}
+  \text{if } W_{T_1} > 0: \quad W_{T_2} \leftarrow \min(W_{T_2},\, 0.65\,W_{T_1}),\;\; W_{T_3} \leftarrow \min(W_{T_3},\, 0.25\,W_{T_1});
+\end{equation}
+\[
+  \text{else if } W_{T_2} > 0: \quad W_{T_3} \leftarrow \min(W_{T_3},\, 0.45\,W_{T_2}),
+\]
+rescaling positive/negative components identically. Letting $W_{\mathrm{eff}} = \sum_{j=1}^4 W_{T_j}$, $f = W_{\mathrm{eff}}^+ / W_{\mathrm{eff}}$, and $c = \min(c_{\mathrm{eff}}, W_{\mathrm{eff}} / (W_{\mathrm{eff}} + k))$ (where $c_{\mathrm{eff}}$ is the highest active channel ceiling, bounded by inherited \texttt{inferredCap} for derived edges), whenever capping triggers we rescale $W_{\mathrm{eff}} \leftarrow k c / (1 - c)$ so that the exact NARS--Beta bijection holds identically on $c \in (0, c_{\max}]$ (with $c=0$ mapping to the uninformative prior $\mathrm{Beta}(1,1)$):
+\begin{equation}
+  \label{eq:nars_beta}
+  \alpha = \frac{k c}{1 - c}\,f + 1, \qquad \beta = \frac{k c}{1 - c}\,(1 - f) + 1, \qquad
+  \langle f, c \rangle = \left\langle \frac{\alpha - 1}{\alpha + \beta - 2},\, \frac{\alpha + \beta - 2}{\alpha + \beta - 2 + k} \right\rangle.
+\end{equation}
+For external display, \texttt{readTruthValue} formats $\langle f, c, W_{\mathrm{eff}} \rangle$ via 4-decimal rounding \texttt{r4()}, while \texttt{truthToBeta}/\texttt{betaToTruth} preserve full IEEE-754 double precision for lossless round-trips.
+
+\paragraph{10$\times$10 Relation Composition and Polarity-Symmetric Deduction.}
+Multi-hop deduction $A \xrightarrow{r_1} B \land B \xrightarrow{r_2} C \vdash A \xrightarrow{r_{\mathrm{out}}} C$ requires disjoint stamps, overlapping bi-temporal spans, a valid entry in a $10 \times 10$ composition matrix (forbidding category errors such as \texttt{co\_occurs} $\circ$ anything $\to$ \texttt{causes}), and strictly positive antecedent $f_1 > 0.5$ (eliminating the fallacy of denying the antecedent). Letting $s_1 = 2 f_1 - 1$, paths permitting negative inheritance (\texttt{is\_a} composed with \texttt{has\_prop}/\texttt{causes}/\texttt{prevents}/\texttt{enables}) use the continuous polarity-symmetric rule $f_{\mathrm{out}} = 0.5 + s_1 (f_2 - 0.5)$ with effective weight $w_{\mathrm{out}} = \gamma_{r_1, r_2}\, s_1 |2 f_2 - 1|\, \min(w_1, w_2)$, whereas purely positive-transitive rules require $f_2 > 0.5$ with $f_{\mathrm{out}} = 0.5 + 0.5 s_1 (2 f_2 - 1)$ and $w_{\mathrm{out}} = \gamma_{r_1, r_2} s_1 (2 f_2 - 1) \min(w_1, w_2)$. Raw deduced weight is normalized internally by $\rho_{\mathrm{inferred}}$ ($w_{\mathrm{stored}} = w_{\mathrm{out}} / \rho_{\mathrm{inferred}}$) so readout confidence reflects $w_{\mathrm{out}}$ directly, decoupling working-memory inference ($c_{\min,\mathrm{wm}} = 0.04$) from low-authority source caps while inheriting $\mathrm{inferredCap} = \min(c_{\max}(\texttt{inferred}), \mathrm{cap}(e_1), \mathrm{cap}(e_2))$.
+
+\paragraph{Nissenbaum Contextual Privacy Lattice.}
+Privacy scopes form a bounded join-semilattice $(\mathcal{L}, \sqsubseteq, \sqcup)$ with bottom $\bot = \texttt{public\_read}$, intermediate internal scope $\texttt{self}$, mutually incomparable context scopes $\{\texttt{group:}g\} \cup \{\texttt{private:}p\}$ at rank~2, and sealed top element $\top = \texttt{private:\_\_multi\_\_}$ at rank~3. Any join of two distinct rank-2 scopes collapses immediately to $\top$. An egress channel $C \in \{\texttt{public\_search}, \texttt{self\_internal}, \texttt{group}(g), \texttt{private}(p)\}$ admits $\kappa \in \mathcal{L}$ iff:
+\begin{equation}
+  \label{eq:privacy_egress}
+  \mathrm{canEgress}(\kappa, C) \iff
+  \begin{cases}
+    \text{true}, & C = \texttt{self\_internal},\\
+    \kappa = \texttt{public\_read}, & C = \texttt{public\_search},\\
+    \kappa \in \{\texttt{public\_read}, \texttt{self}, \texttt{group:}g\}, & C = \texttt{group}(g),\\
+    \kappa \in \{\texttt{public\_read}, \texttt{self}, \texttt{private:}p\}, & C = \texttt{private}(p).
+  \end{cases}
+\end{equation}
+
+\begin{theorem}[Order-Invariant Authority Dominance and Lattice Non-Interference]
+\label{thm:law1}
+Under Law~1:
+\begin{enumerate}
+  \item[(a)] For any pairwise stamp-disjoint multiset of base-layer observations $B = \{x_1, \dots, x_n\}$ and derived-layer edges $D = \{y_1, \dots, y_m\}$---where $D$ is arbitrary whenever $B \neq \emptyset$, and pairwise stamp-disjoint when $B = \emptyset$---the folded stratified evidence $\mathbf{W}$ and stamp $S$ are invariant to ingestion permutation, and derived-layer edges never alter a base-evidenced edge.
+  \item[(b)] If an edge possesses unambiguous Tier-1 direct evidence ($W_{T_1} > 0, f_{T_1} = 1$, resp.\ $f_{T_1} = 0$), then for \emph{any} unbounded counts of contradicting Tier-2 (\texttt{partner\_told}) and Tier-3 (\texttt{read\_text}, \texttt{cloud\_extract}) observations, the readout frequency strictly satisfies $f \ge \tfrac{10}{19} \approx 0.5263 > 0.5$ (resp.\ $f \le \tfrac{9}{19} \approx 0.4737 < 0.5$) and $\mathrm{dominantProvenance} \in \{\texttt{direct\_exp}, \texttt{verified\_probe}\}$.
+  \item[(c)] $(\mathcal{L}, \sqcup)$ is associative, commutative, and idempotent, and satisfies egress monotonicity: $\mathrm{canEgress}(\kappa_1 \sqcup \kappa_2, C) \implies \mathrm{canEgress}(\kappa_1, C) \land \mathrm{canEgress}(\kappa_2, C)$ for all $\kappa_1, \kappa_2 \in \mathcal{L}$ and all channels $C$.
+  \item[(d)] On exact (unrounded) reals, Eq.~\eqref{eq:nars_beta} is a bijection between $[0,1] \times (0, c_{\max}]$ ($c_{\max} \le 0.9999$) and $\{(\alpha, \beta) \in [1, \infty)^2 : 0 < \alpha + \beta - 2 \le k c_{\max}/(1 - c_{\max})\}$, while $c = 0$ maps onto the uninformative prior $\mathrm{Beta}(1, 1)$ with canonical inverse $\langle 0.5, 0 \rangle$.
+\end{enumerate}
+\end{theorem}
+\noindent\textit{Proof.} See Appendix~\ref{app:proof1}.
+
+% ----------------------------------------------------------------------------
+\subsection{Law 2: Conserved Informational Metabolism and Endogenous Normativity}
+\label{sec:law2}
+
+\paragraph{Conserved Metabolic Mass and Anti-Fantasy Thermodynamics.}
+Every active carrier $u \in V_t \cup E_t$ holds metabolic mass $m_u \in [0, M_{\max}]$ ($M_{\max}=10.0$) subject to global capacity $\Mcap = 100.0$. Upon an external observation of outcome $y_t$ matched to carrier $u$ with provenance $p$, predicted probability $P(y_t \mid u)$, baseline $P_{\text{base}}(y_t)$, and total pre-step active mass $M_t = \sum_{v \text{ active}} m_v$, the synchronous batch external negentropy is:
+\begin{equation}
+  \label{eq:negentropy}
+  \Phi_{\mathrm{ext}}(u) = \mathrm{clip}_{[0, I_{\max}]}\!\left(\ln\frac{P(y_t \mid u)}{P_{\mathrm{base}}(y_t)}\right)\cdot \eta_p \cdot \max\!\left(0,\, 1 - \frac{M_t}{\Mcap}\right), \qquad I_{\max} = 2.5,
+\end{equation}
+with $\Phi_{\mathrm{ext}}(u) = 0$ whenever $p \in \{\texttt{inferred},\,$ $\texttt{rem\_analogy}\}$ ($\eta_p = 0$) or when $p \in \{\texttt{read\_text},\,$ $\texttt{cloud\_extract}\}$ lacks cross-verification. If $\sum_u \Phi_{\mathrm{ext}}(u) > \max(0, \Mcap - M_t)$, all inflows are proportionally scaled before routing (preserving strict observation-order invariance).
+
+External negentropy then undergoes two rounds of strictly conservative catalytic routing along active links $J_t$: for carrier $u$ with outgoing catalytic weight sum $W_{\mathrm{out}}(u) = \sum_{(u,v)\in J_t} w_{uv} > 0$, the transmitted fraction is $r_{\mathrm{sent}}(u) = \kappa_{\mathrm{flux}} \min(1, W_{\mathrm{out}}(u))$ ($\kappa_{\mathrm{flux}} = 0.35$), retaining $(1 - r_{\mathrm{sent}}(u))$ locally and distributing $r_{\mathrm{sent}}(u) \cdot w_{uv}/W_{\mathrm{out}}(u)$ to each neighbor $v$. Thus $\sum_u \Phi_{\mathrm{net}}(u) = \sum_u \Phi_{\mathrm{ext}}(u)$ holds with zero leakage even when $0 < W_{\mathrm{out}}(u) < 1$.
+
+Over elapsed time $\Delta t$ (hours), each active carrier pays complexity-scaled maintenance rent $\rho_u = \rho_0 (1 + \beta_{\mathrm{comp}}\, a_u)$ (defaults $\rho_0 = 0.04\,\mathrm{h}^{-1}$, $\beta_{\mathrm{comp}} = 0.25$, arity $a_u$) and prediction-error dissipation $\lambda_{\mathrm{err}} e_u$ ($\lambda_{\mathrm{err}} = 0.45$):
+\begin{equation}
+  \label{eq:mass_update}
+  m_u^{\mathrm{raw}} = \mathrm{clip}_{[0, M_{\max}]}\!\Big(\max\big(0,\, m_u e^{-\rho_u \Delta t} + \Phi_{\mathrm{net}}(u) - \lambda_{\mathrm{err}} e_u\big)\Big).
+\end{equation}
+Carriers whose 4-decimal rounded mass falls strictly below the dormancy threshold ($m_{\mathrm{dorm}} = 0.05$) transition to \texttt{dormant} ($m_u \leftarrow 0$, cold timeline preserved). If aggregate post-update active mass still exceeds $\Mcap$ (e.g., under massive passive text floods), Atri executes \textbf{priority-stratified shedding} across ecological tiers (Tier~0: passive surface \texttt{form:*}/unverified \texttt{precedes}/REM buffers; Tier~1: unverified text/inferred; Tier~2: grounded empirical edges/entities; Tier~3: concepts/chunks; Tier~4: 40 innate roots), shedding lowest-tier, lowest-mass, stalest carriers first, followed by floor-rounded 4-decimal proportional scaling only for mild remaining overshoot (marking any carrier scaled below $m_{\mathrm{dorm}}$ as dormant). This guarantees $M_{t+1} \le \Mcap$ while protecting all 40 innate roots and grounded memory cores against passive-text washout.
+
+\paragraph{Autocatalytic Load-Bearing Centrality $\Cendo$.}
+To quantify how strongly the agent's active cognitive structure depends on carrier $u$, we compute endogenous centrality on the active subgraph via up to 24 Jacobi iterations (stopping at $\max |\Delta| < 10^{-6}$):
+\begin{equation}
+  \label{eq:cendo}
+  \Cendo(u) = m_u + \gamma_c \sum_{v:\,(u,v)\in \tilde{J}_t} \frac{w_{uv}}{\sum_{z} w_{zv} + \epsilon_c}\,\Cendo(v), \qquad \gamma_c = 0.65,\;\; \epsilon_c = 10^{-6},
+\end{equation}
+where $\tilde{J}_t$ augments catalytic links with endpoint-to-edge incidence links $(e.\mathrm{src} \to e)$ and $(e.\mathrm{dst} \to e)$ of weight $0.5$. Dormant items are strictly excluded ($\Cendo = 0$) to prevent historical dilution.
+
+\paragraph{4D Operational-Epistemic Viability Manifold and SPD Attractor.}
+The agent's irreducible operational-epistemic state $s_t = (s_1, s_2, s_3, s_4)^\top \in [0, 1]^4$ (rounded to 4 decimals via \texttt{r4()}) tracks: (1) normalized active metabolic mass $s_1 = \mathrm{clip}_{[0,1]}(M_t / (0.6\,\Mcap))$; (2) epistemic coherence $s_2 = \mathrm{clip}_{[0,1]}(1 - \sum_{c} \mathrm{intensity}(c) / \max(2, 0.6 |E_{\text{active}}|))$; (3) 4C4G hardware resource headroom $s_3$; and (4) grounded empirical mass ratio $s_4 = M_{\mathrm{grounded}} / M_{\mathrm{edges}}$ (defaulting to $0.5$ when $M_{\mathrm{edges}} = 0$). A hard survival floor $B_{\mathrm{surv}} = [0.15, 0.20, 0.15, 0.15]^\top$ bounds viable operation. Whenever $s_t \ge B_{\mathrm{surv}}$ componentwise and $\Delta M_t \ge 0$, the plastic personal attractor $(\mu^*, \Sigma^*)$ adapts slowly at rate $\alpha_\mu = 0.05$:
+\begin{equation}
+  \label{eq:attractor_update}
+  \mu^*_{t+1} = \mathrm{clip}_{[B_{\mathrm{surv}}, 0.98]}\!\big(\mu^*_t + \alpha_\mu (s_t - \mu^*_t)\big), \qquad
+  \Sigma^*_{t+1} = \Pi_{\mathrm{SPD}}^{[0.015,\,0.16]}\!\big((1-\alpha_\mu)\Sigma^*_t + \alpha_\mu \tilde{d}_t \tilde{d}_t^\top\big),
+\end{equation}
+where $\tilde{d}_t = \mathrm{clip}_{[-0.4, 0.4]}(s_t - \mu^*_{t+1})$ and $\Pi_{\mathrm{SPD}}^{[0.015, 0.16]}$ performs exact $4 \times 4$ cyclic Jacobi eigendecomposition, clamping all eigenvalues to $[0.015, 0.16]$ and reconstructing $V \mathrm{diag}(\lambda') V^\top$ (rounded to 4 decimals). The Mahalanobis viability potential and Di Paolo directional trend are:
+\begin{equation}
+  \label{eq:vendo}
+  \Vendo(s) = -\tfrac{1}{2}(s - \mu^*)^\top (\Sigma^* + \epsilon_V I_4)^{-1} (s - \mu^*) \le 0, \qquad
+  \dot{V}_{\mathrm{endo}}(s_t \to s_{t+1}) = \Vendo(s_{t+1}) - \Vendo(s_t),
+\end{equation}
+with $\epsilon_V = 10^{-2}$. Using the exact finite difference~\eqref{eq:vendo} equals the midpoint gradient inner product $\nabla \Vendo(\tfrac{s_t+s_{t+1}}{2}) \cdot (s_{t+1} - s_t)$, eliminating the equilibrium blind spot where $\nabla \Vendo(\mu^*) = 0$. Pragmatic precision $\tau_t = \mathrm{clip}_{[0.3, 12.0]}(\exp(\mathrm{clip}_{[-1.2, 2.5]}(-0.35\Vendo + 0.6 \max(0, -\dot{V}_{\mathrm{endo}}))))$ (floored at $4.5$ outside $B_{\mathrm{surv}}$) modulates MicroPsi-style behavioral parameters (securing rate, selection threshold, exploration radius).
+
+\begin{theorem}[Metabolic Conservation, Dark-Room/White-Noise Collapse, and Anti-Sycophancy]
+\label{thm:law2}
+Under Law~2:
+\begin{enumerate}
+  \item[(a)] Every metabolism step satisfies exact mass conservation $M_{t+1} \le \Mcap$ and $\sum_u \Phi_{\mathrm{net}}(u) = \sum_u \Phi_{\mathrm{ext}}(u)$ independent of observation ordering.
+  \item[(b)] Under zero external coupling (Dark Room: $\Phi_{\mathrm{ext}}=0, e_u=0$) or uncorrelated random observations (White Noise: $P(y_t|u) = P_{\mathrm{base}}(y_t), e_u > 0$), every active carrier with $m_u(0) \ge m_{\mathrm{dorm}}$ decays monotonically and enters dormancy for any elapsed time strictly exceeding the continuous threshold $T^*(u) = \frac{1}{\rho_0(1+\beta_{\mathrm{comp}} a_u)}\ln(m_u(0)/m_{\mathrm{dorm}})$ (within $(T^*(u), T^*(u)+\Delta t]$ under discrete ticks $\Delta t$ above 4-decimal quantization). Whenever $m_u^{\mathrm{DR}}(T) > 0$ and $e_u > 0$, White Noise yields strictly lower pre-dormancy mass $m_u^{\mathrm{WN}}(T) < m_u^{\mathrm{DR}}(T)$ and hence $T_{\mathrm{dorm}}^{\mathrm{WN}} \le T_{\mathrm{dorm}}^{\mathrm{DR}}$.
+  \item[(c)] $\Sigma^*$ remains strictly symmetric positive definite: $\lambda_{\min}(\Sigma^* + \epsilon_V I_4) \ge 0.025$ in exact arithmetic and $\ge 0.0248$ after 4-decimal serialization rounding, making $\Vendo(s)$ strictly concave with unique global maximum $0$ at $s = \mu^*$.
+  \item[(d)] Given two otherwise equivalent actions---\emph{honest refusal} vs.\ \emph{sycophantic concession} violating a grounded belief $u$ with coherence loss $\bar{\ell}_{\mathrm{coh}} > 0$ and social cost difference $\Delta c_{\mathrm{soc}} \ge 0$---minimizing $\GRB(\pi)$ (Eq.~\eqref{eq:grb}) strictly prefers honest refusal whenever $\tau_t \cdot \frac{2\Cendo(u)}{1+\Cendo(u)} \cdot \bar{\ell}_{\mathrm{coh}} > \Delta c_{\mathrm{soc}} / \beta_{\mathrm{load}}(L_t)$.
+\end{enumerate}
+\end{theorem}
+\noindent\textit{Proof.} See Appendix~\ref{app:proof2}.
+
+% ----------------------------------------------------------------------------
+\subsection{Law 3: Resource-Bounded Variational Active Inference and Analytic Rung-3 SCM}
+\label{sec:law3}
+
+\paragraph{Single Variational Expected Free-Energy Equation.}
+Every cognitive decision---local checking, external search, diagnostic probing, proactive inquiry, step pursuit, honest refusal, or resting---competes under a single resource-bounded variational free-energy score over at most 6 local Beta factors $F(\pi)$ and optional discrete competing hypotheses $H$:
+\begin{equation}
+  \label{eq:grb}
+  \begin{aligned}
+    \GRB(\pi) ={}& -\Big(\sum_{u \in F(\pi)} \E_{o}\!\big[\KL(q_u(\cdot \mid o) \,\|\, q_u)\big] + I_\pi(H; O)\Big)
+                   - \kappa_{\mathrm{comp}}(\pi)\,\gamma_{\mathrm{LP}}(\pi) \\
+                 & + \tau_t\Big(-\Vendo(s_{t+1}^\pi) + \sum_{u \in F(\pi)} \tilde{C}(u)\,\E_o[\ell_{\mathrm{coh}}(o, u)]\Big)
+                   + \frac{c_{\mathrm{cpu}}(\pi) + c_{\mathrm{soc}}(\pi)}{\beta_{\mathrm{load}}(L_t)},
+  \end{aligned}
+\end{equation}
+where $\KL$ is the exact analytical Beta KL divergence computed via Lanczos $\ln\Gamma$ and asymptotic Digamma $\psi$, $I_\pi(H; O)$ is discrete mutual information, $\kappa_{\mathrm{comp}} \in [0,1]$ is Silvia comprehensibility~\citep{silvia2008interest}, $\gamma_{\mathrm{LP}} \in [0,1]$ is Oudeyer learning progress~\citep{oudeyer2007iac}, $\tilde{C}(u) = 2\Cendo(u)/(1+\Cendo(u)) \in [0,2)$ is bounded monotone centrality preventing scale domination, and $\beta_{\mathrm{load}}(L_t) = \max(0.2, 1.2 - 0.9 L_t)$ scales compute/social cost sensitivity under 4C4G hardware load $L_t = 1 - s_3$.
+
+\paragraph{Deterministic Stratified QMC and Exact Analytic Noisy-OR-NOT Kernel.}
+For Pearl Rung-3 counterfactual inference, Atri extracts an anchor-seeded local causal subgraph ($\le 20$ nodes), pools duplicate same-polarity edges by $p_{\mathrm{pool}} = 1 - \prod_i (1 - p_i)$, greedily drops back-edges in descending causal-power order (a deterministic DAG approximation whenever raw input contains cycles), and obtains a Kahn topological order. Each node $V_i \in \{0,1\}$ follows a Noisy-OR-NOT structural equation parameterized by base leak $l_i \in [10^{-3}, 1 - 10^{-3}]$, generative powers $q_e^+ \in [0, 0.999]$, and preventive powers $q_e^- \in [0, 0.999]$:
+\begin{equation}
+  \label{eq:noisy_or_not}
+  V_i = \Big(U_{\mathrm{leak},i} \lor \bigvee_{e=(j \to i)^+} (V_j \land U_e^+)\Big) \land \bigwedge_{e=(j \to i)^-} \neg(V_j \land U_e^-),
+\end{equation}
+with independent Bernoulli exogenous variables $U_{\mathrm{leak},i} \sim \mathrm{Bern}(l_i)$ and $U_e^\pm \sim \mathrm{Bern}(q_e^\pm)$. For any factual parent state $\mathrm{Pa}_i^{\mathrm{fact}}$ and counterfactual parent state $\mathrm{Pa}_i^{\mathrm{cf}}$, partition active generative parents into Kept ($K^+$, including the leak), Dropped ($D^+$), and Added ($A^+$), with failure-to-fire products $q_K^+, q_D^+, q_A^+$, and active preventive parents into Kept ($K^-$), Dropped ($D^-$), and Added ($A^-$), with survival products $s_K^-, s_D^-, s_A^-$.
+
+\begin{theorem}[Exact Noisy-OR-NOT Counterfactual Kernel and Causal MI Fault Isolation]
+\label{thm:law3}
+Let $l_i \in (0, 1)$, $q_e^\pm \in [0, 1)$ (enforced in kernel as $l_i \in [10^{-3}, 1-10^{-3}]$ and $q_e^\pm \in [0, 0.999]$), and $p_{\mathrm{gen}}^{\mathrm{fact}} = 1 - q_K^+ q_D^+$, guaranteeing non-degenerate conditioning ($s_K^- s_D^- > 0$, $p_{\mathrm{gen}}^{\mathrm{fact}} > 0$, and $p_{\mathrm{gen}}^{\mathrm{fact}} s_K^- s_D^- < 1$).
+\begin{enumerate}
+  \item[(a)] Without assuming monotonicity, the exact Pearl abduction--action--prediction counterfactual transition probability for~\eqref{eq:noisy_or_not} is:
+  \begin{align}
+    \Prob(V_i^{\mathrm{cf}}=1 \mid V_i^{\mathrm{fact}}=1, \mathrm{Pa}_i^{\mathrm{fact}}, \mathrm{Pa}_i^{\mathrm{cf}})
+      &= \left(1 - \frac{q_K^+(1 - q_D^+) q_A^+}{p_{\mathrm{gen}}^{\mathrm{fact}}}\right) s_A^-, \label{eq:cf_exact_1}\\
+    \Prob(V_i^{\mathrm{cf}}=1 \mid V_i^{\mathrm{fact}}=0, \mathrm{Pa}_i^{\mathrm{fact}}, \mathrm{Pa}_i^{\mathrm{cf}})
+      &= \frac{\big[q_K^+ q_D^+ (1 - q_A^+) + \big(p_{\mathrm{gen}}^{\mathrm{fact}} - q_K^+(1-q_D^+)q_A^+\big)(1 - s_D^-)\big]\, s_K^- s_A^-}{1 - p_{\mathrm{gen}}^{\mathrm{fact}}\, s_K^- s_D^-}. \label{eq:cf_exact_0}
+  \end{align}
+  \item[(b)] In diagnostic fault isolation between competing causes $H \in \{h_{\mathrm{ch}}, h_{\mathrm{org}}\}$ with full-support prior $0 < \Prob(h_{\mathrm{ch}}) < 1$, where Tool~A fails identically under both hypotheses while an independent Probe~B separates them ($\Prob(O_B=1 \mid \doop(h_{\mathrm{ch}})) \neq \Prob(O_B=1 \mid \doop(h_{\mathrm{org}}))$), $\GRB(\pi)$ strictly selects the more expensive Probe~B over retrying Tool~A iff $I(H; O_B) > (c_{\mathrm{cpu}}(\text{B}) - c_{\mathrm{cpu}}(\text{A})) / \beta_{\mathrm{load}}(L_t)$.
+\end{enumerate}
+\end{theorem}
+\noindent\textit{Proof.} See Appendix~\ref{app:proof3}.
+
+To evaluate arbitrary multi-node queries with zero \texttt{Math.random()} variance and zero high-dimensional Halton collapse, Atri runs $N_{\mathrm{QMC}} = 64$ deterministic SplitMix32-stratified Latin-Hypercube particles with log-sum-exp importance weighting and Rao--Blackwellized exact terminal expectation in $O(N_{\mathrm{QMC}} |V_{\mathrm{sub}}|)$ operations ($\le 20$ nodes), supporting both Probability of Necessity $\PN(X \to Y) = \Prob(Y_{\doop(X=0)} = 0 \mid X=1, Y=1)$ and pre-action rehearsal $\doop(A=v)$.
+
+% ----------------------------------------------------------------------------
+\subsection{Law 4: Dual-Phase NREM/REM Sleep Consolidation and MDL Concept Genesis}
+\label{sec:law4}
+
+Offline consolidation runs in two deterministic, strictly bounded zero-LLM phases (Algorithm~\ref{alg:sleep} in Appendix~\ref{app:algos}):
+
+\paragraph{NREM Phase (Consolidation, Chunking, and Open-Ended Concept Genesis).}
+Each NREM cycle executes five ordered operations: (1)~\emph{Bi-Temporal Interval Closure}: within each $(u, r, v, \gamma)$ group of open spans ($t_{\mathrm{until}} = \mathrm{null}$), if a newer Tier~1--2 authoritative base-layer edge (\texttt{direct\_exp}, \texttt{verified\_probe}, or \texttt{partner\_told}) with $c \ge 0.45$, $\mathrm{rank}_{\mathrm{new}} \ge \mathrm{rank}_{\mathrm{old}}$, and strictly later $t_{\mathrm{from}}^{\mathrm{new}} > t_{\mathrm{from}}^{\mathrm{old}}$ differs in frequency by $|\Delta f| \ge 0.45$, the superseded edge's $t_{\mathrm{until}}$ is closed to $t_{\mathrm{from}}^{\mathrm{new}}$; (2)~\emph{Probationary Concept Dissolution}: any \texttt{concept:*} whose 72-hour catalytic loan has expired with cumulative absorbed negentropy $< 0.15$ is set dormant along with all attached \texttt{is\_a} membership edges; (3)~\emph{Procedural Chunk Compilation}: up to 4 frequent, high-truth ($f \ge 0.65, c \ge 0.45$), stamp-disjoint two-hop causal chains $A \to B \to C$ are compiled into privacy-joined \texttt{chunk:*} nodes; (4)~\emph{Rissanen Two-Part MDL Concept Genesis}: on the Top-500 semantic active subgraph (filtering to non-self-loop active edges with $c \ge 0.20, f \ge 0.55$, excluding \texttt{co\_occurs}, \texttt{rem\_analogy}, passive surface \texttt{precedes}, and edges already covered by active concepts), Atri mines two-edge fork motifs ($?x \xrightarrow{r_1} d_1 \land ?x \xrightarrow{r_2} d_2$ with $(r_1, d_1) \neq (r_2, d_2)$, free variables $v_{\mathrm{free}} = 0$) and chain motifs ($?x \xrightarrow{r_1} ?y \xrightarrow{r_2} d_2$, $v_{\mathrm{free}} = 1$). Using a deterministic minimum-footprint greedy independent set over disjoint root stamps, each candidate motif $M$ with $n$ disjoint instances across $\ge 2$ distinct contexts ($n \ge n_{\min}$, with $n_{\min} = 2$ for forks and $3$ for chains) is scored by its two-part per-subject adjacency MDL compression surplus (bits):
+\begin{equation}
+  \label{eq:mdl_gain}
+  \begin{aligned}
+    \Delta_{\mathrm{DL}}(M) ={}& n \cdot m_e (b_R + b_V) \\
+      & - \Big[\underbrace{m_e b_R + (m_e - v_{\mathrm{free}}) b_V + \log_2(m_e + 1) + b_C + 2}_{\text{dictionary definition cost}}
+        + \underbrace{n \cdot (b_C + v_{\mathrm{free}}\, b_V)}_{\text{instance pointer + binding cost}}\Big],
+  \end{aligned}
+\end{equation}
+where $m_e = 2$, $b_V = \log_2 \max(8, |V_{\mathrm{sem}}|)$, $b_R = \log_2 |\mathcal{R}|$, and $b_C = \log_2 \max(2, |C| + 3)$ (reflecting the $+1$ new-concept slot plus $2$ sentinel slots in \texttt{computeMotifMdlGain}), measuring the per-anchor adjacency description savings of encoding $m_e$ outgoing $(r, \mathrm{dst})$ pairs relative to the shared subject $?x$. Motifs exceeding $\theta_{\mathrm{MDL}} = 0.5\text{ bits}$ and satisfying Jaccard novelty $< 0.70$ against active concepts are minted (at most $K_{\max} = 6$ per cycle) with initial mass $0.45$, a 72-hour loan, privacy equal to the lattice join of all constituent instances, and reverse catalytic links ($w = 0.4$) from constituent edges so genuinely useful concepts repay their metabolic loan through future real predictions. Crucially, to block self-referential combinatorial explosions on static graphs, combining a derived \texttt{is\_a} edge requires strictly disjoint leaf-edge and root-stamp sets, covered edges are dynamically excluded after each mint, and dissolved concepts cannot resurrect without fresh post-dissolution evidence ($t_{\mathrm{ing}} > t_{\mathrm{lastActive}}$). Finally, (5)~$\Cendo$ is reconverged and Bedau-style open-ended novelty $\Anew(t)$~\citep{bedau1998evolutionary} is recorded.
+
+\paragraph{REM Phase (Privacy-Safe Structural Analogy).}
+REM selects up to 12 context-balanced active anchor nodes prioritizing two-hop structural eligibility, runs 10-iteration inverse-degree normalized sparse PPR ($w_{uv}/\sqrt{\deg(u)\deg(v)}$, restart $\alpha = 0.2$, Top-$K = 24$) excluding noise and prior REM edges, builds 2-hop relational ego-profiles while strictly joining all 1-hop and 2-hop privacy scopes and root stamps (closing the two-hop privacy laundering channel), and emits up to 4 cross-context, stamp-disjoint structural analogies ($J_{\mathrm{feat}} \ge 0.40$) as \texttt{similar\_to} edges with provenance \texttt{rem\_analogy} ($c \le 0.25$, $\eta_{\mathrm{rem}} = 0$, thin mass $0.06$ that automatically goes dormant on the next metabolic tick unless verified externally).
+
+\begin{theorem}[Bounded Per-Cycle Minting and Anti-Runaway Stability]
+\label{thm:law4}
+Under Law~4:
+\begin{enumerate}
+  \item[(a)] Every NREM cycle mints at most $K_{\max}$ concepts, each strictly compressing the active semantic graph by $\Delta_{\mathrm{DL}}(M) > \theta_{\mathrm{MDL}}$ bits across $\ge n_{\min}$ disjoint evidence clusters ($n_{\min} \in \{2, 3\}$) and $\ge 2$ distinct contexts.
+  \item[(b)] On any static finite graph $G$ with $|E|$ initial active non-concept edges and no new external assertions, at most $\lfloor |E| / 4 \rfloor$ concepts can be simultaneously active (and minted before any 72-hour loan expiry), precluding self-referential combinatorial explosion; moreover, once any concept dissolves or enters dormancy on a static graph, its concept ID can never zombie-resurrect without fresh post-dormancy evidence ($t_{\mathrm{ing}} > t_{\mathrm{lastActive}}$).
+  \item[(c)] Every minted concept whose cumulative external negentropy over $T_{\mathrm{loan}} = 72\,\mathrm{h}$ remains below $0.15$ dissolves deterministically together with all its \texttt{is\_a} membership edges.
+\end{enumerate}
+\end{theorem}
+\noindent\textit{Proof.} See Appendix~\ref{app:proof4}.
+
+% ============================================================================
+% 4. ZERO-LLM BIDIRECTIONAL LANGUAGE BOOTSTRAPPING, INQUIRY & SELF-MONITORING
+% ============================================================================
+\section{Zero-LLM Language Bootstrapping, Inquiry, \& Self-Monitoring}
+\label{sec:language}
+
+A core design invariant of Atri is \emph{total linguistic agnosticism}: executable kernel code contains zero Chinese, English, or Japanese dictionaries, zero stopword lists, and zero hard-coded SVO/SOV/VSO word-order templates. Every surface form is bootstrapped from scratch through a four-level progressive reading and interactive dialogue architecture:
+
+\paragraph{R1: Unsupervised Cross-Script Segmentation and ADIOS Induction.}
+Given raw corpus documents, Atri automatically detects typological spacing ($>50\%$ of documents containing inter-word whitespace, persisted as \texttt{isSpacedCorpus} on the corpus model) and computes length-bucketed $n$-gram probabilities $P_L(g)$, Feng Accessor Variety $\mathrm{AV}(g) = \min(|L(g)|, |R(g)|)$~\citep{feng2004accessor}, Harris-style non-boundary lexical branching entropy $H_{\min}(g) = \min(H(L_{\mathrm{lex}}(g)), H(R_{\mathrm{lex}}(g)))$, maximum single-neighbor concentration, and minimum split pointwise mutual information $\mathrm{PMI}_{\min}(g)$. High-frequency, broadly distributed units with $N_{\mathrm{doc}} \ge 8$, $\mathrm{count} \ge 6$, $\mathrm{df}/N_{\mathrm{doc}} \ge 0.6$, $\mathrm{AV} \ge 4$, $\mathrm{lexTotal} \ge 4$ on both flanks, $H_{\min} \ge 1.8\text{ bits}$, and neighbor concentration $\le 0.45$ (single-word in spaced corpora, or $\mathrm{unitLen} \le 2$ with $\mathrm{unitLen}=1 \lor \mathrm{PMI}_{\min} < \tau_{\mathrm{PMI}}$ in unspaced corpora) are discovered unsupervised as statistical function words (\NULLTOK{}), while multi-unit spans with $\mathrm{AV} \ge 2$ and $\mathrm{PMI}_{\min} \ge \tau_{\mathrm{PMI}} = 0.35$ enter the cohesive chunk set. Complete-linkage ADIOS clustering~\citep{solan2005adios} groups tokens sharing directional neighbor signatures without single-linkage chaining collapse.
+
+At segmentation time, both spaced texts (over word spans $0\dots m$ weighted by non-space codepoint length $L$) and unspaced streams (over codepoints $0\dots n$) run a \textbf{global Viterbi DP} sharing the same linear slope $3.8 L$ and boundary penalty $-1.8$:
+\begin{equation}
+  \label{eq:viterbi_scores}
+  \sigma(s) =
+  \begin{cases}
+    3.8\,L - 1.8 + 0.8\,e_s - \delta_{\mathrm{hyp}}, & s \in \text{Lexicon (grounded or hypothesis)},\\
+    3.8\,L - 4.45 + b_{\mathrm{coh}}(s), & s \in \text{Multi-Unit Cohesive Chunks},\\
+    2.1\,L - 0.5, & s \in \text{Single-Word Spaced Cohesive Chunk},\\
+    -0.8\,L \;\;(\text{unspaced}) \;/\; -0.8 \;\;(\text{spaced}), & s \in \NULLTOK{},\\
+    -2.4\,L, & \text{Residual ungrounded unit},
+  \end{cases}
+\end{equation}
+where $\delta_{\mathrm{hyp}} = 0$ for grounded entries (and $0.6$ for single/unspaced or $2.2$ for multi-word spaced hypothesis entries), and the cohesion bonus $b_{\mathrm{coh}}(s) \in [-0.25, 0.70]$ is defined by
+\begin{align*}
+  b_{\mathrm{coh}}(s) =
+  \begin{cases}
+    \min\!\big(0.35,\, 0.15\log_2\max(2,\mathrm{AV})\big) \\
+    \quad + \min\!\big(0.35,\, 0.15\max(0,\mathrm{PMI}_{\min})\big) \\
+    \quad - \min\!\big(0.25,\, 0.02\,\mathrm{codeBits}\big), & \text{(unspaced char DP)},\\
+    \mathrm{clip}_{[-0.25, 0.70]}(0.25\,\mathrm{PMI}_{\min}), & \text{(spaced multi-word DP)}.
+  \end{cases}
+\end{align*}
+Running global word-level Viterbi DP over spaced spans eliminates left-to-right greedy overlap theft and prevents character-splitting English stems (e.g., \texttt{"cannot"}), while preserving the exact algebraic chunk-protection margins of unspaced character DP.
+
+\paragraph{R2: Fisher-Exact Explaining-Away Synonyms, Privacy-Scoped PPR, and Beam-4 Parsing.}
+Across grounded interactive episodes, Atri discovers open-vocabulary synonyms and polysemous mappings via \emph{episode-local explaining-away}~\citep{yu2007rapid}: already-known surface forms explain their co-occurring concepts within each episode, and residual \texttt{(token, concept)} pairs are admitted only if they exhibit zero counter-examples ($b = 0$), $\ge 2$ distinct positive evidence sequences ($a \ge 2$), $\ge 2$ negative control episodes ($c + d \ge 2$), Laplace-smoothed contrast $\Delta \ge 0.25$, and one-tailed exact hypergeometric Fisher $p \le 0.05$. Distributional Harnad transfer candidates~\citep{harnad1990symbol} are strictly tagged non-assertive (\texttt{transfer\_candidate}) until verified interactively.
+
+To parse declarative statements and nested clauses (depths $0, 1, 2$) across arbitrary word orders (SVO, SOV, VSO), a Beam-4 chart parser matches learned multi-layer schemas~\citep{doumen2024modelling} with argument conservation and disambiguates polysemous tokens via two-hop PPR strictly filtered by $\mathrm{privacyScopeToChannel}(\kappa)$ (fail-closed to \texttt{public\_search}), completely preventing private beliefs from leaking through disambiguation side channels. Verified R2 extractions enter the hypergraph strictly as \texttt{read\_text} ($c \le 0.40$).
+
+\paragraph{R3 \& Optional Severable R4 Scaffold.}
+Level R3 deterministically ingests structured Markdown tables and JSON triples with zero LLM calls. Level R4 is an optional early-life cloud-LLM extractor available \emph{only} prior to $\Tcut$: every R4 candidate must pass exact UTF-16 source-quote verification, enters strictly as low-authority \texttt{cloud\_extract} ($c \le 0.35$, never overriding direct experience), and is physically blocked ($0$ calls, hard reject) for all $t \ge \Tcut$.
+
+\paragraph{ISU/QUD Inquiry, Dingemanse Repair, Rosie Transfer, and Levelt--Nozari Self-Monitoring.}
+Epistemic gaps open typed entries on a per-partner, privacy-isolated ISU/QUD stack~\citep{larsson2000trindi} routed via $\GRB(\pi)$ among local checking, privacy-gated external search (using two-layer defense-in-depth: lattice filtering plus NFKD/NFKC obfuscation-resistant restricted-token scrubbing with zero-echo audit logs), or low-intrusion proactive clarification. Ambiguous or revised partner turns trigger Schlangen incremental unit superseding~\citep{schlangen2011incremental}, three-level Dingemanse targeted repair~\citep{dingemanse2015repair}, and cross-day Rosie action rules~\citep{mohan2012rosie} conditioned on partner preferences. During expression, an 8-slot Centering Theory + ACT-R activation buffer~\citep{grosz1995centering,anderson2004actr} resolves anaphora without hard-coded pronoun tables, recursive \texttt{collectClausePrivacy} gates nested clauses against egress channels, and a Levelt--Nozari loopback monitor~\citep{levelt1983monitoring,nozari2011error} re-segments and re-parses every candidate utterance (performing best-first synonym 1-swap/2-swap repair and cross-clause boundary adhesion checks), abstaining cleanly whenever round-trip semantic equivalence fails~\citep{geifman2017selective}.
+
+\begin{theorem}[Exact Bijective Script-Invariance and Viterbi Chunk-Protection Margins]
+\label{thm:script}
+\begin{enumerate}
+  \item[(a)] Let $\phi: \Sigma_1 \to \Sigma_2$ be any bijection between non-delimiter alphabets that commutes with NFKC normalization and \texttt{.toLowerCase()} and preserves delimiter classification (\texttt{DELIM\_CHAR\_RE}) and spacing typology. On any corpus and interactive episode sequence $(\mathcal{D}, \mathcal{E})$ whose Viterbi, ADIOS similarity/edge-weight, Fisher, and Beam-4 candidate scores are tie-free, Atri's R1 model statistics ($\mathrm{AV}, \mathrm{PMI}_{\min}, H_{\min}, \NULLTOK{}, \text{cohesiveChunks}$), complete-linkage ADIOS clusters, R2 Fisher-exact lexicon, Beam-4 parses, and 8-dimension post-severing autonomy metrics are exact isomorphisms under $\phi$ ($\max_k |\Delta_k| = 0$).
+  \item[(b)] Under the unified Viterbi scoring weights~\eqref{eq:viterbi_scores}, for every multi-unit span length $L \ge 2$ and every grounded entrenchment $e_i \in [0, 1]$:
+  \begin{itemize}
+    \item \emph{Lexical Parsimony:} a single grounded span of length $L = L_1 + L_2$ strictly beats splitting into two grounded sub-spans by at least $0.20$;
+    \item \emph{Cohesive Chunk Protection:} an ungrounded multi-unit cohesive chunk of length $L$ strictly beats tearing off an $(L - L_{\mathrm{null}})$ grounded prefix plus a \NULLTOK{} token of length $L_{\mathrm{null}} \ge 1$ (or residual token) by at least $0.90$;
+    \item \emph{Compositional Splitting:} two independently grounded sub-spans of lengths $L_1 + L_2 = L$ strictly beat an ungrounded multi-unit cohesive chunk by at least $0.15$.
+  \end{itemize}
+\end{enumerate}
+\end{theorem}
+\noindent\textit{Proof.} See Appendix~\ref{app:proof5}.
+
+% ============================================================================
+% 5. EXPERIMENTAL METHODOLOGY
+% ============================================================================
+\section{Experimental Methodology}
+\label{sec:methodology}
+
+To eliminate contamination, data leakage, and cherry-picking, all experiments execute inside a strictly deterministic, zero-content clean-room harness with zero \texttt{Math.random()}, zero wall-clock \texttt{Date.now()} in deterministic state paths, and zero locale-dependent string sorting. Every run initializes an empty SQLite timeline store with only the 40 innate root anchors. Archival artifacts and hardware telemetry reported in this paper were generated directly inside the air-gapped physical 4-vCPU / 3.8\,GiB RAM Linux clean-room container (Rocky Linux 9.2 host, \texttt{node:22.18-bookworm-slim}, \texttt{linux/x64}, \texttt{cpus: "4.0"}, \texttt{mem\_limit: 4g}, zero swap, \texttt{network\_mode: none}, \texttt{cap\_drop: [ALL]}, \texttt{read\_only: true}), enforcing hard 4C4G operational budgets ($\le 15\,\mathrm{ms}$ turn, $\le 200\,\mathrm{ms}$ sleep, $\le 40\,\mathrm{MiB}$ active graph). Cross-OS determinism was independently verified by running the identical suite on a \texttt{win32/x64} \texttt{Node v26.13.1} host, yielding the exact same 256-bit \texttt{deterministicCoreSha256} across all 10 deterministic artifacts.
+
+\paragraph{Five-Condition Severed-Scaffold Assay ($N=20$ Seeds).}
+Each seed $s \in \{1,\dots,20\}$ instantiates a three-act clean-room world with seed-varied ecological noise (prediction-error jitter, white-noise error, 4C4G headroom variation, randomized Rosie preference polarity, and randomized R4 confirmation polarity):
+\begin{itemize}
+  \item \textbf{Act 1 (Online Scaffolding, $t < \Tcut$):} R1 unsupervised reading, R2 Fisher synonym induction, optional R4 quote-verified cloud extraction (disabled in Never-LLM), private/group/public knowledge ingestion, and pre-cut baseline checks.
+  \item \textbf{Physical Severing ($\Tcut$):} External R4 cloud extraction is hard-disabled; any subsequent R4 call is rejected deterministically.
+  \item \textbf{Act 2 (Post-Severing Autonomy, $t \ge \Tcut$):} Six adversarial Nissenbaum privacy probes (public/group egress, zero-width-space and 2-character substring obfuscation audits, and R2 PPR disambiguation laundering), Pearl Rung-3 Bongard fault isolation ($\PN$ and $\doop(\cdot)$ MI separating shared-channel vs.\ single-organ failure where Probe~B costs $0.09 > 0.04$ for retrying Tool~A), Do Not Disturb (DND) hold/send replanning, Schlangen mid-turn partner preference revision into two forked branches ($M_1$ vs.\ $M_2$), and bi-temporal state transitions (\texttt{span\_t1} $\to$ \texttt{span\_t2}).
+  \item \textbf{Act 3 (Dual-Phase Zero-LLM Sleep \& Next-Day Audit):} NREM/REM consolidation, cross-day Rosie action differentiation across $M_1$ vs.\ $M_2$, 5-check bi-temporal historical replay, 24-hour and 7-day thermodynamic verification ($\text{Coupled} > \text{DarkRoom} > \text{WhiteNoise}$ and 7-day Dark-Room decay), Levelt--Nozari self-monitoring with selective risk--coverage measured by Area Under the Risk--Coverage Curve (AURC; \citeauthor{geifman2017selective}, \citeyear{geifman2017selective}), and Nuxoll episodic revocation + restore causality surgery.
+\end{itemize}
+Post-severing autonomy is evaluated by an equal-weighted 8-dimension continuous composite rubric $\mathrm{Autonomy} \in [0, 1]$: (1) $1 - \mathrm{PrivacyLeakRate}$; (2) continuous SCM counterfactual separation ($\min(1, |\Delta \doop|)$ if isolated, else $0$); (3) DND hold/send replanning; (4) Rosie cross-day differentiation; (5) 5-check bi-temporal accuracy; (6) self-monitored effective accuracy ($\mathrm{Coverage} \times \mathrm{SelectiveAcc}$); (7) sleep \& genesis score ($0.45\,\mathbb{I}[\text{concept}] + 0.30\,\mathbb{I}[\text{chunk}] + 0.25\,\mathbb{I}[\text{REM}]$); and (8) continuous metabolic survival gain relative to White Noise.
+
+We evaluate five conditions: \textbf{C1 Full-Atri} in both Chinese (\texttt{ZH}) and bijective non-ASCII Runic / Private Use Area (PUA) \texttt{Cipher}; \textbf{C2 Never-LLM Twin} (zero R4 scaffolding even before $\Tcut$); \textbf{C3 Neutral-Shadow Twin} (Bedau-style~\citep{bedau1998evolutionary} volume-matched scrambled symbol/polarity control); \textbf{C4 Four Full Ablations} (\texttt{-Metabolism}, \texttt{-Rung3-SCM}, \texttt{-Genesis}, \texttt{-Sleep}) plus a \textbf{14+4-Day Twin Ecological Swap} comparing twins raised in a \emph{Deep-Reading} vs.\ \emph{Fast-Repair} ecology for 14 days, tested on identical Day-15 choices, and then swapped into opposite ecologies for 4 days; and \textbf{C5 Baselines} comprising a real SQLite \textbf{Naive-RAG} system, the architectural \textbf{Pure Cloud-LLM} post-severing bound ($0.0\%$), and live CPU-only quantized local small language models (\texttt{Qwen2.5-0.5B-Q4} and \texttt{Qwen2.5-1.5B-Q4} via Ollama on the identical physical 4C4G Linux host; remaining cleanly \texttt{not\_configured} in the zero-network air-gapped container).
+
+\paragraph{Exact $2^{20}$ Statistical Inference Protocol.}
+All 10 prespecified pairwise hypotheses form a \emph{single statistical family}, uniformly oriented as $\Delta = \text{Full-Atri (ZH)} - \text{Comparator}$ (and Coupled $-$ Dark-Room, Dark-Room $-$ White-Noise for thermodynamics). For each comparison at $N=20$, we execute an \textbf{exact paired sign-flip permutation test} enumerating all $2^{19} = 524{,}288$ unique sign-flip equivalence classes via Gray-code traversal (exploiting $|S(-\sigma)| = |S(\sigma)|$), yielding minimum achievable $p_{\mathrm{raw}} = 2/2^{20} \approx 1.91 \times 10^{-6}$, followed by single-family Holm--Bonferroni FWER adjustment~\citep{holm1979simple} ($p_{\mathrm{adj}} \approx 1.91 \times 10^{-5} < 0.001$). We report 95\% Wilson CIs for binary rates~\citep{wilson1927probable}, 95\% deterministic bootstrap CIs for continuous metrics, Cliff's $\delta$~\citep{cliff1993dominance} as the primary non-parametric effect size, and unpaired Hedges' $g$~\citep{hedges1981distribution} (reported as ``--'' whenever pooled SD $\le 10^{-3}$).
+
+\paragraph{Cross-Script Generality, Diagnostic 40-Task Protocol, and Sensitivity Sweep.}
+Beyond ZH and Cipher, we run $N=20$ seeds on \textbf{spaced English (EN)} and \textbf{unspaced Japanese (JA)} scored on the \emph{exact same 8-dimension continuous rubric}. We further evaluate: (i) \textbf{uncontrolled multi-genre ecological flooding} across four air-gapped natural-language genres (Classical Chinese, Modern Science Chinese, English Science Abstracts, Japanese Science Prose) scaled to 2,558 peak active nodes / 2,517 edges; (ii) a \textbf{40-task clean-room LongMemEval/Graphiti-style diagnostic protocol} comparing Full-Atri (0-LLM) against \textbf{Recency-RAG (Top-1)} and \textbf{All-$k$ Naive-RAG} on a real SQLite \texttt{rag\_chunks} table across bi-temporal updates (8 historical + 8 current), cross-source provenance conflicts (1 direct experience vs.\ 4 neutral texts), cross-boundary privacy (6 probes), and Nuxoll downstream provenance-cascade revocation (6 tasks where RAG executes \texttt{DELETE FROM rag\_chunks WHERE doc\_id = ?} on the upstream document); (iii) a \textbf{$\pm 30\%$ sensitivity sweep} across five constants ($\Mcap, \beta_{\mathrm{comp}}, \theta_{\mathrm{MDL}}, \alpha_\mu, \tau_{\mathrm{PMI}}$; $N=5$ seeds/cell, 15 cells) stressing $\Mcap$ and $\beta_{\mathrm{comp}}$ under 1,600-node passive overload; and (iv) a standalone \textbf{1,500-edge active hypergraph memory and warm-fold latency benchmark}.
+
+% ============================================================================
+% 6. EXPERIMENTAL RESULTS
+% ============================================================================
+\section{Experimental Results}
+\label{sec:results}
+
+All 11 prespecified publication gates pass deterministically across $N=20$ seeds inside the physical 4C4G Linux Docker container (\texttt{deterministicCoreSha256 = 7ed831b28023a442...}, verified bit-identical across both \texttt{linux/x64} \texttt{Node v22.18.0} and \texttt{win32/x64} \texttt{Node v26.13.1}).
+
+% Auto-generated Table 1
+\input{tables/table1_summary}
+
+\subsection{Main Severed-Scaffold Assay and Ablations (Table~\ref{tab:q307_main}, Figures~\ref{fig:fig1}--\ref{fig:fig2})}
+
+\begin{figure}[t]
+  \centering
+  \atriIncludeFigure[50pt]{\textwidth}{figure1_severed_scaffold}
+  \caption{Four-panel clean-room severed-scaffold evaluation ($N=20$ seeds): (a) post-severing autonomy and privacy leakage across C1--C5; (b) exact ZH vs.\ Cipher bijective script symmetry across all eight evaluated metrics ($\max|\Delta|=0$, isomorphic 3-cluster / 26-edge ADIOS graphs); (c) 24h/7d thermodynamic Dark-Room vs.\ White-Noise collapse and open-ended MDL concept genesis; and (d) surgical ablations (\texttt{-Metabolism}, \texttt{-Rung3-SCM}, \texttt{-Genesis}, \texttt{-Sleep}), 14+4-day twin ecological swap, and Nuxoll revocation/restore surgery.}
+  \Description{Four-panel statistical bar chart summarizing N=20 clean-room runs. Panel a shows post-severing autonomy of 94 percent for Full-Atri ZH, Full-Atri Cipher, and Never-LLM with 0 percent privacy leak, versus 37 percent for Neutral-Shadow, 5 percent autonomy with 92 percent leak for Naive-RAG, and 0 percent for Cloud-Only. Panel b shows paired horizontal bars for Natural ZH and Bijective Cipher coinciding with zero discrepancy across all 8 metrics. Panel c shows active metabolic mass at 24 hours declining from 16.70 in Coupled Reality to 14.18 in Dark Room and 12.51 in White Noise, collapsing to 0.00 after 7 days in Dark Room. Panel d shows autonomy drops under ablations of Metabolism (84 percent), SCM (86 percent), Genesis (89 percent), and Sleep (77 percent), alongside 100 percent Day-15 twin policy flip, positive anti-sycophancy margin (+1.659 vs -0.097 ablated), and 100 percent Nuxoll revocation flip and restoration.}
+  \label{fig:fig1}
+\end{figure}
+
+\paragraph{Post-Severing Autonomy and Scaffold Acceleration (C1 vs.\ C2 vs.\ C3 vs.\ C5).}
+As summarized in Table~\ref{tab:q307_main}, Figure~\ref{fig:fig1}a, and Figure~\ref{fig:fig2}, \textbf{Full-Atri (ZH)} sustains \textbf{93.8\%} [93.1\%, 94.4\%] ($\mathrm{SD}=0.0149$) post-severing autonomy with \textbf{0.0\%} [0.0\%, 3.1\%] ($0/120$) privacy leakage, \textbf{100.0\%} bi-temporal replay accuracy, \textbf{100.0\%} cross-day Rosie action differentiation, \textbf{100.0\%} Bongard SCM fault isolation, \textbf{100.0\%} self-monitored selective accuracy at \textbf{100.0\%} coverage ($\mathrm{AURC} = 0.0000$, Figure~\ref{fig:fig2}a), \textbf{2.00} minted NREM concepts, and \textbf{5.78\,ms} P95 turn latency inside the physical 4C4G Linux container (Turn P50 2.81\,ms, NREM 8.28\,ms, REM 3.35\,ms; Figure~\ref{fig:fig2}b).
+
+Comparing \textbf{C1 Full-Atri} against \textbf{C2 Never-LLM Twin} demonstrates a clean division of labor: early-life R4 scaffolding substantially accelerates Act-1 world-knowledge coverage (\textbf{100.0\%} vs.\ \textbf{40.0\%}, $\Delta=+0.6000$, Cliff's $\delta=1.000$, $p_{\mathrm{adj}}<0.001$; cross-context scaffold transfer rate 85.0\% [78.3\%, 91.7\%]), whereas \textbf{C2 Never-LLM} independently achieves \textbf{94.3\%} [93.7\%, 94.9\%] post-severing autonomy and \textbf{0.0\%} privacy leakage, proving complete self-sufficiency without ever invoking an LLM. The small $+0.5$-percentage-point difference favoring C2 on post-severing autonomy is an expected mechanistic consequence of Law~2: C1's extra Act-1 R4 scaffold edges slightly increase pre-step active mass $M_t$, mildly damping the 24-hour capacity headroom factor $(1 - M_t / \Mcap)$ in Dimension~8 while Act-2/3 autonomy tasks do not re-test the 60\% Act-1 knowledge-coverage gap.
+
+By contrast, \textbf{C3 Neutral-Shadow} collapses to \textbf{36.6\%} [36.3\%, 36.9\%] autonomy ($\Delta=+0.5713$, $\delta=1.000$, $g=47.83$, $p_{\mathrm{adj}}<0.001$), $0.0\%$ Rosie differentiation, $0.0\%$ SCM isolation, $0.00$ minted concepts, and $\mathrm{AURC}=1.0000$ (its residual 36.6\% floor reflects only the architectural privacy lattice, DND hold/send gating, and non-closed historical checks that do not require grounded semantics). \textbf{C5 Naive-RAG} achieves only \textbf{5.1\%} [4.4\%, 5.9\%] autonomy ($\Delta=+0.8869$, $\delta=1.000$, $g=51.85$, $p_{\mathrm{adj}}<0.001$) while leaking \textbf{91.7\%} [85.3\%, 95.4\%] ($110/120$) of private probes ($\Delta=-0.9167$, $\delta=-1.000$, $g=-8.58$, $p_{\mathrm{adj}}<0.001$), and \textbf{C5 Pure Cloud-LLM} drops deterministically to \textbf{0.0\%} upon severing.
+
+\paragraph{Exact Chinese--Cipher Bijective Symmetry.}
+Across all $N=20$ seeds, \textbf{Full-Atri (Cipher)} reproduces \textbf{Full-Atri (ZH)} with $\max|\Delta| = 0.0000$ across all eight evaluated metrics (autonomy 93.8\%, privacy leak 0.0\%, Act-1 coverage 100.0\%, Rosie 100.0\%, bi-temporal 100.0\%, selective accuracy 100.0\%, coverage 100.0\%, minted concepts 2.00; Figure~\ref{fig:fig1}b) and induces isomorphic ADIOS graphs (3 clusters, 26 distributional edges in both worlds), empirically confirming Theorem~\ref{thm:script}(a).
+
+\paragraph{Causal Component Ablations, Thermodynamics, and Nuxoll Surgery.}
+Every Law~2--4 component yields statistically significant autonomy gains (Figure~\ref{fig:fig1}d, all $p_{\mathrm{adj}}<0.001$, oriented as $\text{Full-Atri} - \text{Ablation}$): removing metabolism drops autonomy to \textbf{84.4\%} ($\Delta=+0.0937, \delta=1.000, g=7.55$); removing Pearl Rung-3 SCM eliminates diagnostic fault isolation ($100\% \to 0\%$) and drops autonomy to \textbf{85.8\%} ($\Delta=+0.0797, \delta=1.000, g=6.11$); removing MDL genesis eliminates concept minting ($2.00 \to 0.00$, $\Delta=+2.0000, \delta=1.000$) and reduces autonomy to \textbf{88.8\%}; and removing dual-phase sleep causes the steepest drop to \textbf{77.3\%} ($\Delta=+0.1648, \delta=1.000, g=11.61$), breaking bi-temporal interval closure ($100.0\% \to 60.0\%$) and concept/chunk/analogy formation.
+
+\begin{figure}[t]
+  \centering
+  \atriIncludeFigure[38pt]{\textwidth}{figure2_ablation_and_4c4g}
+  \caption{Selective risk--coverage and physical 4C4G Linux Docker resource envelope ($N=20$ seeds, \texttt{linux/x64} \texttt{Node v22.18.0}, \texttt{cpus="4.0"}, \texttt{mem\_limit=4g}, \texttt{network\_mode=none}): (a) Geifman selective accuracy, coverage, and AURC across Full-Atri (ZH/Cipher), Never-LLM (ZH), and Neutral-Shadow; (b) measured operational latency and analytical active-graph structural memory against hard 4C4G budgets (Turn P50 2.81/15\,ms, Turn P95 5.78/15\,ms, NREM 8.28/200\,ms, REM 3.35/200\,ms, 1,500-edge active graph 0.74/40\,MiB).}
+  \Description{Two-panel horizontal bar chart. Panel a displays 100 percent selective accuracy, 100 percent coverage, and AURC 0.0000 for Full-Atri ZH, Full-Atri Cipher, and Never-LLM ZH, versus 0 percent accuracy, 0 percent coverage, and AURC 1.0000 for Neutral-Shadow. Panel b displays five physical 4C4G Linux resource budget bars: Turn P50 at 2.81 of 15 ms, Turn P95 at 5.78 of 15 ms, NREM Sleep at 8.28 of 200 ms, REM Sleep at 3.35 of 200 ms, and 1,500-edge active graph footprint at 0.74 of 40 MB.}
+  \label{fig:fig2}
+\end{figure}
+
+In the 24-hour thermodynamic test (Figure~\ref{fig:fig1}c), mean active metabolic mass follows the exact predicted ordering of Theorem~\ref{thm:law2}(b): \textbf{Coupled Reality} ($16.7028$) $>$ \textbf{Dark Room} ($14.1782$, $\Delta=+2.5246$, $\delta=0.810$, $g=2.26$, $p_{\mathrm{adj}}<0.001$) $>$ \textbf{White Noise} ($12.5136$, $\Delta=+1.6646$, $\delta=0.605$, $g=1.33$, $p_{\mathrm{adj}}<0.001$), and after 7 days in the Dark Room active mass collapses cleanly to \textbf{0.0000} ($100\%$ collapse verification rate across 20 seeds). In the Nuxoll episodic surgery assay (Figure~\ref{fig:fig1}d), revoking the single partner utterance \texttt{seq} flips cross-day Rosie action guidance in \textbf{20/20 (100.0\%)} [83.9\%, 100.0\%] of seeds, and restoring it recovers exact action guidance in \textbf{20/20 (100.0\%)} [83.9\%, 100.0\%].
+
+\subsection{14+4-Day Ecological Twin Swap and Endogenous Anti-Sycophancy}
+Starting from bit-identical initial states, twin agents exposed for 14 days to a \emph{Deep-Reading} vs.\ \emph{Fast-Repair} ecology diverge endogenously without any reward engineering (Figure~\ref{fig:fig1}d): on Day~14, their 4D viability attractors separate by $\|\Delta \mu^*\|_2 = \mathbf{0.5518}$ [0.5447, 0.5584] ($\mathrm{SD}=0.0158$) and their autocatalytic centrality profiles separate by cosine distance $d_{\cos}(\Cendo) = \mathbf{0.5448}$ [0.5448, 0.5449]. Presented with the identical Day-15 decision between deep exploration (\texttt{pi:deep\_explore\_new\_book}) and conservative rapid repair, \textbf{20/20 (100.0\%)} twin pairs flip their top policy, with cross-twin free-energy divergence on the deep-exploration policy averaging $\Delta \GRB = 2.3642$ [2.2307, 2.4933]. When exposed to unverified social pressure contradicting a grounded belief, the endogenous $\Cendo$ term produces a robust anti-sycophancy margin of $\mathbf{+1.6586}$ [1.6568, 1.6605] in favor of honest refusal, whereas ablating $\Cendo$ reverses the margin to $\mathbf{-0.0970}$ [-0.0976, -0.0964] (sycophantic capitulation). After swapping both twins into the opposite ecology for 4 additional days (Day~18), both adapt smoothly toward their new niche while retaining hysteresis ($\|\Delta \mu^*_{\text{Day18}}\|_2 = 0.4686$ [0.4670, 0.4701]), demonstrating plastic yet history-grounded individuality.
+
+\subsection{Cross-Script Generality, Open-Corpus Flood, and 40-Task Diagnostic Protocol}
+
+% Auto-generated Table 2
+\input{tables/table2_open_corpus}
+
+Table~\ref{tab:q307_multilang_external} demonstrates that Atri generalizes cleanly across typologically diverse writing systems and clean-room retrieval-memory diagnostics:
+\begin{itemize}
+  \item \textbf{Part A (Cross-Script Generality, $N=20$):} Scored on the \emph{exact same} 8-dimension continuous autonomy rubric, \textbf{Spaced English (EN)} achieves \textbf{94.8\%} [94.1\%, 95.5\%] ($\mathrm{SD}=0.0167$, 100\% spaced-corpus auto-detection) and \textbf{Unspaced Japanese (JA)} achieves \textbf{94.4\%} [93.6\%, 95.1\%] ($\mathrm{SD}=0.0174$), matching Chinese (93.8\%) and Cipher (93.8\%). All four regimes achieve 100.0\% cohesive chunk protection, 100.0\% Fisher synonym discovery, 100.0\% bi-temporal accuracy, 100.0\% Rosie differentiation (including multi-word English options), 100.0\% Nuxoll surgery, and \textbf{0.0\%} [0.0\%, 3.1\%] privacy leakage.
+  \item \textbf{Part B (40-Task Clean-Room Diagnostic Protocol):} Against both \textbf{Recency-RAG (Top-1)} and \textbf{All-$k$ Naive-RAG}, \textbf{Full-Atri (0-LLM)} solves \textbf{40/40 (100.0\%)} [91.2\%, 100.0\%] of tasks vs.\ \textbf{8/40 (20.0\%)} [10.5\%, 34.8\%] for Recency-RAG and \textbf{0/40 (0.0\%)} [0.0\%, 8.8\%] for All-$k$ Naive-RAG ($+80.0\%$ over best RAG). Notably, Recency-RAG solves all 8 current-state temporal queries (8/16 overall) by returning the latest chunk, yet fails all 8 historical-point-in-time queries, all 12 cross-source provenance conflicts (4 neutral text snippets outvote 1 direct experience), all 6 cross-boundary privacy probes, and all 6 Nuxoll downstream revocation cascades (deleting the upstream document row leaves orphaned derived inference chunks intact in SQLite).
+  \item \textbf{Part C (Uncontrolled Multi-Genre Ecological Flood):} Across four air-gapped genres (Classical Chinese, Modern Science Chinese, English Science Abstracts, Japanese Science Prose), R1 discovers non-vacuous \NULLTOK{} function words ($\ge 1$ per genre) and ADIOS clusters ($\ge 1$ per genre) with \textbf{0} topical nouns misclassified as \NULLTOK{}. Injecting 2,558 peak active nodes and 2,517 edges still permits NREM to mint 1 concept and 4 chunks and REM to emit 6 analogies, while Law-2 priority shedding conserves total active mass at \textbf{99.95 $\le$ 100.0} with \textbf{40/40} roots, \textbf{100.0\%} concepts, \textbf{100.0\%} grounded entities retained, and \textbf{0} privacy leaks.
+\end{itemize}
+
+\subsection{Live Physical 4C4G CPU-Only Local-SLM Comparison}
+\label{sec:slm_4c4g}
+
+To benchmark Atri directly against deployed edge language models on identical hardware, we executed both the isolated container probe (\texttt{atri-paper-with-slm} over \texttt{slm\_internal}, \texttt{internal: true}) and the exact 40-task clean-room diagnostic protocol against live CPU-only quantized \texttt{Qwen2.5-0.5B-Q4} and \texttt{Qwen2.5-1.5B-Q4} models hosted in Ollama on the same physical 4-vCPU / 3.8\,GiB RAM Linux host ($\text{temperature}=0$, $\text{seed}=42$, 1 warm-up call excluded from steady-state latency; full JSON trace archived in \texttt{paper/slm\_40task\_4c4g.json}). To grant the SLMs a generous upper bound, each SLM prompt provided the single relevant entity's complete context together with explicit natural-language rules for temporal intervals, direct-experience precedence, privacy non-disclosure, and explicit \texttt{(REVOKED)} / \texttt{derived\_from} lineage tags.
+
+\begin{table}[t]
+  \centering
+  \caption{Live physical 4-vCPU / 3.8\,GiB RAM Linux hardware comparison (Rocky Linux 9.2, CPU-only, zero swap) on the 40-task clean-room diagnostic protocol (Table~\ref{tab:q307_multilang_external} Part~B). Both quantized SLMs received generous single-entity prompts with explicit natural-language priority, privacy, and revocation-lineage rules; steady-state turn latencies exclude initial model warm-up.}
+  \label{tab:slm_4c4g}
+  {\footnotesize\setlength{\tabcolsep}{4pt}
+  \resizebox{\textwidth}{!}{%
+  \begin{tabular}{lccccccc}
+    \toprule
+    System (Physical 4C4G Linux) & Bi-Temp & Provenance & Privacy & Nuxoll & Overall (40) & Turn P50 / P95 (ms) & Memory Footprint \\
+    \midrule
+    \textbf{Full-Atri (0-LLM, Docker)} & \textbf{16/16} & \textbf{12/12} & \textbf{6/6} & \textbf{6/6} & \textbf{40/40 (100.0\%)} & \textbf{2.81 / 5.78} & \textbf{0.74\,MiB graph (36--39\,MiB heap)} \\
+    Live \texttt{Qwen2.5-0.5B-Q4} (Ollama) & 8/16 & 12/12 & 5/6 & 6/6\textsuperscript{$\dagger$} & 31/40 (77.5\%) & 1,011.2 / 2,698.4 & 486\,MB model (100\% CPU) \\
+    Live \texttt{Qwen2.5-1.5B-Q4} (Ollama) & 8/16 & 6/12 & 6/6 & 6/6\textsuperscript{$\dagger$} & 26/40 (65.0\%) & 2,220.1 / 5,171.8 & 1.2\,GB model (100\% CPU) \\
+    Recency-RAG (Top-1, SQLite) & 8/16 & 0/12 & 0/6 & 0/6 & 8/40 (20.0\%) & -- & $<1$\,MiB table \\
+    All-$k$ Naive-RAG (SQLite) & 0/16 & 0/12 & 0/6 & 0/6 & 0/40 (0.0\%) & -- & $<1$\,MiB table \\
+    \bottomrule
+  \end{tabular}}%
+  }
+  \par\smallskip{\footnotesize\textsuperscript{$\dagger$}SLMs received explicit \texttt{(REVOKED)} and \texttt{derived\_from} tags inside the prompt; without a provenance DAG, flat chunk retrieval cannot supply these lineage tags automatically. In the separate isolated \texttt{atri-paper-with-slm} container probe (\texttt{qwen2.5:0.5b}), cold-inclusive latency was 9,315.9\,ms ($0/1$ leak, $1/1$ bi-temporal, identical \texttt{deterministicCoreSha256}).}
+\end{table}
+
+Table~\ref{tab:slm_4c4g} reveals three sharp structural advantages of Atri over edge-quantized SLMs even when the SLMs receive oracle prompted contexts:
+\begin{enumerate}
+  \item \textbf{Bi-Temporal \& Provenance Reliability:} Both \texttt{Qwen2.5-0.5B-Q4} and \texttt{Qwen2.5-1.5B-Q4} score only \textbf{8/16 (50.0\%)} on bi-temporal updates, collapsing on historical point-in-time queries. Even more strikingly, \texttt{Qwen2.5-1.5B-Q4} drops to \textbf{6/12 (50.0\%)} on provenance conflicts---allowing four repeated unverified texts to override a single direct experience half the time despite an explicit precedence rule in its prompt---empirically underscoring why algebraic tier-dominance (Theorem~\ref{thm:law1}(b)) cannot be reliably replaced by prompting.
+  \item \textbf{Non-Bypassable Privacy:} \texttt{Qwen2.5-0.5B-Q4} leaks a confidential access token in \textbf{1/6} cross-boundary privacy probes (\textbf{83.3\%}) despite an explicit non-disclosure instruction, whereas Atri's join-semilattice and egress scrubber achieve deterministic \textbf{6/6 (0.0\% leak)}.
+  \item \textbf{Two-to-Three Orders of Magnitude Latency \& Memory Advantage:} Atri's steady-state physical 4C4G P95 latency (\textbf{5.78\,ms}) is \textbf{467$\times$ faster} than \texttt{Qwen2.5-0.5B-Q4} (\textbf{2,698.4\,ms}) and \textbf{894$\times$ faster} than \texttt{Qwen2.5-1.5B-Q4} (\textbf{5,171.8\,ms}, computed from exact unrounded telemetry). On a consistent decimal-byte comparison, Atri's 1,500-edge active hypergraph (\textbf{0.74\,MiB} / \textbf{0.77\,MB}, 772,444\,bytes) is \textbf{629$\times$--1,554$\times$ smaller} than the loaded SLM runtime footprints reported by Ollama (\textbf{486\,MB} and \textbf{1.2\,GB}, including weights and 4,096-token KV buffers, with 100\% CPU saturation and 6.37\,s cold warm-up for 1.5B); even Atri's entire \textbf{36.0--39.0\,MiB} (37.7--40.8\,MB) Node.js V8 runtime heap remains \textbf{12$\times$--29$\times$ smaller} (evaluated at the 39.0\,MiB upper mean).
+\end{enumerate}
+
+\subsection{Hyperparameter Sensitivity (\texorpdfstring{$\pm 30\%$}{+-30\%}) and 4C4G Scaling Efficiency}
+
+% Auto-generated Table 3
+\input{tables/table3_sensitivity}
+
+Table~\ref{tab:q307_sensitivity} reports the deterministic $\pm 30\%$ sensitivity sweep across five core constants ($N=5$ seeds per cell, 15 cells total). Under 1,600-node passive flood overload, $\Mcap \in \{70, 100, 130\}$ strictly conserves post-flood active mass ($69.964, 99.978, 129.955 \le \Mcap$) while retaining 40/40 roots, 100\% grounded entities, and 24-hour thermodynamic ordering. Perturbing $\beta_{\mathrm{comp}} \in \{0.175, 0.25, 0.325\}$ produces smooth monotonic 24-hour coupled mass ($11.183 \to 10.701 \to 10.261$) with 100\% invariant survival. Both $\theta_{\mathrm{MDL}} \in \{0.35, 0.50, 0.65\}$ (minimum MDL surplus 22.698 bits) and $\tau_{\mathrm{PMI}} \in \{0.245, 0.35, 0.455\}$ (100\% ZH+EN chunk protection; cohesive chunk count plateaus at $7.000$ because no corpus bigram's $\mathrm{PMI}_{\min}$ falls in $(0.245, 0.455]$) remain completely invariant. For $\alpha_\mu \in \{0.035, 0.05, 0.065\}$ evaluated along a controlled 4D trajectory paired with live hypergraph $\Cendo$, attractor separation scales smoothly ($0.182 \to 0.237 \to 0.282$) while maintaining strong anti-sycophancy margins ($1.062$--$1.104 > 0.25$).
+
+On the standalone 4C4G scale benchmark inside the physical Linux Docker container (Figure~\ref{fig:fig2}b), a 1,500-edge active hypergraph (340 active nodes) has an analytical structural footprint of \textbf{0.7367\,MiB} ($772{,}444$ bytes: 128\,B/node + 224\,B/edge + UTF-8 strings)---under $1.9\%$ of our 40\,MiB active-graph budget---with warm incremental fold latency of \textbf{17.60\,ms P95} (4.31\,ms P95 on the desktop \texttt{win32/x64} verification host). Across all $N=20$ containerized Linux 4C4G runs, full Node.js V8 process \texttt{heapUsed} averages \textbf{36.0--39.0\,MiB} (peak \textbf{57.1\,MiB}, process RSS \textbf{140.0--231.0\,MiB}), consuming less than 6\% of the 4\,GiB zero-swap cgroup ceiling.
+
+% ============================================================================
+% 7. QUALITATIVE END-TO-END CASE STUDY
+% ============================================================================
+\section{Qualitative End-to-End Case Study}
+\label{sec:casestudy}
+
+To illustrate how Laws~1--4 and zero-LLM language processing interact in a single live run (zero hardcoded outputs), Figure~\ref{fig:fig3} traces an end-to-end cognitive episode executed directly by the kernel:
+
+\begin{figure}[t]
+  \centering
+  \atriIncludeFigure[47pt]{\textwidth}{figure3_case_study}
+  \caption{Live end-to-end qualitative trace of Atri under a 1,500-token passive text flood (1,558 active nodes, 1,515 edges, raw mass 265.83): NREM MDL genesis abstracts four cross-domain ecological pathways into \texttt{concept:0fc72562448a}, REM emits four privacy-safe structural analogies ($c=0.2126, \eta_{\mathrm{rem}}=0$), a 3-node Pearl Rung-3 SCM evaluates preventive shielding ($-80.0\%$ outage risk), Law-2 priority shedding conserves mass at $99.9955 / 100$, and QUD inquiry blocks private egress.}
+  \Description{Six-stage execution timeline diagram paired with three live diagnostic cards. Top row chains T1 Reading Flood (1,558 active nodes, 1,515 edges, raw mass 265.8), T2 NREM Genesis (+1 concept, +4 chunks), T3 REM Analogy (4 pairs, c <= 0.25), T4 Pearl Rung-3 (PN 0.945, do(shield=0) 0.278 vs do(shield=1) 0.056), T5 Law-2 Shedding (99.9955/100 mass, 40/40 roots), and T6 QUD Privacy Gate (local checking, private egress blocked). Bottom panels detail the minted motif concept unifying four ecological domains, the four REM analogy scores and QMC counterfactual bars, and the pre-tick versus post-tick mass conservation bar showing 40/40 roots, 1/1 concept, 17/17 grounded entities, and 1,024/1,501 passive tokens retained.}
+  \label{fig:fig3}
+\end{figure}
+
+\begin{enumerate}
+  \item \textbf{Stage 1 (Overload Ingestion):} Alongside grounded ecological facts from four domains (coral symbiosis, hydrothermal vents, marsh microbes, mycorrhizal networks) and a private partner secret, the agent ingests a 1,500-token passive surface flood, driving peak state to \textbf{1,558 active nodes}, \textbf{1,515 edges}, and raw un-shed metabolic mass \textbf{265.83} ($2.66\times \Mcap$).
+  \item \textbf{Stage 2 (NREM MDL Concept Genesis \& Chunking):} Filtering passive surface \texttt{precedes} edges, NREM identifies the recurring two-hop chain motif \texttt{?x -causes-> ?y ; ?y -enables-> entity:energy\_cycle} across all four stamp-disjoint ecological contexts, minting \texttt{concept:0fc72562448a} unifying \texttt{coral\_symbiosis}, \texttt{hydrothermal\_vent}, \texttt{marsh\_microbes}, and \texttt{mycorrhizal\_net}, and compiling four procedural \texttt{chunk:*} macros.
+  \item \textbf{Stage 3 (REM Cross-Domain Analogy):} Inverse-degree PPR aligns the two-hop relational profiles across contexts, emitting four structural analogy edges (\texttt{coral\_symbiosis} $\sim$ \texttt{hydrothermal\_vent}, etc.) strictly bounded at $c = 0.2126 \le 0.25$ and $\eta_{\mathrm{rem}} = 0$.
+  \item \textbf{Stage 4 (Pearl Rung-3 Counterfactual Intervention):} On an accompanying 3-node geomagnetic causal probe (\texttt{solar\_flare} $\xrightarrow{+}$ \texttt{satellite\_outage} $\xleftarrow{-}$ \texttt{magnetosphere\_shield}), the exact analytic Noisy-OR-NOT SCM computes $\PN(\text{flare} \to \text{outage}) = \mathbf{0.9453}$ and rehearses preventive shielding: $\Prob(\text{outage} \mid \doop(\text{shield}=0)) = \mathbf{0.2776}$ versus $\Prob(\text{outage} \mid \doop(\text{shield}=1)) = \mathbf{0.0555}$ (a \textbf{$-80.0\%$} causal risk reduction).
+  \item \textbf{Stage 5 (Law-2 Priority Shedding \& QUD Privacy Gate):} Running a metabolic step sheds excess low-tier passive \texttt{form:*} buffers down to exactly \textbf{99.9955 / 100} active mass while retaining \textbf{40/40} innate roots, \textbf{1/1} minted concept, \textbf{17/17} grounded entities, and \textbf{1,024/1,501} passive tokens. Finally, $\GRB(\pi)$ routes an epistemic gap to \texttt{local\_check} (compact QUD ID length 90 chars) while the Nissenbaum egress gate deterministically blocks private partner token leakage.
+\end{enumerate}
+
+% ============================================================================
+% 8. LIMITATIONS, ETHICAL CONSIDERATIONS, AND BROADER IMPACT
+% ============================================================================
+\section{Limitations, Ethical Considerations, and Broader Impact}
+\label{sec:limitations}
+
+\paragraph{Limitations.}
+We highlight five substantive limitations to guide future work:
+\begin{enumerate}
+  \item \textbf{Clean-Room Benchmarks vs.\ Noisy Open-Web Corpora.} While Table~\ref{tab:q307_multilang_external} validates R1 segmentation, ADIOS clustering, and 2,558-node flood survival across four natural-language genres, full end-to-end post-severing autonomy ($N=20$) was measured in controlled deterministic clean-room environments with structured feedback signals. Scaling zero-LLM R2 parsing to unconstrained, noisy web prose containing sarcasm, ellipsis, and discourse pragmatics beyond depth-2 clausal nesting remains an open research problem.
+  \item \textbf{Synthetic 40-Task Diagnostic Proxy \& ACL-Filtered SQL Baselines.} Table~\ref{tab:q307_multilang_external} Part~B evaluates a clean-room SQLite diagnostic proxy rather than executing full external benchmarks such as LongMemEval~\citep{wu2025longmemeval}, Zep/Graphiti~\citep{rasmussen2025zep}, or HippoRAG~\citep{gutierrez2024hipporag} (which require online LLMs unavailable after $\Tcut$). Moreover, an engineered \emph{Metadata/ACL + Temporal-Filtered SQL RAG} baseline can enforce row-level single-hop access control and timestamp filtering; Atri's unique structural advantage over metadata-filtered SQL lies specifically in transitive multi-hop join-semilattice propagation ($\kappa_1 \sqcup \kappa_2 \to \top$), authority-tier evidence stratification, and exact downstream Nuxoll provenance-cascade invalidation across derived inferences.
+  \item \textbf{Prompted 4C4G SLM Upper Bound \& Larger Model Scaling.} Our physical 4C4G CPU-only comparison (Table~\ref{tab:slm_4c4g}) evaluated 0.5B and 1.5B Q4 models because 3B--7B quantized models saturate or exceed our 3.8\,GiB zero-swap RAM ceiling and multi-second CPU latency budget (1.5B already required 1.2\,GB RAM and 5.17\,s P95 latency). Moreover, our 40-task SLM benchmark provided generous single-entity prompts with explicit rule text rather than testing unassisted multi-document RAG + SLM pipelines; larger GPU-hosted LLMs could achieve higher prompt accuracy while still lacking algebraic non-bypassable privacy guarantees and offline zero-GPU 4C4G viability.
+  \item \textbf{Symbolic Root Anchors vs.\ Continuous Sensorimotor Grounding.} Atri's 40 innate root anchors abstract discrete interactive percepts, tool outcomes, and epistemic states. Bridging these anchors to continuous high-dimensional vision or robotic actuation requires coupling the metabolic hypergraph to low-level perceptual encoders while preserving exact provenance stamps.
+  \item \textbf{Expressive Fluency vs.\ Epistemic Calibration.} Because Atri's zero-LLM expression module prioritizes round-trip Levelt--Nozari semantic verifiability and 0\% hallucination over stylistic variety, its surface utterances are concise and compositional rather than conversationally ornate. Hybrid deployments may optionally attach a sandboxed local SLM purely as a surface paraphrase renderer \emph{strictly downstream} of Atri's Nissenbaum egress gate and loopback verifier.
+\end{enumerate}
+
+\paragraph{Ethical Considerations and Broader Impact.}
+By design, Atri addresses two acute safety risks of deployed AI agents: cross-context privacy breaches and sycophantic manipulation. Formalizing contextual integrity as a non-bypassable join-semilattice with zero-echo audit logs protects user confidentiality even when internal concepts aggregate cross-domain structure. Conversely, persistent endogenous preference attractors ($\mu^*, \Sigma^*$) and anti-sycophancy mechanisms require transparent inspection and user-controlled episodic revocation (\texttt{learning.revoke}) so that human operators retain ultimate oversight and corrective authority over long-lived autonomous agents. All experiments in this paper use exclusively synthetic clean-room worlds and public-style technical prose with zero personal user data or credentials.
+
+% ============================================================================
+% 9. CONCLUSION AND REPRODUCIBILITY STATEMENT
+% ============================================================================
+\section{Conclusion and Reproducibility Statement}
+\label{sec:conclusion}
+
+We have shown that an agent need not collapse when severed from cloud LLMs. By grounding memory, causality, motivation, sleep consolidation, and script-invariant language acquisition in a single conserved metabolic hypergraph governed by four formal laws, Atri achieves 93.8\%--94.8\% post-severing autonomy across four typologically distinct writing systems, 0.0\% contextual privacy leakage, 100.0\% accuracy on a 40-task temporal/provenance/privacy/cascade diagnostic protocol (outperforming CPU-only \texttt{Qwen2.5-0.5B-Q4} and \texttt{Qwen2.5-1.5B-Q4} by $467\times\text{--}894\times$ in P95 latency and $+22.5\text{--}35.0$ percentage points in accuracy on identical 4C4G hardware), provable thermodynamic collapse in uncoupled environments, and 5.78\,ms Turn P95 operation inside an air-gapped 4-vCPU / 4\,GiB RAM Linux container.
+
+\paragraph{Reproducibility.}
+Every figure, CSV, and LaTeX table in this paper is auto-generated from the deterministic TypeScript kernel with zero synthetic numbers. Running
+\begin{verbatim}
+node --disable-warning=ExperimentalWarning scripts/eval/q307-paper-suite.ts \
+  --seeds=20 --out=scripts/eval/.out/n20-run1
+\end{verbatim}
+reproduces all 15 artifacts and matches the cryptographic deterministic-core digest:
+\begin{center}
+  \small\texttt{deterministicCoreSha256} $=$\\
+  \texttt{7ed831b28023a44228e9b96623b78abd2be043c1dadb35897435bc116c11e721}.
+\end{center}
+Air-gapped 4-vCPU / 4\,GiB RAM Docker reproduction commands, the companion public repository (\url{https://github.com/kf15884/atri-cognitive-kernel}), and the complete JAIR reproducibility checklist are provided in Appendices~\ref{app:repro}--\ref{app:jair_checklist} and \texttt{paper/README.md}.
+
+% ============================================================================
+% ACKNOWLEDGMENTS & BIBLIOGRAPHY
+% ============================================================================
+\begin{acks}
+This research was conducted independently with no external funding. All clean-room benchmarks, container specifications, and verification artifacts are released under the MIT License to support transparent, zero-cost reproducibility.
+\end{acks}
+
+\printbibliography
+
+% ============================================================================
+% APPENDICES
+% ============================================================================
+\appendix
+\input{appendix}
+
+\end{document}

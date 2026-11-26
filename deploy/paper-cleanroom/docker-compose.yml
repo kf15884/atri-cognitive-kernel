@@ -1,0 +1,85 @@
+# Q307 Stage D — Clean-Room 4C4G Containerized Paper Assay (RFC v3 Section 4.2)
+# 1) Default (0-network physically severed 4C4G run):
+#      docker compose -f deploy/paper-cleanroom/docker-compose.yml up --build atri-paper-airgapped
+# 2) Optional live 4C4G local SLM comparison (Qwen2.5-0.5B/1.5B-Q4 via Ollama):
+#      docker compose -f deploy/paper-cleanroom/docker-compose.yml --profile slm up -d slm-ollama
+#      docker exec atri-q307-slm-4c4g ollama pull qwen2.5:0.5b
+#      docker compose -f deploy/paper-cleanroom/docker-compose.yml --profile slm up --build atri-paper-with-slm
+
+services:
+  atri-paper-airgapped:
+    build:
+      context: ../..
+      dockerfile: deploy/paper-cleanroom/Dockerfile
+    container_name: atri-q307-cleanroom-4c4g
+    cpus: "4.0"
+    mem_limit: 4g
+    memswap_limit: 4g
+    network_mode: none
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=128m
+    volumes:
+      - ./out:/out:rw
+    command: ["--seeds=20", "--out=/out"]
+
+  slm-ollama:
+    image: ollama/ollama:latest
+    profiles: ["slm"]
+    container_name: atri-q307-slm-4c4g
+    cpus: "4.0"
+    mem_limit: 4g
+    memswap_limit: 4g
+    ports:
+      - "127.0.0.1:11434:11434"
+    volumes:
+      - slm_models:/root/.ollama
+    networks:
+      - slm_internal
+      - default
+    healthcheck:
+      test: ["CMD-SHELL", "ollama list >/dev/null 2>&1 || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 5s
+
+  atri-paper-with-slm:
+    build:
+      context: ../..
+      dockerfile: deploy/paper-cleanroom/Dockerfile
+    profiles: ["slm"]
+    container_name: atri-q307-cleanroom-slm-compare
+    cpus: "4.0"
+    mem_limit: 4g
+    memswap_limit: 4g
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=128m
+    networks:
+      - slm_internal
+    depends_on:
+      slm-ollama:
+        condition: service_healthy
+    environment:
+      ATRI_EVAL_SLM_URL: http://slm-ollama:11434/api/generate
+      ATRI_EVAL_SLM_MODEL: qwen2.5:0.5b
+    volumes:
+      - ./out-slm:/out:rw
+    command: ["--seeds=20", "--out=/out"]
+
+networks:
+  slm_internal:
+    driver: bridge
+    internal: true
+
+volumes:
+  slm_models:

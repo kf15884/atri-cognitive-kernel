@@ -1,0 +1,17 @@
+node_modules/
+scripts/eval/.out/
+deploy/paper-cleanroom/out/
+deploy/paper-cleanroom/out-slm/
+paper/*.aux
+paper/*.bbl
+paper/*.bcf
+paper/*.blg
+paper/*.log
+paper/*.out
+paper/*.run.xml
+paper/*.toc
+*.db
+*.db-wal
+*.db-shm
+.env
+.env.*

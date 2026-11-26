@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="640" viewBox="0 0 1200 640" font-family="DejaVu Sans, Arial, Helvetica, sans-serif">
+<defs>
+<marker id="arr-slate" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" fill="#475569"/></marker>
+<marker id="arr-blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" fill="#0284c7"/></marker>
+<marker id="arr-red" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" fill="#dc2626"/></marker>
+<marker id="arr-green" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" fill="#059669"/></marker>
+</defs>
+<rect x="0" y="0" width="1200" height="640" fill="#ffffff"/>
+<text x="24" y="30" font-size="16.5" font-weight="700" fill="#0f172a">Figure 0 · Atri Endogenous Cognitive Kernel Architecture &amp; Severed-Scaffold Closure</text>
+<text x="24" y="48" font-size="11" fill="#475569">40 Innate Root Anchors · Four Mathematical Laws · Zero-LLM Bidirectional Language Bootstrapping (4 vCPU / 4 GB RAM)</text>
+<rect x="18" y="62" width="1164" height="518" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.2"/>
+<text x="32" y="81" font-size="10.5" font-weight="700" fill="#0369a1">PERMANENT LOCAL ENDOGENOUS KERNEL (ZERO CLOUD LLM AFTER T_cut · APPEND-ONLY TIMELINE LOG + NUXOLL REVOCATION)</text>
+<rect x="30" y="96" width="300" height="108" rx="8" fill="#ffffff" stroke="#0284c7" stroke-width="1.4"/>
+<rect x="30" y="96" width="300" height="24" rx="8" fill="#e0f2fe"/>
+<text x="40" y="112" font-size="11" font-weight="700" fill="#0c4a6e">1. 40 Innate Root Anchors (root:*)</text>
+<text x="40" y="134" font-size="9.5" fill="#334155">• 18 Perception &amp; Self-Model anchors</text>
+<text x="40" y="151" font-size="9.5" fill="#334155">• 14 Daily Life &amp; Volition anchors</text>
+<text x="40" y="168" font-size="9.5" fill="#334155">• 4 Epistemic Inquiry + 4 Relation anchors</text>
+<text x="40" y="189" font-size="9.2" font-weight="600" fill="#0369a1">0 natural-language tokens in kernel code</text>
+<rect x="30" y="220" width="300" height="186" rx="8" fill="#ffffff" stroke="#0d9488" stroke-width="1.4"/>
+<rect x="30" y="220" width="300" height="24" rx="8" fill="#ccfbf1"/>
+<text x="40" y="236" font-size="11" font-weight="700" fill="#115e59">2. Zero-LLM Language Bootstrapping</text>
+<text x="40" y="258" font-size="9.6" font-weight="600" fill="#0f172a">R1 Unsupervised Segmentation:</text>
+<text x="48" y="273" font-size="9.2" fill="#334155">MDL Viterbi + Accessor Variety + Entropy</text>
+<text x="48" y="287" font-size="9.2" fill="#334155">ADIOS Clusters · ZH / Cipher / EN / JA</text>
+<text x="40" y="307" font-size="9.6" font-weight="600" fill="#0f172a">R2 Grounded Parsing &amp; Synonyms:</text>
+<text x="48" y="322" font-size="9.2" fill="#334155">Fisher Explaining-Away · Beam-4 Chart</text>
+<text x="48" y="336" font-size="9.2" fill="#334155">Privacy-Scoped 2-Hop PPR Disambiguation</text>
+<text x="40" y="356" font-size="9.6" font-weight="600" fill="#0f172a">R3 Structured Tables / JSON (0 LLM):</text>
+<text x="48" y="371" font-size="9.2" fill="#334155">read_text assertions (c &lt;= 0.40) + stamps</text>
+<text x="40" y="393" font-size="9.2" font-weight="600" fill="#0f766e">Exact Symmetry: ZH vs Cipher max |Δ| = 0</text>
+<rect x="30" y="422" width="300" height="140" rx="8" fill="#fff7ed" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="6,4"/>
+<rect x="30" y="422" width="300" height="24" rx="8" fill="#fee2e2"/>
+<text x="40" y="438" font-size="11" font-weight="700" fill="#991b1b">3. Optional R4 Scaffold (Severed T_cut)</text>
+<text x="40" y="460" font-size="9.5" fill="#334155">• Accelerates Act-1 coverage (c &lt;= 0.35)</text>
+<text x="40" y="477" font-size="9.5" fill="#334155">• UTF-16 quote-span check, no overwrite</text>
+<text x="40" y="494" font-size="9.5" fill="#334155">• Never-LLM Twin proves t=0 closure</text>
+<rect x="42" y="510" width="276" height="38" rx="5" fill="#dc2626"/>
+<text x="180" y="526" text-anchor="middle" font-size="10" font-weight="700" fill="#ffffff">HARD PHYSICAL SEVERING AT T_cut</text>
+<text x="180" y="541" text-anchor="middle" font-size="9" fill="#fee2e2">network_mode: none · R4 blocked · 0 cloud</text>
+<rect x="364" y="96" width="472" height="466" rx="10" fill="#ffffff" stroke="#334155" stroke-width="1.6"/>
+<rect x="364" y="96" width="472" height="28" rx="10" fill="#1e293b"/>
+<text x="600" y="114" text-anchor="middle" font-size="11.5" font-weight="700" fill="#ffffff">UNIFIED METABOLIC HYPERGRAPH (FOUR MATHEMATICAL LAWS)</text>
+<rect x="378" y="134" width="444" height="94" rx="7" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.2"/>
+<text x="388" y="151" font-size="10.6" font-weight="700" fill="#1d4ed8">Law 1 · Stratified NARS-Beta &amp; Nissenbaum Privacy Lattice</text>
+<text x="388" y="168" font-size="9.2" fill="#1e293b">• Unclipped stats (w+_p, w-_p) per provenance; readout c_max(p)</text>
+<text x="388" y="184" font-size="9.2" fill="#1e293b">• Exact Uint32Array root/leaf stamps; Base (+) Derived guard</text>
+<text x="388" y="200" font-size="9.2" fill="#1e293b">• Privacy join κ₁ ⊔ κ₂ (SEALED) + Graphiti [t_from, t_until)</text>
+<text x="388" y="218" font-size="9" font-weight="600" fill="#1d4ed8">Thm 1: Order-invariant fold &amp; lattice non-interference</text>
+<rect x="378" y="238" width="444" height="98" rx="7" fill="#ecfdf5" stroke="#10b981" stroke-width="1.2"/>
+<text x="388" y="255" font-size="10.6" font-weight="700" fill="#047857">Law 2 · Conserved Informational Metabolism &amp; SPD Manifold</text>
+<text x="388" y="272" font-size="9.2" fill="#1e293b">• First-Law budget Σ m_u &lt;= M_cap (100); η_inferred = η_rem = 0</text>
+<text x="388" y="288" font-size="9.2" fill="#1e293b">• Priority shedding: roots (T4) &gt; concepts &gt; grounded &gt; passive</text>
+<text x="388" y="304" font-size="9.2" fill="#1e293b">• 4D SPD attractor (μ*, Σ*) via Jacobi projection + C_endo load</text>
+<text x="388" y="324" font-size="9" font-weight="600" fill="#047857">Thm 2: Dark-room decay &amp; emergent endogenous anti-sycophancy</text>
+<rect x="378" y="346" width="444" height="96" rx="7" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.2"/>
+<text x="388" y="363" font-size="10.6" font-weight="700" fill="#b45309">Law 3 · Resource-Bounded Active Inference &amp; Pearl Rung-3 SCM</text>
+<text x="388" y="380" font-size="9.2" fill="#1e293b">• G_RB(π) = −IG − κ·γ_LP + τ_t(−V_endo + C̃·l_coh) + Cost/β</text>
+<text x="388" y="396" font-size="9.2" fill="#1e293b">• Stratified QMC Noisy-OR-NOT SCM (generative + preventive)</text>
+<text x="388" y="412" font-size="9.2" fill="#1e293b">• Online do(X=x) rehearsal &amp; counterfactual Necessity PN(X→Y)</text>
+<text x="388" y="430" font-size="9" font-weight="600" fill="#b45309">Thm 3: Causal MI isolates channel vs organ faults despite cost</text>
+<rect x="378" y="452" width="444" height="98" rx="7" fill="#f5f3ff" stroke="#8b5cf6" stroke-width="1.2"/>
+<text x="388" y="469" font-size="10.6" font-weight="700" fill="#6d28d9">Law 4 · Dual-Phase Offline Sleep &amp; Rissanen MDL Genesis</text>
+<text x="388" y="486" font-size="9.2" fill="#1e293b">• NREM: bi-temporal closure, chunk:*, MDL concept:* (72h loan)</text>
+<text x="388" y="502" font-size="9.2" fill="#1e293b">• Disjoint root/leaf motif rule blocks loops; enables L0→L1→L2</text>
+<text x="388" y="518" font-size="9.2" fill="#1e293b">• REM: salience-sorted 2-hop inverse-deg PPR analogies (c&lt;=0.25)</text>
+<text x="388" y="538" font-size="9" font-weight="600" fill="#6d28d9">Thm 4: Bounded minting &amp; catalytic repayment stop bloat</text>
+<rect x="870" y="96" width="300" height="124" rx="8" fill="#ffffff" stroke="#059669" stroke-width="1.5"/>
+<rect x="870" y="96" width="300" height="24" rx="8" fill="#d1fae5"/>
+<text x="880" y="112" font-size="11" font-weight="700" fill="#065f46">4. Nissenbaum Egress Privacy Gate</text>
+<text x="880" y="134" font-size="9.5" fill="#334155">• Lattice dominance: κ(edge) ⊑ Channel</text>
+<text x="880" y="151" font-size="9.5" fill="#334155">• Raw-query &amp; NFKC/ZWSP secret audit</text>
+<text x="880" y="168" font-size="9.5" fill="#334155">• Fail-closed R2 PPR &amp; SEALED isolation</text>
+<text x="880" y="196" font-size="9.6" font-weight="700" fill="#047857">0.0% Leakage across ZH/Cipher/EN/JA</text>
+<rect x="870" y="236" width="300" height="156" rx="8" fill="#ffffff" stroke="#f59e0b" stroke-width="1.4"/>
+<rect x="870" y="236" width="300" height="24" rx="8" fill="#fef3c7"/>
+<text x="880" y="252" font-size="11" font-weight="700" fill="#92400e">5. Epistemic Inquiry, ISU/QUD &amp; Rosie</text>
+<text x="880" y="274" font-size="9.5" fill="#334155">• Conflict &amp; missing-link gap detector</text>
+<text x="880" y="291" font-size="9.5" fill="#334155">• G_RB channel planner &amp; DND replanner</text>
+<text x="880" y="308" font-size="9.5" fill="#334155">• Dingemanse repair &amp; Schlangen IU</text>
+<text x="880" y="325" font-size="9.5" fill="#334155">• Single-turn Rosie action differentiation</text>
+<text x="880" y="342" font-size="9.5" fill="#334155">• Compact SHA-256 QUD ID (&lt;= 120 ch)</text>
+<text x="880" y="372" font-size="9.6" font-weight="600" fill="#b45309">100% Overnight Action Transfer (T_fork)</text>
+<rect x="870" y="408" width="300" height="154" rx="8" fill="#ffffff" stroke="#6366f1" stroke-width="1.4"/>
+<rect x="870" y="408" width="300" height="24" rx="8" fill="#e0e7ff"/>
+<text x="880" y="424" font-size="11" font-weight="700" fill="#3730a3">6. Production &amp; Levelt Self-Monitor</text>
+<text x="880" y="446" font-size="9.5" fill="#334155">• Centering / ACT-R Salience Buffer</text>
+<text x="880" y="463" font-size="9.5" fill="#334155">• Rhetorical Planner &amp; Shared Realizer</text>
+<text x="880" y="480" font-size="9.5" fill="#334155">• Levelt/Nozari Loopback Verification</text>
+<text x="880" y="497" font-size="9.5" fill="#334155">• Selective Abstention on Ungrounded</text>
+<text x="880" y="532" font-size="9.6" font-weight="700" fill="#4338ca">Selective Acc = 100% · AURC = 0.0000</text>
+<line x1="330" y1="150" x2="362" y2="150" stroke="#0284c7" stroke-width="1.8" marker-end="url(#arr-blue)"/>
+<line x1="330" y1="312" x2="362" y2="312" stroke="#475569" stroke-width="1.8" marker-end="url(#arr-slate)"/>
+<line x1="330" y1="492" x2="362" y2="492" stroke="#dc2626" stroke-width="1.8" stroke-dasharray="5,3" marker-end="url(#arr-red)"/>
+<text x="346" y="484" text-anchor="middle" font-size="8.8" font-weight="700" fill="#dc2626">T_cut</text>
+<line x1="836" y1="168" x2="868" y2="168" stroke="#059669" stroke-width="1.8" marker-end="url(#arr-green)"/>
+<line x1="836" y1="366" x2="868" y2="366" stroke="#475569" stroke-width="1.6" marker-end="url(#arr-slate)"/>
+<line x1="868" y1="286" x2="838" y2="286" stroke="#b45309" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arr-slate)"/>
+<text x="853" y="279" text-anchor="middle" font-size="8" font-weight="600" fill="#b45309">QUD</text>
+<line x1="836" y1="496" x2="868" y2="496" stroke="#475569" stroke-width="1.6" marker-end="url(#arr-slate)"/>
+<rect x="18" y="592" width="1164" height="34" rx="6" fill="#0f172a"/>
+<text x="600" y="613" text-anchor="middle" font-size="10.8" fill="#f8fafc">4C4G Clean-Room Envelope:  Turn P95 &lt;= 15 ms  ·  NREM/REM Sleep &lt;= 200 ms  ·  Active Graph (1,500E) &lt;= 40 MB  ·  Zero Nondeterministic RNG / Wall-Clock  ·  Byte-Identical SHA-256 Core</text>
+</svg>
